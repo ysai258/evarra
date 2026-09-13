@@ -10,6 +10,7 @@ import {
   submitGuess,
 } from '../engine/game.ts';
 import { MAX_ATTEMPTS } from '../engine/reveal.ts';
+import { HINT_PENALTY, MAX_SCORE, baseScoreForStage } from '../engine/scoring.ts';
 import { makeCelebrity } from './factories.ts';
 
 const answer = makeCelebrity({
@@ -64,7 +65,7 @@ describe('submitGuess', () => {
   it('scores by the stage that was on screen when the guess was made', () => {
     let state = play(['wrong one', 'wrong two']);
     state = submitGuess(state, 'Prabhas', answer).state;
-    expect(state.score).toBe(300);
+    expect(state.score).toBe(baseScoreForStage(2));
   });
 
   it('ends the game after five wrong guesses with a score of zero', () => {
@@ -98,7 +99,7 @@ describe('revealHint', () => {
     state = revealHint(state, answer);
     expect(state.hintsUsed).toEqual([0, 1]);
     state = submitGuess(state, 'Prabhas', answer).state;
-    expect(state.score).toBe(500 - 100);
+    expect(state.score).toBe(MAX_SCORE - 2 * HINT_PENALTY);
   });
 
   it('stops at the number of hints the dataset actually has', () => {

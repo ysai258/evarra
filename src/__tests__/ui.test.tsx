@@ -5,6 +5,7 @@ import { GameBoard } from '../components/GameBoard.tsx';
 import { GuessInput } from '../components/GuessInput.tsx';
 import { createGame } from '../engine/game.ts';
 import { MAX_ATTEMPTS } from '../engine/reveal.ts';
+import { HINT_PENALTY, MAX_SCORE } from '../engine/scoring.ts';
 import { EMPTY_STATS } from '../engine/stats.ts';
 import { makeCelebrity } from './factories.ts';
 
@@ -153,7 +154,7 @@ describe('GameBoard', () => {
     await userEvent.click(screen.getByRole('button', { name: /Reveal a clue/i }));
     expect(screen.getByText(answer.hints.era)).toBeInTheDocument();
     expect(board.game.hintsUsed).toEqual([0]);
-    expect(screen.getByText(/worth/)).toHaveTextContent('450');
+    expect(screen.getByText(/worth/)).toHaveTextContent(String(MAX_SCORE - HINT_PENALTY));
   });
 
   it('credits the photo source once the game is over', async () => {

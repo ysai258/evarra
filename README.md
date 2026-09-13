@@ -75,9 +75,28 @@ bandwidth than losing. Stages already passed stay mounted underneath, so each re
 cross-fades rather than cutting. The hardest stages are also desaturated so they read
 as a silhouette rather than a colour blob.
 
-**Scoring.** 500 / 400 / 300 / 200 / 100 by the stage you were looking at when you
-guessed, minus 50 per clue revealed, with a floor of 100 for any correct answer. A
-loss scores 0.
+**Scoring.** Every path through a puzzle scores differently. A wrong guess costs 85, a
+clue costs 12, and the worst possible win — last stage, every clue — lands exactly on
+the 100 floor. A loss scores 0.
+
+```
+ clues:     0    1    2    3    4    5
+guess 1:  500  488  476  464  452  440
+guess 2:  415  403  391  379  367  355
+guess 3:  330  318  306  294  282  270
+guess 4:  245  233  221  209  197  185
+guess 5:  160  148  136  124  112  100
+```
+
+The unround numbers are the point. The obvious scheme — 100 a stage, 50 a clue, floored
+at 100 — collapses: a clue costs exactly half a stage, so guess 1 with two clues ties
+guess 2 with none, and the floor flattens everything beneath it. That left **9 distinct
+scores across these 30 paths**, with every win on the last guess scoring 100 however
+much help was taken.
+
+Holding the range at 100–500 and requiring all 30 to differ pins the values: four stage
+steps plus five clue steps must total 400, and five clues must cost less than one wrong
+guess, or the bands overlap and collide again.
 
 **Clues are things a filmgoer actually remembers.** The ladder runs: which generation
 their films span → a film family or where they were born → a director they are
