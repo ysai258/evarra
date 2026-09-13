@@ -22,7 +22,7 @@ describe('scoring', () => {
   });
 
   it('steps down by one stage per wrong guess', () => {
-    expect([0, 1, 2, 3, 4].map(baseScoreForStage)).toEqual([500, 415, 330, 245, 160]);
+    expect([0, 1, 2, 3, 4].map(baseScoreForStage)).toEqual([500, 420, 340, 260, 180]);
   });
 
   it('rejects a stage outside the reveal ladder', () => {
@@ -36,9 +36,9 @@ describe('scoring', () => {
   });
 
   it('subtracts the clue penalty per clue', () => {
-    expect(calculateScore({ stageIndex: 1, hintsUsed: 0, won: true })).toBe(415);
-    expect(calculateScore({ stageIndex: 1, hintsUsed: 1, won: true })).toBe(415 - HINT_PENALTY);
-    expect(calculateScore({ stageIndex: 1, hintsUsed: 3, won: true })).toBe(415 - 3 * HINT_PENALTY);
+    expect(calculateScore({ stageIndex: 1, hintsUsed: 0, won: true })).toBe(420);
+    expect(calculateScore({ stageIndex: 1, hintsUsed: 1, won: true })).toBe(420 - HINT_PENALTY);
+    expect(calculateScore({ stageIndex: 1, hintsUsed: 3, won: true })).toBe(420 - 3 * HINT_PENALTY);
   });
 
   /**
@@ -59,9 +59,20 @@ describe('scoring', () => {
     }
   });
 
-  it('lands the worst possible win exactly on the floor', () => {
-    expect(calculateScore({ stageIndex: MAX_ATTEMPTS - 1, hintsUsed: MAX_HINTS, won: true }))
-      .toBe(MIN_WINNING_SCORE);
+  it('lands the worst possible win just above the floor, never on it by clamping', () => {
+    const worst = calculateScore({
+      stageIndex: MAX_ATTEMPTS - 1, hintsUsed: MAX_HINTS, won: true,
+    });
+    expect(worst).toBe(105);
+    expect(worst).toBeGreaterThan(MIN_WINNING_SCORE);
+  });
+
+  // Scores ending in odd digits read like a rounding error rather than a result.
+  it('ends every score in a five or a zero', () => {
+    for (const path of everyPath) {
+      expect(calculateScore({ ...path, won: true }) % 5, JSON.stringify(path)).toBe(0);
+    }
+    expect(MAX_SCORE % 5).toBe(0);
   });
 
   it('always pays more for guessing earlier, whatever the clues', () => {
@@ -88,7 +99,7 @@ describe('scoring', () => {
 
   it('reports the best score still reachable', () => {
     expect(potentialScore(0, 0)).toBe(MAX_SCORE);
-    expect(potentialScore(2, 1)).toBe(330 - HINT_PENALTY);
+    expect(potentialScore(2, 1)).toBe(340 - HINT_PENALTY);
   });
 
   it('gives each stage its own rank label at a clue-free win', () => {
@@ -99,11 +110,11 @@ describe('scoring', () => {
 
   it('labels the whole range, losses included', () => {
     expect(rankFor(MAX_SCORE).label).toBe('UNFAIR');
-    expect(rankFor(440).label).toBe('LEGENDARY');
-    expect(rankFor(355).label).toBe('STAR SPOTTER');
-    expect(rankFor(270).label).toBe('NOT BAD');
+    expect(rankFor(425).label).toBe('LEGENDARY');
+    expect(rankFor(345).label).toBe('STAR SPOTTER');
+    expect(rankFor(265).label).toBe('NOT BAD');
     expect(rankFor(185).label).toBe('CUTTING IT FINE');
-    expect(rankFor(MIN_WINNING_SCORE).label).toBe('YOU GOT THERE');
+    expect(rankFor(105).label).toBe('YOU GOT THERE');
     expect(rankFor(0).label).toContain('WHO EVEN ARE YOU');
   });
 });

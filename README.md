@@ -75,28 +75,31 @@ bandwidth than losing. Stages already passed stay mounted underneath, so each re
 cross-fades rather than cutting. The hardest stages are also desaturated so they read
 as a silhouette rather than a colour blob.
 
-**Scoring.** Every path through a puzzle scores differently. A wrong guess costs 85, a
-clue costs 12, and the worst possible win — last stage, every clue — lands exactly on
-the 100 floor. A loss scores 0.
+**Scoring.** Every path through a puzzle scores differently. A wrong guess costs 80, a
+clue costs 15. A loss scores 0.
 
 ```
  clues:     0    1    2    3    4    5
-guess 1:  500  488  476  464  452  440
-guess 2:  415  403  391  379  367  355
-guess 3:  330  318  306  294  282  270
-guess 4:  245  233  221  209  197  185
-guess 5:  160  148  136  124  112  100
+guess 1:  500  485  470  455  440  425
+guess 2:  420  405  390  375  360  345
+guess 3:  340  325  310  295  280  265
+guess 4:  260  245  230  215  200  185
+guess 5:  180  165  150  135  120  105
 ```
 
-The unround numbers are the point. The obvious scheme — 100 a stage, 50 a clue, floored
-at 100 — collapses: a clue costs exactly half a stage, so guess 1 with two clues ties
-guess 2 with none, and the floor flattens everything beneath it. That left **9 distinct
-scores across these 30 paths**, with every win on the last guess scoring 100 however
-much help was taken.
+Three constraints pin those two numbers. Every score ends in a five or a zero, so both
+steps must be multiples of five. All thirty combinations must differ, which means five
+clues have to cost less than one wrong guess — otherwise the per-guess bands overlap.
+And no win may score under 100.
 
-Holding the range at 100–500 and requiring all 30 to differ pins the values: four stage
-steps plus five clue steps must total 400, and five clues must cost less than one wrong
-guess, or the bands overlap and collide again.
+Search that space and 80/15 is the only pairing where a clue is worth as much as 15;
+every other valid option makes clues cheaper still, and none lands the lowest win
+exactly on 100 without colliding, which is why the worst path scores 105.
+
+The scheme this replaced — 100 a guess, 50 a clue, floored at 100 — produced **9
+distinct scores across those 30 paths**: a clue cost exactly half a guess, so guess 1
+with two clues tied guess 2 with none, and the floor flattened everything beneath it
+into a single 100.
 
 **Clues are things a filmgoer actually remembers.** The ladder runs: which generation
 their films span → a film family or where they were born → a director they are
