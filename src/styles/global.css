@@ -1,0 +1,1305 @@
+/* ---------------------------------------------------------------------------
+   EVARRA? — ఒరేయ్ ఎవర్రా?
+
+   Retro screen-print: flat poster inks, hard un-blurred shadows, a few things pinned
+   slightly askew. Old Telugu film posters were printed this way — a handful of flat
+   colours, slightly out of register — so the look carries the cinema reference
+   without any literal film-reel decoration.
+
+   Printed light-on-dark: near-black stock with pale ink, and electric blue, hot pink,
+   green and lemon as the four colours. A dark room also does the photograph a favour —
+   nothing on the page competes with it for brightness.
+
+   Layout rule: the game never scrolls. The board is a flex column (a row on wide
+   screens) where the photo is the only element allowed to give up space, so clues
+   and the result push the picture smaller instead of pushing the input off-screen.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Ink is the pale mark; paper is the dark stock it is printed on. `--paper-bright`
+     is the raised surface — a second sheet laid on the first, not a lighter page. */
+  --ink: #f3eeff;
+  --paper: #131020;
+  --paper-bright: #211c36;
+
+  /* The four inks, brightened to carry on a dark ground. Blue takes the primary
+     actions, pink marks a wrong turn, green a right one, lemon is the highlight. */
+  --blue: #5b78ff;
+  --pink: #ff4d8d;
+  --green: #2fd39a;
+  --sun: #ffd23f;
+
+  /* On dark stock the light pink is legible as text, so alert and pink converge. */
+  --alert: #ff4d8d;
+
+  --ink-soft: #b4abd0;
+  --ink-faint: #7d7499;
+
+  /* Offset, never blurred — a second pass of ink slightly out of register. On a dark
+     ground it has to be darker than the page to read at all. */
+  --shadow-ink: #05040c;
+
+  /* The signature: offset, never blurred. Blur would make it a drop shadow; this
+     reads as a second pass of ink slightly out of register. */
+  --shadow: 4px 4px 0 var(--shadow-ink);
+  --shadow-lg: 6px 6px 0 var(--shadow-ink);
+  --shadow-press: 1px 1px 0 var(--shadow-ink);
+
+  --radius: 7px;
+  --radius-lg: 13px;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-telugu: 'Noto Sans Telugu', system-ui, sans-serif;
+
+  --shell: min(520px, 100%);
+  /* Ceiling for the photo. Its width is derived so 4:5 holds exactly; flex may
+     shrink it below this when clues or the result need the room. */
+  --stage-height: min(56dvh, 460px);
+}
+
+@media (min-width: 640px) {
+  :root { --stage-height: min(62dvh, 520px); }
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  /* Halftone: a faint dot screen, like cheap colour printing. */
+  background-image: radial-gradient(rgba(243, 238, 255, .16) 0.5px, transparent 0.5px);
+  background-size: 7px 7px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+body::before {
+  /* A soft pool of light behind the board, so the page is not a flat black field. */
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 80% at 50% 0%, #241d3d 0%, transparent 62%);
+  pointer-events: none;
+}
+
+:where(button, input, select) { font: inherit; color: inherit; }
+
+button { cursor: pointer; }
+
+:where(.guess__list, .modal) {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-faint) transparent;
+}
+
+:where(.guess__list, .modal)::-webkit-scrollbar { width: 6px; }
+
+:where(.guess__list, .modal)::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border-radius: 99px;
+}
+
+:where(a) { color: var(--alert); text-underline-offset: 3px; }
+
+:focus-visible {
+  outline: 3px solid var(--alert);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.telugu { font-family: var(--font-telugu); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- app shell */
+
+.app {
+  /* One viewport, always — the landing as much as the board. */
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px calc(10px + env(safe-area-inset-bottom));
+}
+
+.shell { width: var(--shell); }
+
+.topbar {
+  width: var(--shell);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0 10px;
+}
+
+.wordmark {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.wordmark__en {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 25px;
+  letter-spacing: -1px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.wordmark__te {
+  font-family: var(--font-telugu);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--alert);
+  line-height: 1;
+}
+
+.topbar__actions { display: flex; gap: 7px; }
+
+.icon-button {
+  width: 40px; height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--paper-bright);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-press);
+  color: var(--ink);
+  font-size: 15px;
+  transition: transform .1s, box-shadow .1s, background .12s;
+}
+
+.icon-button:hover:not(:disabled) { background: var(--sun); color: var(--paper); }
+
+.icon-button:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.icon-button:disabled { opacity: .3; cursor: not-allowed; box-shadow: none; }
+
+/* ------------------------------------------------------------------ landing */
+
+.landing {
+  width: var(--shell);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Gaps breathe on a tall phone and tighten on a short one, so the Play button is
+     never the thing that falls off the bottom. */
+  gap: clamp(8px, 1.8vh, 20px);
+  padding: 8px 0 4px;
+  text-align: center;
+}
+
+/* Flattened on phones so the poster can sit between the title and the tagline. */
+.landing__copy { display: contents; }
+
+.landing__head { order: 1; }
+.hero__poster { order: 2; }
+.hero__lines { order: 3; }
+.landing__actions { order: 4; }
+.landing__stats { order: 5; }
+.steps { order: 6; }
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(42px, 13vw, 72px);
+  line-height: .95;
+  letter-spacing: -3px;
+  margin: 0;
+  color: var(--ink);
+  /* Off-register second pass, the way cheap two-colour printing misaligns. */
+  text-shadow: 4px 4px 0 var(--pink);
+  transform: rotate(-1.5deg);
+}
+
+.hero__telugu {
+  font-family: var(--font-telugu);
+  font-weight: 700;
+  font-size: clamp(19px, 5.5vw, 28px);
+  margin: clamp(6px, 1.4vh, 14px) 0 0;
+  color: var(--alert);
+  transform: rotate(1deg);
+}
+
+.hero__lines {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(14px, 1.9vh, 16px);
+  line-height: 1.5;
+}
+
+.hero__lines strong { color: var(--ink); font-weight: 700; }
+
+.hero__poster {
+  position: relative;
+  /* Sized off viewport height, so the poster is what gives way on a short screen. */
+  width: min(190px, 48vw, calc(26dvh * 4 / 5));
+  aspect-ratio: 4 / 5;
+  margin: 0 auto;
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  box-shadow: var(--shadow-lg);
+  background: var(--blue);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  transform: rotate(-2.5deg);
+}
+
+.hero__poster::after {
+  content: '?';
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(48px, 13dvh, 80px);
+  color: var(--paper-bright);
+}
+
+.hero__poster--photo::after {
+  position: relative;
+  z-index: 1;
+  color: var(--paper-bright);
+  mix-blend-mode: hard-light;
+}
+
+.hero__poster--photo .stage__image { transform: scale(1.15); }
+
+.landing__stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.landing__stats b {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--ink);
+  margin-right: 4px;
+}
+
+.landing__actions { display: flex; flex-direction: column; gap: 10px; }
+
+.steps {
+  text-align: left;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  padding: clamp(10px, 1.6vh, 16px) 16px;
+}
+
+.steps h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.steps ol {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: clamp(12.5px, 1.7vh, 14.5px);
+}
+
+.steps li { margin: clamp(2px, .5vh, 6px) 0; }
+.steps li strong { color: var(--ink); font-weight: 700; }
+
+/* ------------------------------------------------------------------ buttons */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 18px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: var(--shadow);
+  transition: transform .1s, box-shadow .1s, background .12s;
+}
+
+/* The press: the element moves into its own shadow. */
+.button:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  box-shadow: none;
+  background: transparent;
+  border-style: dashed;
+}
+
+.button--primary {
+  background: var(--blue);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -.4px;
+}
+
+.button--primary:hover:not(:disabled) { background: #7590ff; }
+
+.button--ghost {
+  background: transparent;
+  box-shadow: var(--shadow-press);
+}
+
+.button--ghost:hover:not(:disabled) { background: var(--paper-bright); }
+
+.button--ghost:active:not(:disabled) { transform: translate(1px, 1px); }
+
+.button--subtle { background: var(--paper-bright); }
+
+/* --------------------------------------------------------------------- game */
+
+.game {
+  width: var(--shell);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The photo and the panel. Kept separate from `.game` so the archive banner stays a
+   full-width row above both — inside the row layout it became a third column and
+   squeezed the guess box into a sliver. */
+.game__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game__stage {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 1 auto;
+  min-height: 0;
+  /* Give back roughly a clue's worth of height for each one revealed. */
+  --stage-height: min(calc(56dvh - var(--clues, 0) * 4dvh), 460px);
+}
+
+.game__panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1.1vh, 10px);
+  /* Natural height, with the photo above absorbing what is left. Deliberately not
+     `justify-content: flex-end`: when content is taller than the box, flex overflows
+     towards the *start*, so the tracker would be painted over the photograph. Any
+     overflow now goes downwards, where the QA harness can see it. */
+  flex: 0 0 auto;
+  justify-content: flex-start;
+}
+
+/* Wide screens: the landing lays out like the board — picture beside the words. */
+@media (min-width: 900px) and (min-height: 560px) {
+  .landing {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 44px;
+    width: min(960px, 100%);
+    text-align: left;
+  }
+
+  /* A real column now, so the copy stays compact instead of being stretched to the
+     poster's height. */
+  .landing__copy {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.8vh, 20px);
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 440px;
+  }
+
+  .hero__poster {
+    /* Picture on the left, same side as the board — the mobile `order` that slots it
+       between the title and the tagline must not survive into the row layout. */
+    order: 0;
+    flex: 0 0 auto;
+    width: min(300px, calc(56dvh * 4 / 5));
+    margin: 0;
+  }
+
+  .landing__copy { order: 1; }
+
+  .hero__title { transform: rotate(-1.5deg) translateX(-2px); }
+  .landing__stats { justify-content: flex-start; }
+}
+
+/* Wide screens: clues and the guess box sit beside the photo, not under it. */
+@media (min-width: 900px) and (min-height: 560px) {
+  .game {
+    align-items: center;
+    width: min(960px, 100%);
+  }
+
+  .game__body {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .replay-banner { width: min(600px, 100%); }
+
+  /* A definite width here is load-bearing: in a row the column's width would come
+     from its content, and the photo sizes itself from that width via aspect-ratio —
+     a circular constraint that collapses the picture to nothing. */
+  .game__stage {
+    flex: 0 0 auto;
+    /* Beside the panel there is room for the full frame however many clues are out. */
+    --stage-height: min(72dvh, 600px);
+    width: calc(var(--stage-height) * 4 / 5);
+    max-width: 52%;
+  }
+
+  .game__stage .stage { width: 100%; }
+
+  .game__panel {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 420px;
+  }
+
+  :root { --stage-height: min(72dvh, 600px); }
+}
+
+.stage {
+  position: relative;
+  width: min(100%, calc(var(--stage-height) * 4 / 5));
+  aspect-ratio: 4 / 5;
+  max-height: var(--stage-height);
+  flex: 0 1 auto;
+  /* Shrinks to make room for clues, but never below a readable face. */
+  min-height: min(28dvh, 210px);
+  margin: 0 auto;
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  background: var(--blue);
+  isolation: isolate;
+}
+
+.stage__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Faces sit in the upper-middle of a 4:5 crop, so when clues squeeze the frame
+     short, bias the crop upwards rather than slicing the head off. */
+  object-position: center 38%;
+  /* Scale up so a blurred edge never shows the frame behind it. */
+  transform: scale(1.06);
+  /* Each stage fades in over the one before it, covering the moment its (tiny) file
+     loads. Stages are never fetched ahead of the player. */
+  animation: fade .5s ease both;
+}
+
+.stage--revealed .stage__image { transform: scale(1.005); }
+
+.stage__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(8, 6, 16, .35);
+}
+
+.stage__fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 24px;
+  color: var(--paper-bright);
+  background: var(--blue);
+  font-size: 14px;
+}
+
+.stage__badge {
+  position: absolute;
+  z-index: 3;
+  top: 9px;
+  left: 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-press);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  color: var(--ink);
+}
+
+.stage__badge b { color: var(--alert); font-weight: 700; }
+
+.stage--shake { animation: shake .42s cubic-bezier(.36,.07,.19,.97); }
+.stage--win { animation: pop .55s cubic-bezier(.2,.9,.2,1); }
+
+/* Once the answer is in, the score matters more than the photograph. */
+.stage--revealed {
+  --stage-height: min(34dvh, 300px);
+  min-height: min(20dvh, 160px);
+}
+
+@media (min-width: 900px) and (min-height: 560px) {
+  .stage--revealed { --stage-height: min(72dvh, 600px); }
+}
+
+.attribution {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+  text-align: center;
+  /* One line: a long photographer credit must not push the score off the screen. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attribution a { color: var(--ink-soft); }
+
+/* ------------------------------------------------------------------ tracker */
+
+.tracker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pips { display: flex; gap: 6px; }
+
+.pip {
+  width: 26px;
+  height: 13px;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  transition: background .3s;
+}
+
+.pip--used { background: var(--pink); }
+.pip--current { background: var(--sun); }
+.pip--won { background: var(--green); }
+
+.tracker__score {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .3px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.tracker__score b {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--ink);
+  vertical-align: -2px;
+}
+
+/* -------------------------------------------------------------------- hints */
+
+.hints {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, .7vh, 7px);
+  flex: 0 0 auto;
+}
+
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: clamp(6px, 1vh, 9px) 11px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-press);
+  font-size: clamp(12.5px, 1.7vh, 14px);
+  line-height: 1.3;
+  animation: rise .3s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.hint:nth-child(odd) { transform: rotate(-.4deg); }
+.hint:nth-child(even) { transform: rotate(.4deg); }
+
+.hint__icon { font-size: 15px; line-height: 1.3; }
+
+/* ------------------------------------------------------------------ feedback */
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 21px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feedback--wrong { color: var(--alert); }
+
+.feedback--info {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .2px;
+}
+
+/* -------------------------------------------------------------------- guess */
+
+.guess { position: relative; }
+
+.guess__field {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow);
+}
+
+.guess__field:focus-within { background: #2a2442; }
+
+.guess__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 50px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+}
+
+.guess__input::placeholder { color: var(--ink-faint); }
+
+.guess__clear {
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 6px;
+  line-height: 1;
+}
+
+.guess__list {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: min(264px, 40dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper-bright);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.guess__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.guess__option[aria-selected='true'] { background: var(--sun); color: var(--paper); }
+
+.guess__option em { font-style: normal; font-weight: 600; }
+
+.guess__option span {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--ink-soft);
+}
+
+.guess__empty { padding: 13px 11px; color: var(--ink-soft); font-size: 14px; }
+
+.guess__actions { display: flex; gap: 10px; }
+.guess__actions .button { flex: 1; }
+
+/* ------------------------------------------------------------------- result */
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1vh, 10px);
+  padding: clamp(10px, 1.8vh, 16px) 14px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  /* Never shrink below its own content: a flex-shrunk panel keeps its border where
+     the box ends and lets the countdown spill out past it. */
+  flex: 0 0 auto;
+  animation: rise .4s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.result__rank {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 6vh, 31px);
+  letter-spacing: -1px;
+  color: var(--alert);
+  margin: 0;
+  transform: rotate(-1deg);
+}
+
+.result__rank--lost { color: var(--ink-soft); }
+
+.result__blurb { margin: -4px 0 0; color: var(--ink-soft); font-size: clamp(12px, 1.7vh, 13.5px); }
+
+.result__name {
+  font-size: clamp(21px, 5vh, 27px);
+  font-weight: 700;
+  letter-spacing: -.6px;
+  margin: 0;
+}
+
+.result__telugu {
+  font-family: var(--font-telugu);
+  font-size: clamp(15px, 2.2vh, 18px);
+  color: var(--green);
+  margin: -4px 0 0;
+}
+
+.result__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 11vh, 56px);
+  line-height: 1;
+  letter-spacing: -3px;
+  color: var(--ink);
+  margin: 2px 0 0;
+}
+
+.result__score small {
+  font-size: 20px;
+  letter-spacing: -1px;
+  color: var(--ink-faint);
+}
+
+.result__detail { margin: 0; font-size: clamp(12px, 1.7vh, 13.5px); color: var(--ink-soft); }
+.result__detail b { color: var(--ink); }
+
+.result__grid { font-size: clamp(15px, 2.4vh, 20px); letter-spacing: 3px; margin: 0; }
+
+.result__streak {
+  display: inline-flex;
+  align-self: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border: 2px solid var(--ink);
+  border-radius: 44px;
+  background: var(--sun);
+  color: var(--paper);
+  box-shadow: var(--shadow-press);
+  font-size: 13px;
+  font-weight: 700;
+  transform: rotate(-1.5deg);
+}
+
+.result__share { display: flex; flex-direction: column; gap: clamp(6px, 1vh, 9px); }
+.result__share-row { display: flex; gap: 9px; }
+.result__share-row .button { flex: 1; min-height: 42px; font-size: 13px; }
+.result .button--primary { min-height: clamp(42px, 6vh, 50px); }
+
+.countdown {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.countdown b {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.8vh, 22px);
+  letter-spacing: -.5px;
+  color: var(--ink);
+  display: block;
+  margin-top: 2px;
+}
+
+/* -------------------------------------------------------------------- modal */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: end center;
+  background: rgba(8, 6, 16, .72);
+  animation: fade .2s ease both;
+}
+
+@media (min-width: 640px) { .modal-backdrop { place-items: center; } }
+
+.modal {
+  width: min(500px, 100%);
+  max-height: 88dvh;
+  overflow-y: auto;
+  padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
+  background: var(--paper-bright);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-lg);
+  animation: slide-up .25s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@media (min-width: 640px) { .modal { border-radius: var(--radius-lg); } }
+
+.modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.modal__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+
+/* -------------------------------------------------------------------- stats */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.stat {
+  /* dt before dd in the DOM for correct markup; the number reads better on top. */
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: center;
+  padding: 8px 4px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--paper-bright);
+}
+
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 25px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--ink-soft);
+}
+
+.dist { display: flex; flex-direction: column; gap: 5px; }
+
+.dist__row {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.dist__bar {
+  height: 21px;
+  min-width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 7px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--paper-bright);
+  font-size: 11px;
+  font-weight: 600;
+  transition: width .4s;
+}
+
+.dist__bar--best { background: var(--sun); color: var(--paper); }
+
+/* ------------------------------------------------------- archive / past days */
+
+.replay-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+  padding: 5px 10px;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  flex: 0 0 auto;
+}
+
+.replay-banner b { color: var(--ink); font-weight: 700; }
+
+.replay-banner button {
+  background: none;
+  border: 0;
+  padding: 4px 2px;
+  color: var(--alert);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ calendar */
+
+.calendar { display: flex; flex-direction: column; gap: 10px; }
+
+.calendar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.calendar__month {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -.8px;
+}
+
+.calendar__weekdays,
+.calendar__week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar__weekdays span {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .6px;
+  color: var(--ink-soft);
+}
+
+.calendar__grid { display: flex; flex-direction: column; gap: 4px; }
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  /* A comfortable thumb target on a 360px phone, and it scales up from there. */
+  aspect-ratio: 1;
+  min-height: 42px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--paper-bright);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transition: background .12s, transform .1s, box-shadow .1s;
+}
+
+.cell--empty { background: none; border-color: transparent; }
+
+.cell:disabled {
+  background: none;
+  border-style: dotted;
+  border-color: var(--ink-faint);
+  color: var(--ink-faint);
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.cell:not(:disabled) { box-shadow: var(--shadow-press); }
+
+.cell:not(:disabled):hover { background: var(--sun); color: var(--paper); }
+
+.cell:not(:disabled):active { transform: translate(1px, 1px); box-shadow: none; }
+
+.cell--today { border-width: 3px; }
+
+.cell--selected { background: var(--sun); color: var(--paper); }
+
+.cell__day { line-height: 1; }
+
+.cell__dot,
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.cell--won .cell__dot { background: var(--green); }
+.cell--lost .cell__dot { background: var(--pink); }
+.cell--in-progress .cell__dot { background: var(--blue); }
+
+.calendar__key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 13px;
+  margin: 2px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+.calendar__key span { display: inline-flex; align-items: center; gap: 6px; }
+
+.dot { display: inline-block; }
+.dot--won { background: var(--green); }
+.dot--lost { background: var(--pink); }
+.dot--open { background: var(--blue); }
+
+/* ---------------------------------------------------------------- utilities */
+
+.error-screen {
+  width: var(--shell);
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 40px 0;
+}
+
+.footer {
+  width: var(--shell);
+  flex: 0 0 auto;
+  padding: clamp(6px, 1.4vh, 16px) 0 4px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) rotate(-1deg);
+  z-index: 60;
+  padding: 10px 16px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--sun);
+  color: var(--paper);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------- animations */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; }
+}
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-7px); }
+  40%, 60% { transform: translateX(7px); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .12s !important;
+  }
+}
+
+.loading {
+  font-family: var(--font-telugu);
+  font-size: 30px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Short *phones*: the score, the grid and the share button are the point of this
+   screen, so the flavour line and the recognised-at detail stand down for them.
+   Width-scoped on purpose — the desktop layout puts the panel beside the photo and
+   has the room, and shrinking only the stage's height there left its width unchanged,
+   cover-cropping the 4:5 portrait into a letterbox strip. */
+@media (max-height: 730px) and (max-width: 899px) {
+  .result__blurb,
+  .result__detail { display: none; }
+
+  .stage--revealed {
+    --stage-height: min(26dvh, 200px);
+    min-height: 118px;
+  }
+
+  .result { gap: 6px; padding: 10px 12px; }
+}
+
+/* ------------------------------------------------------------- info pages */
+
+.footer--compact {
+  padding: 4px 0 2px;
+}
+
+.footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.footer--compact .footer__links { margin-top: 0; }
+
+.footer__links button {
+  background: none;
+  border: 0;
+  padding: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__links button:hover { color: var(--alert); }
+
+.info { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+
+.info p { margin: 0 0 12px; }
+
+.info strong { color: var(--ink); }
+
+.info__heading {
+  margin: 18px 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.info__email {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.info__note {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-size: 13px;
+}

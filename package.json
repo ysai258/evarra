@@ -1,0 +1,46 @@
+{
+  "name": "evarra",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "EVARRA? \u2014 a daily progressive-blur Telugu cinema face guessing game.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dataset:discover": "tsx scripts/dataset/discover-celebrities.ts",
+    "dataset:fetch": "tsx scripts/dataset/fetch-metadata.ts",
+    "dataset:images": "tsx scripts/dataset/fetch-images.ts",
+    "dataset:validate": "tsx scripts/dataset/validate-images.ts",
+    "dataset:assets": "tsx scripts/dataset/generate-assets.ts",
+    "dataset:build": "tsx scripts/dataset/build-dataset.ts",
+    "dataset:report": "tsx scripts/dataset/report.ts",
+    "dataset:all": "npm run dataset:discover && npm run dataset:fetch && npm run dataset:images && npm run dataset:validate && npm run dataset:assets && npm run dataset:build && npm run puzzles:generate",
+    "puzzles:generate": "tsx scripts/dataset/generate-puzzles.ts",
+    "qa": "tsx scripts/qa/play.ts"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.0.1",
+    "picojs": "^1.0.0",
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
+  }
+}

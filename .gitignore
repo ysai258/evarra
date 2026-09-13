@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Ingestion working files: large, regenerable with `npm run dataset:all`.
+/data/images/
+/data/raw/
+
+# Generated game assets ARE committed (~31MB). They are reproducible from the
+# pipeline, but rebuilding them takes half an hour and ~300MB of downloads from
+# Wikimedia, which is not something a deploy should do — so the built site needs them
+# in the repository.
+
+# Never commit a date -> answer list: the repository is public.
+/data/puzzle-schedule.json
+
+# QA screenshots from `npm run qa`. Anchored to the root: an unanchored `qa/` also
+# matches scripts/qa/, which is the harness itself.
+/qa/
