@@ -10,8 +10,16 @@ export const DIFFICULTY_MIX: ReadonlyArray<readonly [Difficulty, number]> = [
 
 export const DEFAULT_REPEAT_GAP_DAYS = 180;
 
+/**
+ * Mixed into every selection seed. Changing it reshuffles the whole rotation — every
+ * past and future day gets a new star — which is what a roster fix needs so nobody is
+ * left replaying a puzzle whose photo was replaced. Pair a change with a new
+ * `STORAGE_KEYS.games`.
+ */
+export const SCHEDULE_SEED = '3f064c46d6c6';
+
 export function pickDifficulty(dateKey: string): Difficulty {
-  const roll = seededUnit(`${dateKey}:difficulty`);
+  const roll = seededUnit(`${SCHEDULE_SEED}:${dateKey}:difficulty`);
   let cumulative = 0;
   for (const [difficulty, weight] of DIFFICULTY_MIX) {
     cumulative += weight;
@@ -45,7 +53,7 @@ export function selectForDate(
     pool,
   ];
   const candidates = tiers.find((tier) => tier.length > 0)!;
-  return candidates[hashString(`${dateKey}:star`) % candidates.length];
+  return candidates[hashString(`${SCHEDULE_SEED}:${dateKey}:star`) % candidates.length];
 }
 
 /**

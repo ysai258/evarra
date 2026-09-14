@@ -14,6 +14,7 @@ import { normalizeName } from '../../src/engine/normalize.ts';
 import type { PersonMetadata } from './fetch-metadata.ts';
 import type { ImageRecord } from './fetch-images.ts';
 import { detectFaces, faceDetectionAvailable, faceDetectionUnavailableReason, type Face } from './face.ts';
+import { loadPhotoReview } from './photo-review.ts';
 import { IMAGES_DIR, RAW, ensureDirs, progress, requireStage, writeJson, runStage } from './lib.ts';
 
 /** Below this the source cannot fill an 800×1000 asset without upscaling mush. */
@@ -180,6 +181,7 @@ async function main(): Promise<void> {
       tokens: normalizeName(person.name).split(' ').filter(Boolean),
     }));
   const downloaded = images.filter((image) => image.downloaded);
+  const review = loadPhotoReview();
 
   if (faceDetectionAvailable()) console.log('  face detection: pico.js (vendored cascade)');
   else console.log(`  face detection unavailable (${faceDetectionUnavailableReason()}) — images will be flagged for review instead`);
@@ -206,6 +208,17 @@ async function main(): Promise<void> {
       results.push(result);
       continue;
     }
+    const rejectedOnReview = review.rejected[image.file];
+    if (rejectedOnReview) {
+      result.verdict = 'rejected';
+      reasons.push(`rejected on photo review: ${rejectedOnReview}`);
+      results.push(result);
+      continue;
+    }
+    // A reviewer saw this photo and confirmed only this person is in it, which settles
+    // the two questions the detector and the title check exist to guess at.
+    const approved = Boolean(review.approved[image.file]);
+
     if (!image.license) {
       result.verdict = 'rejected';
       reasons.push('licence could not be established');
@@ -221,7 +234,7 @@ async function main(): Promise<void> {
     }
 
     const alsoNamed = namesAnotherPerson(image.file, names.get(image.qid) ?? '', everyone);
-    if (alsoNamed) {
+    if (alsoNamed && !approved) {
       result.verdict = 'rejected';
       reasons.push(`the file also names ${alsoNamed} — the crop could be the wrong person`);
       results.push(result);
@@ -294,8 +307,8 @@ async function main(): Promise<void> {
       || reason.startsWith('extreme aspect')
       || reason.startsWith('blank')
       || reason.startsWith('duplicate')
-      || reason.startsWith('no face detected and')
-      || (!image.primary && faceReason(reason)));
+      || (!approved && reason.startsWith('no face detected and'))
+      || (!image.primary && !approved && faceReason(reason)));
     result.verdict = fatal ? 'rejected' : reasons.length > 0 ? 'review' : 'valid';
     results.push(result);
     done += 1;

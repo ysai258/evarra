@@ -1,0 +1,76 @@
+{
+  "$comment": "Human photo review. Every playable star's crops were checked by eye; the face detector misses side-on and partly hidden faces, so it cannot tell a portrait from a group shot on its own. `rejected` files are never used. `approved` files were seen to show only this person, so a missed face or a co-star named in the title does not disqualify them. `extraCandidates` adds Commons files a category listing did not surface.",
+  "rejected": {
+    "File:AR Rahman Shashi Gopal.jpg": "a group shot — the crop lands on someone else",
+    "File:Amit Phalke with Mahesh Manjrekar and Nitin Vaidya.JPG": "a group shot — the crop lands on someone else",
+    "File:Ashwini murali sharma.jpg": "a second person shares the crop",
+    "File:Balajisanala11.jpg": "a group shot — the crop lands on someone else",
+    "File:BhanuPriya-SwarnaKamalam.jpg": "a pencil sketch, not a photograph",
+    "File:BhanuPriyaPortrait.jpg": "a pencil sketch, not a photograph",
+    "File:Chandran Rutnam with Varalaxmy Sarathkumar.jpg": "a group shot — the crop lands on someone else",
+    "File:Daggubati Venkatesh.jpg": "the crop cuts the face out of frame",
+    "File:Gollapudi Maruthirao in 2nd World Telugu Writers' conference.jpg": "a group shot — the crop lands on someone else",
+    "File:Gollapudi Maruthirao in 2nd world telugu writers' conference 254.jpg": "a second person shares the crop",
+    "File:KOLORO 1725007989835.jpg": "not a photograph of her",
+    "File:Kumbha Manoj Kumar Wife.jpg": "a group shot — the crop lands on someone else",
+    "File:Maestro Ilayaraaja smiling 2.jpg": "a group shot — the crop lands on someone else",
+    "File:Mukesh Rishi at Rajesh Khanna's prayer meet 07.jpg": "a second person shares the crop",
+    "File:Nandamuri Kalyan Ram in Valencia.jpg": "the crop cuts the face out of frame",
+    "File:Nani at Aaha Kalyanam audio launch.jpg": "the crop cuts the face out of frame",
+    "File:Navdeep Pallapollu - TeachAIDS Recording Session (13550494995).jpg": "a group shot — the crop lands on someone else",
+    "File:RADHIKA SARATHKUMAR- OIL PORTRAIT BY RAJASEKHARAN.jpg": "a painting, not a photograph",
+    "File:Raashi Khanna at Touch chesi choodu Pre Release event image 1.png": "the crop cuts the face out of frame",
+    "File:Ram Gopal Verma on set of Rakta Charitra- rgvzoomin.jpg": "the crop cuts the face out of frame",
+    "File:Rao Ramesh.jpg": "a second person shares the crop",
+    "File:Sachin Khedekar at Runathon of Hope 2011.jpg": "a group shot — the crop lands on someone else",
+    "File:Samuthirakani (cropped).jpg": "a second person shares the crop",
+    "File:Siddharth - TeachAIDS Recording Session (13566845335).jpg": "the crop cuts the face out of frame",
+    "File:Siddharth - TeachAIDS Recording Session (13566849345).jpg": "the crop cuts the face out of frame",
+    "File:The President, Shri Pranab Mukherjee presenting the Dada Saheb Phalke Award to the Director Shri K. Vishwanath, at the 64th National Film Awards Function, in New Delhi (1).jpg": "a group shot — the crop lands on someone else",
+    "File:The President, Shri Pranab Mukherjee presenting the Dada Saheb Phalke Award to the Director Shri K. Vishwanath, at the 64th National Film Awards Function, in New Delhi.jpg": "a group shot — the crop lands on someone else",
+    "File:The President, Shri Pranab Mukherjee presenting the Padma Shree Award to Shri S. Lakshminarayana (Bapu), at an Investiture Ceremony, at Rashtrapati Bhavan, in New Delhi on April 05, 2013.jpg": "a group shot — the crop lands on someone else",
+    "File:The President, Shri Pranab Mukherjee presenting the Padma Shri Award to Shri Kota Srinivasa Rao, at a Civil Investiture Ceremony, at Rashtrapati Bhavan, in New Delhi on April 08, 2015.jpg": "a group shot — the crop lands on someone else",
+    "File:The President, Smt. Pratibha Devisingh Patil presenting the Best Actress Award to Ms. Priya Mani, at the 54th National Film Awards function, in New Delhi on September 02, 2008 (cropped).jpg": "a group shot — the crop lands on someone else"
+  },
+  "approved": {
+    "File:2nd world telugu writers' conference 67.jpg": "only this person in frame",
+    "File:Gollapudi speaking in 2nd world telugu writers' conference.jpg": "only this person in frame",
+    "File:K. Vishwanath at National Film Awards Function 2017.jpg": "close portrait, only him in frame",
+    "File:Kalyan Ram.png": "only this person in frame",
+    "File:Manchu Manoj babu.jpg": "close portrait, only him in frame",
+    "File:Navdeep Pallapollu - TeachAIDS Recording Session (13550491995).jpg": "only him in frame",
+    "File:Navdeep Pallapollu - TeachAIDS Recording Session (13550492645).jpg": "only this person in frame",
+    "File:Raashi Khanna at Tholi Prema movie opening.png": "only this person in frame",
+    "File:Raashi Khanna at the premiere of film 12th Fail.jpg": "only this person in frame",
+    "File:Raashi khanna speaking at Srinivasa kalyanam movie launch.png": "only this person in frame",
+    "File:Siddharth - TeachAIDS Recording Session (13566913583).jpg": "only this person in frame",
+    "File:Siddharth at Walt Disney Studio announcement.jpg": "only this person in frame",
+    "File:Siddharth at the success party for Striker.jpg": "only this person in frame",
+    "File:Varalaxmy Sarathkumar (cropped).jpg": "only this person in frame"
+  },
+  "extraCandidates": {
+    "Q17386171": [
+      "File:Raashi Khanna at the premiere of film 12th Fail.jpg",
+      "File:Raashi Khanna at Tholi Prema movie opening.png",
+      "File:Raashi khanna speaking at Srinivasa kalyanam movie launch.png"
+    ],
+    "Q3124846": [
+      "File:Siddharth at Walt Disney Studio announcement.jpg",
+      "File:Siddharth at the success party for Striker.jpg",
+      "File:Siddharth - TeachAIDS Recording Session (13566913583).jpg"
+    ],
+    "Q5580832": [
+      "File:Gollapudi speaking in 2nd world telugu writers' conference.jpg",
+      "File:2nd world telugu writers' conference 67.jpg"
+    ],
+    "Q6963172": [
+      "File:Kalyan Ram.png"
+    ],
+    "Q6982203": [
+      "File:Navdeep Pallapollu - TeachAIDS Recording Session (13550492645).jpg"
+    ],
+    "Q7915423": [
+      "File:Varalaxmy Sarathkumar (cropped).jpg"
+    ]
+  }
+}

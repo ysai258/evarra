@@ -72,20 +72,21 @@
         "year": 2019
       },
       {
-        "localPath": "/celebrities/4bb08d7c00cccbfa.webp",
+        "localPath": "/celebrities/22ce69d80c6e75c8.webp",
         "previews": [
-          "data:image/webp;base64,UklGRo4BAABXRUJQVlA4IIIBAABwDwCdASpAAFAAPmEmjkYkIiEhPNxoAIAMCWMAuVPngbsOJLDsxCmkZX1KGs9e3Aq2+YRNfQvWKe1FpqboNp4Gz7p6z0Zf8ZS7nmNG2pSbCBk7fAn0250P168K6GgICeBtb++r6CkXOG6FwR0nPVDKd5sVSB8MtQAXJWrONT5X+G2uBAAA3jIuytGhIf/No0iJ+96Wyg2Hs/bzc6FLvZOmGDc7OC1d5BZ6EzSg8ixUmN3an7qAVQ4VCzJ7C749BmIS72GDfhCM9FJnmpAparrQj6yN62eDC80969+u9BFFizdNSsoOgNIkgBVuATsuHHUwm/Atz/VQiyKWHWnkrlsM0/O9I8PCH0XDvslskE/NJt0Q+ddRVrd0WD2oY4ELztzT9dmE5sL3Wbowb87UjKvo7xrOSRN11XpDvzfba+MSeS8SOMz9rs8RQGctqaHGyBqsNsBhmsP6K/9RNeWkRjO9A5/x75zUT15bA2aNVakIJCs1XibH2OiEsWr7CGYWZQAAAA==",
-          "/celebrities/4bb08d7c00cccbfa-s2.webp",
-          "/celebrities/4bb08d7c00cccbfa-s3.webp",
-          "/celebrities/4bb08d7c00cccbfa-s4.webp"
+          "data:image/webp;base64,UklGRpQBAABXRUJQVlA4IIgBAABQDgCdASpAAFAAPmUojkYkIqEhOzpdUIAMiUAWhYaZJCznN7OzXAeqTi81D860dcu4apDOlB0owGVs9KDCHoS7py0fSyykkEdWBtabDZS9bhRBZ2XGcnnC/+0HFPgN97xrinGz9z0k2H6gdL19rlHiPJE42suALv6m2SAA/vtmOldB9/gT34np0kgpaAoPz22puRIQF6Umzlv2QS1Jc+K9ALXHk0bd3deB+Hob4iwFx9AkLPZdUflbQ2mI53BJJp6PUBPwp8r98VLoX4h6Zv2quzkGZUT6MX9PGHqQHGUeLx9s0yHkDKZJDjghxBq2q4C1hW4LO1EurQWpXfYTfYxWLOOsNlD3YO2n74pgHq9X79Ys2xbjU/iNyxtW2RaHX/VLIUWZDKE2xtHDuuG/XA7aUFfuW5ISYzzRqG8skITNfJ+fMbBzFbl0BfZ96raWWE1kXg6qEpvuCms/nts5aMc5KldfRTmGiQjfEMWxKv7Uq1XhzidlyB7yj2wfSZPw+awTEQe3pN8AAA==",
+          "/celebrities/22ce69d80c6e75c8-s2.webp",
+          "/celebrities/22ce69d80c6e75c8-s3.webp",
+          "/celebrities/22ce69d80c6e75c8-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:AR_Rahman_Shashi_Gopal.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:AR_Rahman_at_HWC.jpg",
         "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "attribution": "Magnasound",
-        "width": 2310,
-        "height": 1533
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Government of Odisha",
+        "width": 2048,
+        "height": 1365,
+        "year": 2018
       }
     ],
     "source": {
@@ -1598,66 +1599,6 @@
     }
   },
   {
-    "id": "bapu",
-    "wikidataId": "Q4857745",
-    "name": "Bapu",
-    "nameTelugu": "బాపు",
-    "aliases": [
-      "Sattiraju Lakshmi Narayana",
-      "బాపూ",
-      "సత్తిరాజు లక్ష్మీనారాయణ",
-      "బాపు"
-    ],
-    "gender": "male",
-    "category": "director",
-    "difficulty": "medium",
-    "birthYear": 1933,
-    "birthPlace": "Narasapuram",
-    "debutYear": 1967,
-    "notableWorks": [
-      "Sri Rama Rajyam (2011)",
-      "Mana Voori Pandavulu (1978)",
-      "Bhakta Kannappa (1976)"
-    ],
-    "profession": [
-      "film director",
-      "screenwriter",
-      "director"
-    ],
-    "popularity": 89,
-    "playable": true,
-    "hints": {
-      "era": "Telugu director · films from the 1960s to 2011",
-      "origin": "Born in Narasapuram",
-      "film": "Was in Mana Voori Pandavulu (1978)",
-      "signature": "Also in Sri Rama Rajyam (2011)"
-    },
-    "images": [
-      {
-        "localPath": "/celebrities/de2e708d40122b6f.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRrIBAABXRUJQVlA4IKYBAAAwEQCdASpAAFAAPnEuk0YkoqIhNnbcAJAOCWMAraHRVt6akzZEQPm8eqJiemTIs1j4zv0T15rkmD6WFe2iIexLlotNQtPVg6KjI2DMLgJtIo9dqAlOh52GqOefWBNRwzgMOSLEdD0dKmVc1mV58hk6zUwPia+Kk0BT3PZ7g8fFRsT08/heSNDKTbijXz7tIHPuKAD+9uc64cp74FubDYmLGRruei1kJtSxorwLzEERobNXfatyiEjBO6sx9VRLj3AozAPkuSAVXsHECFsz2UagfqQdN+Hn/xYEGgSiGc/NKxq8JyPuBpfSIDYODtEdZAFPLRN9La4KbfCDzHOZYaBpw9CYjQcdGfP4E4o5/kSAISYJrU0kxa0murBMNTa7/i+gTHanAklTIlSE5JQfD1R4LNRXSr4RNHx+5xcW4PLTN8QdHIIN0c+2al0UhLgsot2fIzg03UVinyOC/COC27DTi9/Z4eQf8kNvuMsYWSr26yrSujHTSIhoUluNiqhH+14+Xze/YoGgsMppEqzhuyfufbhx8wBD/1gylbGYtpG/dEqn4YAAAA==",
-          "/celebrities/de2e708d40122b6f-s2.webp",
-          "/celebrities/de2e708d40122b6f-s3.webp",
-          "/celebrities/de2e708d40122b6f-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_President,_Shri_Pranab_Mukherjee_presenting_the_Padma_Shree_Award_to_Shri_S._Lakshminarayana_(Bapu),_at_an_Investiture_Ceremony,_at_Rashtrapati_Bhavan,_in_New_Delhi_on_April_05,_2013.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "GODL-India",
-        "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
-        "attribution": "President's Secretariat",
-        "width": 2200,
-        "height": 2205,
-        "year": 2013
-      }
-    ],
-    "source": {
-      "url": "https://www.wikidata.org/wiki/Q4857745",
-      "provider": "wikidata",
-      "fetchedAt": "2026-09-25T05:02:08.457Z"
-    }
-  },
-  {
     "id": "bellamkonda-sreenivas",
     "wikidataId": "Q21067407",
     "name": "Bellamkonda Sreenivas",
@@ -1732,65 +1673,6 @@
     }
   },
   {
-    "id": "bhanupriya",
-    "wikidataId": "Q3520003",
-    "name": "Bhanupriya",
-    "nameTelugu": "భానుప్రియ",
-    "aliases": [
-      "Bhanu Priya",
-      "Manga Bhama",
-      "మంగభాను",
-      "భానుప్రియ"
-    ],
-    "gender": "female",
-    "category": "actress",
-    "difficulty": "easy",
-    "birthYear": 1964,
-    "birthPlace": "Rajahmundry",
-    "debutYear": 1984,
-    "notableWorks": [
-      "Mahanati (2018)",
-      "Chhatrapati (2005)",
-      "Annamayya (1997)"
-    ],
-    "profession": [
-      "actor"
-    ],
-    "popularity": 99,
-    "playable": true,
-    "hints": {
-      "era": "Telugu actress · films from the 1980s to 2018",
-      "origin": "Born in Rajahmundry",
-      "director": "Worked with A. Kodandarami Reddy",
-      "film": "Was in Chhatrapati (2005)",
-      "signature": "Also in Mahanati (2018)"
-    },
-    "images": [
-      {
-        "localPath": "/celebrities/58a0d1cd661f203f.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRhQBAABXRUJQVlA4IAgBAAAwDgCdASpAAFAAPm0mj0YkIiEktN67aJANiWkA0YNT2qoVX6Z+bPJAcm5QTY75/bV6W/S8HqeJrvhiMpkPawok2blArYoadcQuhitJaiUCOnNLwS6MtmO78NZPU3L3HwHqdHhWWMvOWHCkd+DGV+eUl2Pv+5enfa9sAAD+70lWIe8PMfGVgcM+jPAQ1fmApv3pnpSuPsLsMvx8lwUgofSoyX5PbHdo767FMq4SpaS6qBzYzxWrGP5XDfCAleofHh56cAHeao/rSLiDhwoOtqWyN4ZldbWFm8DuJMYcKuhm+4Rh984J+Mh1zXzQl5Z+qFCARAiA70HtmJj68pgH4Y8tuE5ZsXDNAAA=",
-          "/celebrities/58a0d1cd661f203f-s2.webp",
-          "/celebrities/58a0d1cd661f203f-s3.webp",
-          "/celebrities/58a0d1cd661f203f-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:BhanuPriyaPortrait.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-        "attribution": "Gpottepalem",
-        "width": 676,
-        "height": 711,
-        "year": 1988
-      }
-    ],
-    "source": {
-      "url": "https://www.wikidata.org/wiki/Q3520003",
-      "provider": "wikidata",
-      "fetchedAt": "2026-09-25T05:02:08.457Z"
-    }
-  },
-  {
     "id": "bhumika-chawla",
     "wikidataId": "Q3236611",
     "name": "Bhumika Chawla",
@@ -1840,23 +1722,6 @@
         "width": 585,
         "height": 881,
         "year": 2013
-      },
-      {
-        "localPath": "/celebrities/78954325fc7ff919.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRsABAABXRUJQVlA4ILQBAADwEACdASpAAFAAPnkulEYkoqIhMzQM+JAPCUAYVnog5fp/NosncEEKK34FFZt9L42muHhsWVIMYcqLSyjyQMZp9H+Dmfx8HP6pZhggZoV9KtWsLWt0T3efgC26ZYeXce0CVokl201153aE8omOn7uj8P3xQUoB5TDzfb/Dbg9V8OtObvyjFr8vWw2ga8UglIAA/vQy2zvqnG4B7wYL5Yv8xGIf9Z8DnLxiAn/4fDahhNQj6WbhPZNgMkwkyNNpcPLIFsNqkHDjrTHrBCYVLWJ5z9orJBS4f8ebn9IPRpXjOIghUCdRX32CMc5h8pQBFto9Bt/SIl99d2heKCoeA3GvX+ZgkVPPavMccKZ34Z/8AeSmfPqJm1YGAz+E91eFfblXhnLUT13Bc3SZYO1t7gtz/AwEwvfd8Le+T64LEbaiQrEiqc0MGFx0FAfWiLS8O9txTSQUVwEGY8kQ6A2cOTDZbYnWx6KVkF/A9yKPgZolnaKrHqiqblWSHmvzxtfAT7oUOYlU8sEWSH8bzPBASbabVo5hiABklkg9nrBg/HTB+tsJ0Z7atC/+Icj1QE+8y/sJi4AA",
-          "/celebrities/78954325fc7ff919-s2.webp",
-          "/celebrities/78954325fc7ff919-s3.webp",
-          "/celebrities/78954325fc7ff919-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:KOLORO_1725007989835.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "attribution": "Coffeegingerr",
-        "width": 4240,
-        "height": 2832,
-        "year": 2024
       }
     ],
     "source": {
@@ -2585,37 +2450,37 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/4d98c54d6e4fa29c.webp",
+        "localPath": "/celebrities/cd5f3fb18c1f3847.webp",
         "previews": [
-          "data:image/webp;base64,UklGRpwBAABXRUJQVlA4IJABAADQEACdASpAAFAAPmkskEYkIqGhOzeNUIANCWMAv2vyTUDJaEM3TUP/lLN3Go54cFUwnjfR2WuQK13gQGZtz5AE6hPRSKkHE6umKDL6rdCKSGeFfC4XHTcZ5G6IQnuL4V0b52u1AfH3T6vg1CtEsvWLGkHa6oPELXcRwN45kL0I8T7ljP5tKQSZRHWjGGX4AAD+i568l2sPnyCY3uH/TQATAbBuTxngdfW7ITLGMbL+A7ex1XYAQnl68lpPpWY9T6TPoXTrl5WS2LOlCLVsqcD+Oxz4+yH+6kqwHc6qBidMYQd2k+O4sfUypFj9PKb3KTzejpz2kzx6NZdB9woMKe2tdeWXGS1vyZOvW72Bd0OW9ZTP07r1pFDmICbP3IhWOsVyMQmKp8PzQxr4JigKncshtZuutpj/m/6Ex7LzSn208sw7dDgU7vVnwpiCXw/pTJ98IBuuM0HSWr5+YDX1OeRiy0YDY7x2PsSIU8Ajgw+/11m/JIz0mH0yzXOzAhbGngcE4rty11cDswqK03UAAAAA",
-          "/celebrities/4d98c54d6e4fa29c-s2.webp",
-          "/celebrities/4d98c54d6e4fa29c-s3.webp",
-          "/celebrities/4d98c54d6e4fa29c-s4.webp"
+          "data:image/webp;base64,UklGRpoBAABXRUJQVlA4II4BAACwDgCdASpAAFAAPnUuk0YkoqGhNnN8AJAOiUAZEfQxDy4w4Jr5nFkM+58gDoc2MZwspwvPDhitLLiofHsPAk2P+j9m2BNjrL2rZwKTs/Ex61xZDe2JYYuxU7NlKA96SpoIMnydF/BT3ieEogbI+JDXPPEhKP8ek0Y499vc0gAA/vB8//pE6DrzqYya7vn9c43AoUC4vZXAebdI3o5ys9/kdcDv1e2ABWwnlfyU9x3jH4y6a8TidL+3ZG4ipPm4gyytikWxHyKM/jseGrhOqXmAAC8Kw55bTRSSxbQU58j8OSjKlc4VbeLzOc7DoCy1FoL/omSvHVJGorcYS5FylvRdYEg4BlNYewXvFnGlNcWXevy7MfzODHFnSMWRnwzzc64WAP3Io/lAv/GMp/WWHhE9zPL3Lkux3I5mkBif30jy1Mlk8V+QGoZrYRf4KFegCz8MWjyP9Qgbj6iSjk6z2APM/nyweqsZule6ZvvAbfAHSYxJJKBP9yb3zHhXfP0emiyJpvROAK6zZFmHDcgAAA==",
+          "/celebrities/cd5f3fb18c1f3847-s2.webp",
+          "/celebrities/cd5f3fb18c1f3847-s3.webp",
+          "/celebrities/cd5f3fb18c1f3847-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gollapudi_Maruthirao_in_2nd_world_telugu_writers%27_conference_254.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gollapudi_speaking_in_2nd_world_telugu_writers%27_conference.jpg",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "attribution": "రహ్మానుద్దీన్",
-        "width": 2848,
-        "height": 4288,
+        "width": 1986,
+        "height": 2106,
         "year": 2011
       },
       {
-        "localPath": "/celebrities/c7aedd8f7a04cbea.webp",
+        "localPath": "/celebrities/f8b9a2c174761986.webp",
         "previews": [
-          "data:image/webp;base64,UklGRgoCAABXRUJQVlA4IP4BAABQEQCdASpAAFAAPmUojkYkIqEhPleYAIAMiUAXZnAJXDZw5YJIw5vcIuyCCwK/42FeO6yXsMhfqsh0y6SjW7PKKG8IsVmEV58zlfDAqvOSp/hPaEtuv3v4RnbXXGFWzxQysug2A3+MZ1HS4aWb/ootY+K9caRAbLf16q0VErOr9knEmvySrtC2Hib++J7n2nsuPgAA/vnI7yHziUbGnx/os1zlONGFBMYKuugnzBnY2NdRUpGyGCP/WAbljLB2rntmz8OwFLd9tbb1zmB9oYjpzszsoZNm7KgMUkEtW1OV+3Oh+JRrI8kjVA2pWyoWm2F5KiKfTw2j4wyL9RrIAtSzD6g4mGW6t3rOdG2UhI3PqQT1z8KOT7z7VyN/xVbHLaadzAfJ6btlNuQxUvtxmVTCjgk85vKzs6rd0tdrzsTwBA2javQQn4EHBS5DdTC29gFNR9Gc50aw7O1434MJXbkOYJpmzXjaz8JFCTelUTHzyeplZvjO2ZPjEfFGeAoLlFbElWGD4Fis9tv7TrISICsjOZ6Ov6uncsjLAL58bH9pKyNr9r4KLZJcNlEpLDNoT0svXG3CVl7SeL+OBoDZB7ws5xRBkTSf9jb3kCwn31f0chjciYLdM3HCX3KXRl09Mw0sDQIwI2tFwSKsv+mH/WgbJXSEFjplurC6ebeOAAA=",
-          "/celebrities/c7aedd8f7a04cbea-s2.webp",
-          "/celebrities/c7aedd8f7a04cbea-s3.webp",
-          "/celebrities/c7aedd8f7a04cbea-s4.webp"
+          "data:image/webp;base64,UklGRvQBAABXRUJQVlA4IOgBAACQEQCdASpAAFAAPnEwkUYkoyGhNNYtsJAOCWQAsv9tQs/RcvZ0pErz3nP90BqbNbfl87peLbZWU8TWquvDbfCbDBkh/Jgn5c9SLzMTvih68qnE4dAW1XUitS6N0Vfl5bnPnte2BJvj+lYSWNh412L6GVDyVfB5ZKYhLH10smXkuGt3L1QxgbnXUd+Q6pf8YqR3mM6VIAD+zOwisa+rXkTR3v14OyWshBVjq37GDZ6sdStyQlSaNU2wYYT3p+iVCQAk21UD3DoOX1RHGf8fI2X12j7CLepW/ZlLn/12Qc+c5cfIBEYZX3fNsDT5Rp2WqY9iUnq4T/u6PgAeTNbSqW4IXwMaKquFIO7yEcAs2h2IUPq4PCMXD8zcmShx0MdwOo2CnJl4emZjsD42ENqZ+W15tyVCFYwmvGKdIFRylSw6RbU2+3TiKOEzbeTIctcFHHpLvgSAT+mP5cAB1vG4QsVvoitVoax/35gIJcIzvUvIJR/19oeJW1QdHAApLg7eWf63y5FLQmzMprAA56mY6IkvdKl5kTvOtYd5bZ4A5VBKF/M08Zp/suihgjkL7w1JxmKpn21Oyqh/oWZODTAq5hr3vBWNW00k66TMzOEHH5wvm2VJFmn5UrOgqvk/YASYP1zEGqzkIYcAAA==",
+          "/celebrities/f8b9a2c174761986-s2.webp",
+          "/celebrities/f8b9a2c174761986-s3.webp",
+          "/celebrities/f8b9a2c174761986-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gollapudi_Maruthirao_in_2nd_World_Telugu_Writers%27_conference.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:2nd_world_telugu_writers%27_conference_67.jpg",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "attribution": "రహ్మానుద్దీన్",
-        "width": 1935,
-        "height": 2319,
+        "width": 4288,
+        "height": 2848,
         "year": 2011
       }
     ],
@@ -3031,23 +2896,6 @@
       "signature": "Also in Rudhramadevi (2015)"
     },
     "images": [
-      {
-        "localPath": "/celebrities/128650a9977a27e2.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRsQBAABXRUJQVlA4ILgBAABwEACdASpAAFAAPnUuk0YkoqGhNNO9sJAOiUAV9v7h6PjeYfIUie8jvdBg/L1xIWeSd0UkCrHz+4JeZmQdMmGEhlNL2dWeTy7UD34yZyCiTQ38sGGjMftrHKXDkaL5HYzyJAepnS62k8EPugQ9h74OHdt/06VxKL+1XnooaqFVqKuyPJBosH4T0ZZ6AAD9nr+x7b+iYBuQ6FuOZOxMokJkdz3xXLw2VgU6i9ck/gbDDiVTthUUoGEdSz3929tx1o2jvrpb49wM/Y7YWtZA/fq9gmhxjVBd5Od5gWh3eWzBN0ROO9N86a2GMCF+x/zTqxm8WZ5i/RwtDd0H1+jSAcr0MPGElSUaxloPx1ReOZA5t2qofXYO/uHuqUEEMZqCFCsotVkZm6/1OmsP3xaHbPbFTJbIuqVQ2LJR02CxdY36EK7Swr83WNxm7S8fxyxaUZuZT8/4HCVsCZmjB/xT453Z3ClweuDmd4pJANbUx4GBl3EtI68yIGrkS/mULSx3MULERnXjtZPqbS2i8ENDn5G+OJfHwX+Jfu3QH2fpqUmEPjmVaGmVr10Ew1iGORXNmPGKh5OLptNAAA==",
-          "/celebrities/128650a9977a27e2-s2.webp",
-          "/celebrities/128650a9977a27e2-s3.webp",
-          "/celebrities/128650a9977a27e2-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Maestro_Ilayaraaja_smiling_2.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "attribution": "Surya_Prakash.S.A.",
-        "width": 2933,
-        "height": 4608,
-        "year": 2017
-      },
       {
         "localPath": "/celebrities/48d9cac965945392.webp",
         "previews": [
@@ -4107,37 +3955,20 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/e48be734766ea972.webp",
+        "localPath": "/celebrities/f7a1a76b64aff659.webp",
         "previews": [
-          "data:image/webp;base64,UklGRrgBAABXRUJQVlA4IKwBAAAwEACdASpAAFAAPmksjkYkIqEhPNVYAIANCWUAxcA+UiPrVSuvqUBP8BVpANeoQx52zNehX6vxjNQxfL4ddAvLizsm3xJTqoR8NUgPeM7IkqgkyqzgAOeaNDSIzBwP0aZ+w/HhqeGwfv/DArnbuUzk5X9pjZLxu2qWxYfm5BroUv4JUDNkKUFPjkAA/vY50XfkX+Rr9WD5tSy9XoxT2xMG+zZvv7pg4Ku4xSvXquXVO/k64fpHha546i2euQAYlNfRlYxLxGuh9HEU0SLaKjvGJOTLQRWiaeAwaEXCKJrKGWHst093MZDXZ66sZ7JssvzOKwWOxXHRMccdVwnmAvnTe8LAav2YMFE8Cew346qIWPJhboZxBfGHAC4RBPF3z3IiDQFtJZnW3l8aVbenbn2KWhTw+NXDSB9e6EQicOJXMT+pec3VAwnRl3eOIAkSiQSIzqlP60tmgKjmz8Psm4+/hoaM8/9Z98zsxSbSmuTWtQDnYXGxRKVC2ju8MNITy/9kG3TsEskirvMai2GwyOAg1GhckbAUJ112GFm/DArUiuikAKJJstye0z6IAA==",
-          "/celebrities/e48be734766ea972-s2.webp",
-          "/celebrities/e48be734766ea972-s3.webp",
-          "/celebrities/e48be734766ea972-s4.webp"
+          "data:image/webp;base64,UklGRsoBAABXRUJQVlA4IL4BAABQEQCdASpAAFAAPnkwk0YkoyGhMBgNmJAPCWMAuzoTWH6QFGprBJl/ffZKRfdxbjpdcF/+ZR4NvZNiEK40Ty8PMMGFXElwdyvPTQUOJG0OSVJpsrVg11Y79w6xUVLqv+Bd+ItEGFTDm1/jTFTnTYgTGrhUx3PzUeu7Er5KBBwDJZxLasIkZFqdezwTGh1RYmWxwoAA/v0tE1jmuTI91heYcBvvYiu46CGiETgOrLukT5OYsKZoydqJYmrE2vMyDC7urTP8l909fbM1v0t77Pui3664zUUczYmM9lMmEld5a371rjvhbZtGivEVkW9Q6zrFD3Iwy+4QgHGIPM4+mS7U50S6joVnCYseO8+uh2QNB3R7nhwp01RaE9OyOO2gOJSzGWW11ViiQ89UbScFpoSSL8STtvm5bz1SAVI3HirQwd9ZW+RGVNgXCx35P4zMTHgCjFkfkM9hhSnIu81FJfLxoW1YcrRZM0Q4ghErAPQDG3ygJzV5oLM++5RSyGgIo3kMmMrd5NtMS8tBrcSvIdFQpshxBk/JNPiE01RDRPN6Eab2m/OIszwBn492/avxsst03iTsXM4xwpGsOaoAAA==",
+          "/celebrities/f7a1a76b64aff659-s2.webp",
+          "/celebrities/f7a1a76b64aff659-s3.webp",
+          "/celebrities/f7a1a76b64aff659-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_President,_Shri_Pranab_Mukherjee_presenting_the_Dada_Saheb_Phalke_Award_to_the_Director_Shri_K._Vishwanath,_at_the_64th_National_Film_Awards_Function,_in_New_Delhi_(1).jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:K._Vishwanath_at_National_Film_Awards_Function_2017.jpg",
         "sourceName": "Wikimedia Commons",
         "license": "GODL-India",
         "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
         "attribution": "President's Secretariat",
-        "width": 2068,
-        "height": 1611,
-        "year": 2017
-      },
-      {
-        "localPath": "/celebrities/1eeda464252b3397.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRrYBAABXRUJQVlA4IKoBAACwDwCdASpAAFAAPmkskkYkIqIhOZgN+IANCWUAwYg1ZgDU2ZWAgNMuwZpYr5j+W3/QCtwHTtmfXf7OAHIV1a3wWivGhDVMXEThgZgHVX3/pWFBRIeJQh1CqOAvTGmjTexV+Gmx3uRJILGJoIMGXc7QzGm40vnCK35/zR2yauX5Kj+04uqAAAD+/HTgeUKcToUJ3zovv0VXrh8vRD6AiB9pEvZOrErK2eYPht32Hq2YGo93va1cqWQaMj0qGFapqS8zbLA4Bgojqs6lR/qbIuFERUULLyEM2V/c5tmLluhnY/923Aw5M3KoiFE1hWnf2vnaccVchrTDOD3rS3JNHKBxFJnPN6m65fT7T3XQekLzyoUHJ4WFxdQcfcO0JyqOCwMhLUbUB5e5gcOm7ZPGf7MqYTUAFhTEaWoK21qpJ392Edwqxo+spC962iXx8w3VtOeMjwU0JREmAvKsBUYJfjheynNJY1MHAAlsVFS7PRD77GS2LCwyh28gMeeREVQS6r9CXQ1RQW0u34OJfmCpR7OsONoxvD45bvXZg4X7d0dvu3j3o8aUP7eaAAA=",
-          "/celebrities/1eeda464252b3397-s2.webp",
-          "/celebrities/1eeda464252b3397-s3.webp",
-          "/celebrities/1eeda464252b3397-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_President,_Shri_Pranab_Mukherjee_presenting_the_Dada_Saheb_Phalke_Award_to_the_Director_Shri_K._Vishwanath,_at_the_64th_National_Film_Awards_Function,_in_New_Delhi.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "GODL-India",
-        "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
-        "attribution": "President's Secretariat",
-        "width": 2028,
-        "height": 1468,
+        "width": 500,
+        "height": 500,
         "year": 2017
       }
     ],
@@ -4463,23 +4294,6 @@
         "width": 1549,
         "height": 2324,
         "year": 2016
-      },
-      {
-        "localPath": "/celebrities/573d7bff2e3509db.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRpoBAABXRUJQVlA4II4BAAAQEACdASpAAFAAPmEqjEYkIyEhPN4wgAwJZQC81/XM4w+1aUZ5x9xh++yINZJyDWt+87QDUq1OdR5WKiJISsLEtFgAYzfdGajnRIAcM2IW+RJTNpp1XicpyWMCXGu3OPJdyQapFFl79llJzYzJWkjSRGzs0lo1cFEE9OHyVdMazg+OlCwzzFzCAAD++v31u7vwEm+2+wCHy+UKieRUugbagf6am5/s+HvDDebIxqbi3ONXF9lU+WJurXonl5diQgjG1UVcmV1o6E6G2M9hhtMs9aFguuOZm8INI8rXX9I4LZPH1qnve3t2ABfXSuKNmOzfO0SyXpeHiKpVFknxmLZtJEXgM24TIr06tH39RzJX6winS6j8+COZ6s2h/LtyAKcs+qwuE2eLzAYwgK1UYpwdPgTzrYBSJdzHrIRD9+eEmu2C++BVKfdbuqUezd9F3QoAMs3cZXEY7kB0g02W4dym44lJyn6mM3DPZcPjdBJP+c41IZeZMfV1tFiXNUXN59Ig9mDiLx0zSfPCoYAAAA==",
-          "/celebrities/573d7bff2e3509db-s2.webp",
-          "/celebrities/573d7bff2e3509db-s3.webp",
-          "/celebrities/573d7bff2e3509db-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_President,_Shri_Pranab_Mukherjee_presenting_the_Padma_Shri_Award_to_Shri_Kota_Srinivasa_Rao,_at_a_Civil_Investiture_Ceremony,_at_Rashtrapati_Bhavan,_in_New_Delhi_on_April_08,_2015.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "GODL-India",
-        "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
-        "attribution": "President's Secretariat",
-        "width": 2200,
-        "height": 2086,
-        "year": 2015
       }
     ],
     "source": {
@@ -4847,67 +4661,6 @@
     }
   },
   {
-    "id": "mahesh-manjrekar",
-    "wikidataId": "Q3089275",
-    "name": "Mahesh Manjrekar",
-    "nameTelugu": "మహేష్ మంజ్రేకర్",
-    "aliases": [
-      "Mahesh Vaman Manjrekar",
-      "మహేష్ మంజ్రేకర్"
-    ],
-    "gender": "male",
-    "category": "actor",
-    "difficulty": "medium",
-    "birthYear": 1958,
-    "birthPlace": "Mumbai",
-    "debutYear": 2007,
-    "notableWorks": [
-      "Saaho (2019)",
-      "Vinaya Vidheya Rama (2019)",
-      "Sarkaru Vaari Paata (2022)"
-    ],
-    "profession": [
-      "film director",
-      "actor",
-      "film producer",
-      "screenwriter",
-      "television actor"
-    ],
-    "popularity": 71,
-    "playable": true,
-    "hints": {
-      "era": "Telugu actor · films from the 2000s to 2022",
-      "origin": "From a film family — their child is in the industry",
-      "director": "Worked with ARUN NAYAK AK",
-      "film": "Was in Vinaya Vidheya Rama (2019)",
-      "signature": "Also in Saaho (2019)"
-    },
-    "images": [
-      {
-        "localPath": "/celebrities/757c5731da4713a3.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRn4BAABXRUJQVlA4IHIBAABQDgCdASpAAFAAPmkqj0YkIqGhN/u+YIANCWUAvJwNioZ8F72kGgpLDEFj+7rwExD9RvbvRGmTpBnfDIAP6tYXoqtV4hdbJkUua/sG/O42tzV9mh4ipUXtlKFq88v52IyNPkCUqSv8v64WDfB91oMnmRSydUOSrdPARgAA/vlYAgQf1jC/0JHgSR2wx+x/XPrMjOcEv7XxbfGYDLG/qOT+P2z8cTynylEzC4l1lnnm7qOM/DA2gHdGyZOvGfb88RPXE0OH44iQDubppyCeo7sFFl7uQ6OHoTBaAF/S7/gy71WqgmbZEVOPkA5fpXTiClTxJDHPecpLrMApshMKfVeA2nW+0Gqom1BQIrGO3NIobitZ3vO9T/RpB9HqlvjwCcfvyV4/6/Bz50zClr11y+8X7fCQe6sm1vgJ5txe7/rzBuWdVkTHArsl2R3UmeTYCD1hVWAFu0oKBFzJbMnLn0iIE6WMlCEGcBUtUI1D/9Y9gAAA",
-          "/celebrities/757c5731da4713a3-s2.webp",
-          "/celebrities/757c5731da4713a3-s3.webp",
-          "/celebrities/757c5731da4713a3-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Amit_Phalke_with_Mahesh_Manjrekar_and_Nitin_Vaidya.JPG",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "attribution": "Poojasudrik",
-        "width": 3872,
-        "height": 2592,
-        "year": 2008
-      }
-    ],
-    "source": {
-      "url": "https://www.wikidata.org/wiki/Q3089275",
-      "provider": "wikidata",
-      "fetchedAt": "2026-09-25T05:02:08.457Z"
-    }
-  },
-  {
     "id": "mani-sharma",
     "wikidataId": "Q6749421",
     "name": "Mani Sharma",
@@ -5002,21 +4755,21 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/6d238c344f0cc1eb.webp",
+        "localPath": "/celebrities/38be52bdecb6dbf6.webp",
         "previews": [
-          "data:image/webp;base64,UklGRsIBAABXRUJQVlA4ILYBAABQEQCdASpAAFAAPnEujkYkoqEhNnksAJAOCWMAo0vVzljTW3Bksa4ogR13kHtEkCBqkKpN1dFpzAlZo4FBoj8mmhEmf38QqrbxA+OPYUyvMkQE/lptydTZpsYldHAfBhSEBNZGSywQ+oqm1Ft3xqDjzhjyUAq5IMP8zjcWi0zQOmERTPCg1rYn4FiUNrTuLtGbQcAA/vlKeBY0lGrWZMhwCnYs68yS5fR90kB6ECmqzZ7Lg1TbVymp/XJBEyuSdhRJcc4MQZ5qPizqvvG8rvP8sO6FcxS0CZwmm/45oSGANOeZZ1bMIiP8vvmJZUCdGIze2VXl4ulX/OfI74JnPuWjTtxFKnmJUdtgXEaUWaGClBNEsOD4hy1RJ3tQPWd46HGlU+ecg04D00+BUNG1EyX9hMSqfbvVjASlT8F0ylS3kfpbYB75Ell8b9iYNShYJSXFrOk2uZHgcttXMx18PNqRvlucQjhgMQ1Q/nJAC9LYHxNmn9c4jxjl+ur6r/YR5zhe7oES5lx8l0nXCIVj9yJ40wxs4S7+SGXJ8XdP3GuIczuDz12Sp/9AYIA0ygcthPM9HlEUAAA=",
-          "/celebrities/6d238c344f0cc1eb-s2.webp",
-          "/celebrities/6d238c344f0cc1eb-s3.webp",
-          "/celebrities/6d238c344f0cc1eb-s4.webp"
+          "data:image/webp;base64,UklGRnQBAABXRUJQVlA4IGgBAABwDwCdASpAAFAAPmkqkUYkJyGhNnpOqOANCWUAwNQNiwcPuLbwv1409R7e6JyPNHp83Ab/e3jyqoVQki9QiMT7XJfqC3wHADDmWK7MCWaiKc6cy4evTnl+jjWl+HhsH+l8WeL+yUFCtMkG1fNUr8xmCkweAm9D8aXJXWfPB3bc5IBJ/oAA/vu2N//DtYMKr7nN2FLV0OmffL1AI80qA23FHVgLP9trRON3eauZJksxJF6B4oC7fR5RtHL0yUWQcMYCYFJfyWc5S70qy26QDFcn2RoGusbuPmZxk3+tncusgQVqwNXOgiBO4+oMNKWFTJwzCQ+x1915Ta7o/PODDr4OD2Dy/Nlxj4JBKMlRTU1Xcq6ybWHWDEQJH0GYZEZYIi/A0cu4kaatWDVtdA2UAkzl8zeRcUicVqGJA2w4O8W2wEpIPcksvP9N6Ai5f4njcDEmGO0RZ0u1Jh6KyICckXnPM9M8jLO4AAA=",
+          "/celebrities/38be52bdecb6dbf6-s2.webp",
+          "/celebrities/38be52bdecb6dbf6-s3.webp",
+          "/celebrities/38be52bdecb6dbf6-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kumbha_Manoj_Kumar_Wife.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Manchu_Manoj_babu.jpg",
         "sourceName": "Wikimedia Commons",
-        "license": "CC0",
-        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-        "attribution": "Dr Kunbha Manoj Kumar",
-        "width": 1067,
-        "height": 1067,
-        "year": 2023
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Ntrtrust",
+        "width": 3872,
+        "height": 2592,
+        "year": 2013
       }
     ],
     "source": {
@@ -5345,23 +5098,6 @@
         "width": 3000,
         "height": 4000,
         "year": 2011
-      },
-      {
-        "localPath": "/celebrities/40f5ab3a7a9917b3.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRqABAABXRUJQVlA4IJQBAAAQEACdASpAAFAAPmUojkYkIqEhOzw6qIAMiWUAuzNdzTJQPOoeqrmpmeoq7e7d/17rfY2NIjF9MgWQSLE5Rq5vT8mAWVpd9fpeHOsZc84kE63nkxzDAypQqCnz6KkzgmVDoJrjvLeqdX6dxx2tcprZVR3o3ePAARz45CdQst/ow68WiUFaHqPHgAD+uyYAjyEek6sMk87D3wJB4oHvQqyP3sfR9X168vum7R8HfmrIojAuNRap+boSyIM6WoMG/kB+bjIuTIbcfcaOW+zU20RAPgwYoaXRDUNQIyvdA7Zz/E9wOm5JEzk2EWJkZPHSRJvU3BkxPlfO7E3fWLtJQQTsMkU0F6sF+4CsPME3IZzPOAv3/Ey/0PqU3PBFfctYIsItPPVEDsuCSuksLVoLz2HJP03iU6JmIxEbZuNask0Pe01ctDS97AEpYWKexm9tC1SQAXFK/e95EWI2KUsU7pT1l/2b54NiBnwruFBSUM5meXsCeQehnp4Tk4dXALK/mCnUxelU1ZNJRyhCxjQT/2a0oAAAAA==",
-          "/celebrities/40f5ab3a7a9917b3-s2.webp",
-          "/celebrities/40f5ab3a7a9917b3-s3.webp",
-          "/celebrities/40f5ab3a7a9917b3-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mukesh_Rishi_at_Rajesh_Khanna%27s_prayer_meet_07.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "attribution": "Bollywood Hungama",
-        "width": 585,
-        "height": 881,
-        "year": 2012
       }
     ],
     "source": {
@@ -5419,23 +5155,6 @@
         "width": 484,
         "height": 507,
         "year": 2013
-      },
-      {
-        "localPath": "/celebrities/adc0a4339c4e5ab8.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRm4BAABXRUJQVlA4IGIBAAAQDwCdASpAAFAAPm0sjkYkIqEhN/iMyIANiWUAw+CPkUFhmZWf5gIhlZg14lpM5Dpn0ltKXwkovLZWr80lFvcEmlZnwmwkGj6E8Rc7mepOuLjzuq+K49a3dZm/Lygr6JYy0joeOc9r5XKm4ZrL3QdJ5azZcQcY6VWL1IsBe6D5joAA/vytF0+4L+KVm4QIFRYwl3UfbU4drUERMRsedW3llgCRnZvhhpx4btmzL3ndn97nrDojT6W0YKtIg2Mw8gjprqP+5+cry2PKOrxjeW64u2LbbQaA3CbZXHG63MSLEJSZWO98BeKpQ5dsDm8r489wnkvpuwqjvvZe4Sp9mtMwZTJ45l8RO1BmxWyoKc0lOlmeSfAdJ94dH8cQX1JsoAkhuACUafW2XFxKO6/Nz2DWD8kUA6Ik5j+P9HlTQ9Monq16b3UTMejq7SHqipri6svD4SE6pg5hvtbfD6bGGKg54AA=",
-          "/celebrities/adc0a4339c4e5ab8-s2.webp",
-          "/celebrities/adc0a4339c4e5ab8-s3.webp",
-          "/celebrities/adc0a4339c4e5ab8-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ashwini_murali_sharma.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "attribution": "Bollywood Hungama",
-        "width": 585,
-        "height": 439,
-        "year": 2012
       }
     ],
     "source": {
@@ -5751,21 +5470,21 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/5308f92a5b9f1e6a.webp",
+        "localPath": "/celebrities/5b32faf307d91e9e.webp",
         "previews": [
-          "data:image/webp;base64,UklGRtYBAABXRUJQVlA4IMoBAAAwEQCdASpAAFAAPnkwlEckoqIlLnHOiKAPCWMArDQSPCnQHUA1KUbZFrV5qWqy71bClvBPKZGp9avPO/fGrLJVYkEUvaWM44W4kXlFDzClUZyOpc2vDrZy0E1oC2o6y1CoeT97AuFoClcmRZpkgWQW0TPe21TS2GRrUFp9i37e2aQZlTY16m8SdTpjhKv3pOuJAAD++966rfSFsqg8vF7Kw4Hh77XfUxNjD4StOIpaI2gioJTLtjfgpvQKj5Rq+Qlmiutq0CbypUdOK6friUPqDr9TguoJxZF0BZ2Z4kAhuBFyaNHFAzB25l4DBir9V9Ljo/thGA/ruJIxiG52JjRqmhlbzBJuzTwuVsz+jUUz2cY1rcoTVC1V7/YRRHWg2i/XyTY3tbjTqU5429z3QZpAbON8fT94We+np4/817FxG4vWz+btZ1To+1LwKmanVSskU8+sX20iYzUPNoTmYmuiZmJ2wlZ8O9sX0iGdNxp0m56jeXI3mwda9HoQGwGwgfrQ1OVaKNkZ7j4W0AbngEkJ5dMWGosMjy/7Oe77m5y8mnshBSsyNll/A5/18UFI1F+5Qv0V6Mq9Cn6UatUNqruJQv2AYPkAgwAAAA==",
-          "/celebrities/5308f92a5b9f1e6a-s2.webp",
-          "/celebrities/5308f92a5b9f1e6a-s3.webp",
-          "/celebrities/5308f92a5b9f1e6a-s4.webp"
+          "data:image/webp;base64,UklGRuwBAABXRUJQVlA4IOABAACwEQCdASpAAFAAPm0ukkYkIqGhOZQMAIANiWMAtGdsCPBlN6bHQLSUbb50z431oByRC9mKa7KZcFGKt2bXnSDzItmiMT0MJ61vQk+28w/bZpRkJaD729O0T9sJ+JlBrb3DEMIdFLer8yJvnYPmBbTxakv+OAinUG+zPnP+VYqZqviyhObx8eFi5LfshHha83JNycyFKkAA979xO33tS6OWBsbHIzK1wJ6m548e9wtwdfsnj9SYaNeezb6uZo4TX+WA5iF/agwD03d+hZ379mTSIO5PQyRHLsbnuVYqdk/mrCglQNt6kcPNYMRcCzGTNZ2mJ9kfK1b33jF1ol3uecGC2gfc8+JIcfImXD36a4oe7mzqhhfBTUv6OYOVI0n1X/DGdBhRVoq3mtlt6pRAEr/wQZgduo13bbiDN8djL8mbghO8tUpVcczETyq3CANab2nnFFrIrPbTiA9ldcikPmMgujpA+a2HGnBt3+kt8F+VknUab8plqTbAB1is5Kbyji5/1SJzXhSUYxmsARDJsLbmBvYYSCp2fBZoSnmlItAMBu5YkncZxcfFNh75eQclW/NI/+fLTsafVcQX04ajIvqZ6ZJarYWsx3MTRAvqisZYedHpjshYvSUW6vxVgz/AAAA=",
+          "/celebrities/5b32faf307d91e9e-s2.webp",
+          "/celebrities/5b32faf307d91e9e-s3.webp",
+          "/celebrities/5b32faf307d91e9e-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nandamuri_Kalyan_Ram_in_Valencia.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kalyan_Ram.png",
         "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "attribution": "Francesc Fort",
-        "width": 1561,
-        "height": 2765,
-        "year": 2016
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "https://www.youtube.com/channel/UCnq8_H00sbQH6NoGJ-8ftJQ",
+        "width": 729,
+        "height": 640,
+        "year": 2022
       }
     ],
     "source": {
@@ -6003,19 +5722,36 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/27d852eb0c9c02d5.webp",
+        "localPath": "/celebrities/1562b2a4095bc4a9.webp",
         "previews": [
-          "data:image/webp;base64,UklGRrABAABXRUJQVlA4IKQBAAAQDwCdASpAAFAAPmkuk0YkIqIhNnpMAIANCWIAswXA2p5vfcvM7tzdCi9EZ8ormYfNZPVZAMO+CEXTEOOyRKuePjbscFaXebb5zUgK+2+isdSvX96oTX+1NhZYwO6XZ6HbsLu158uENbhJr5H2CuSkzuDK37qLnVSksswE5WJXHUAA/rjx8p/dTn+LQmHgzbHn+Sn0Q12/+VRhuOz1sF4qKg5AbH/slaaUoCd5/aByeair+qrmZeBOWd7JUoobiexPbMnj00gXDEkcP+Edab10eY59XKIKz3yCvgOc/yTk8Y90RCmOgrO2v0BVi4qGDXQyRY9y6wg4Xr1GNtsD+hNwAO9jT8mVR9eotLLvXg5T56vVG4478P/daKtyRMDZLnbRSnkjKX0/Ia5qcA4IZWsCr0JZmq0hkzTb4diMMCTFqRTGoF9Scbb2OdGEOSRMBzXOD4PQGxpu9xnN43Yqlppt1T+lz1SA2hka130Q8pA/668wznpRTWm255lYED6BDwKp5WMT4CXsRSAARN+e1TeYJvybtBDZ6nhHri6NmEK0X4HLMAA=",
-          "/celebrities/27d852eb0c9c02d5-s2.webp",
-          "/celebrities/27d852eb0c9c02d5-s3.webp",
-          "/celebrities/27d852eb0c9c02d5-s4.webp"
+          "data:image/webp;base64,UklGRogBAABXRUJQVlA4IHwBAAAQDwCdASpAAFAAPm0sj0YkIqEhN/mcyIANiWUAwOSFr7mz+O4GVavWriUkxWf6SHsRdSmRfihFkqMdg34jwKaoKIY2ompwWvGiUZzy4DJ17+z27I2Ctub49ztV6aqz/0TbqzYv7ejlKKnaeYHqX0jPQrMVLS3Gr5N39iBtpuz7BwAA/vmvrLC1MnCaozYWUr2fapKneTk36YLA3QEiD26ddU+1x8W/Opb6+JrnKVH8osgWEetRxF7Ni6EYibhxBebYEDkynPvvouFG1EaaoCVTRunOPjPij7dK6cU/M2FjKSpNuttnwbCgjS+qDmhn8Kf8EecMYIxoIeyBsegqVN8T46TbaxCHBR7LOOdQervpzzW0EwuIeUbKN+5+wnbrXvZuylHQTolsuK4ga2oCaZ60E0oa8GfuLQlOAPuXYjlFaGW3Fdt9sdpmIhYp2/HTN2+i0Ieb3n1eWpy7iMP16XWg5PphRfRf4GWgjawe8nTaLIMHfXnKjNq6+QAAAA==",
+          "/celebrities/1562b2a4095bc4a9-s2.webp",
+          "/celebrities/1562b2a4095bc4a9-s3.webp",
+          "/celebrities/1562b2a4095bc4a9-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Navdeep_Pallapollu_-_TeachAIDS_Recording_Session_(13550494995).jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Navdeep_Pallapollu_-_TeachAIDS_Recording_Session_(13550492645).jpg",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "attribution": "TeachAIDS from Stanford, California, USA",
-        "width": 2069,
+        "width": 3072,
+        "height": 2304,
+        "year": 2009
+      },
+      {
+        "localPath": "/celebrities/5048c29207966d9a.webp",
+        "previews": [
+          "data:image/webp;base64,UklGRowBAABXRUJQVlA4IIABAACQDgCdASpAAFAAPmksjkYkLKEhOzeKqZANCWMAyXxBljEbZ6uxlvvxwScDaL3siHVo1Z+SkKaKudgbgeHHEz0UT9Lpo5XKgk2N5TYjhoEimMZ21DEy6BYfdhOKlKrqbwcNw3MeC0fZfEorP0pjBeGi2dJKWPh9JJakvpebAAD++cMjp6190RRpMoMcxvk138DLQ2rkJRgGMW9fdgUv4kBhsWUQk0qThILqtmUtdeRXJKkF7gitzC++t8ZdwEnbxe18ixL5uq/u5WiA9/xf/iTiF/YZMVwQ/i2DnTZO3JxqXR0uMx1F97HPUKBrgDkU5SuijXpJDbCUmjgDdEjX0f/XRAtR2Mx6+bh3oIByq/DLQMatWi8LWmJ5HbT6zucFaa+KCuihsQSOfdfZ0LuyEHBHYhHYsfqOPZC0VGfBRAXbQEbUNvqud5HUNNJmoB4MbjwRMEAGZnxl1O/Th74cseXK6dp2LvFPXEjgebwVbFSeYXScTWyaDjn3Jda9msgAAAA=",
+          "/celebrities/5048c29207966d9a-s2.webp",
+          "/celebrities/5048c29207966d9a-s3.webp",
+          "/celebrities/5048c29207966d9a-s4.webp"
+        ],
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Navdeep_Pallapollu_-_TeachAIDS_Recording_Session_(13550491995).jpg",
+        "sourceName": "Wikimedia Commons",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attribution": "TeachAIDS from Stanford, California, USA",
+        "width": 3072,
         "height": 2304,
         "year": 2009
       }
@@ -6777,23 +6513,6 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/d394d3d5b767fd9f.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRsoBAABXRUJQVlA4IL4BAADQDwCdASpAAFAAPm0ukEYkIqGhNngOqIANiUAUu+e5cTMBlJrHhQCzPPuA03eze5433SFdytVgxfN/WH7Ez16XJKiNLbixFr6xY9dL5voigt8gP9ttnt4oIr8dk2yJ6yIGDjXB4Qtlkv/W4xoA48gmo1afYtR50tcLuzLX/teFlFgvMAebp8AA/LE810Ksy9I7v85fjJ0mecg91YijRPMqLVxPJrIQH4Ul8Sc4CX83GFcAuFyNjli6r2gty9/TopjqH/aASoPa1T+PbUz+vAGov6dFi1t1bDU1J6B8o1QSlyA4NqtT92Owr4DjohVsCfqJ0ucuIrFiuM2Mmm/4apSf4qUT5DhjkhxMZNUeqZjCZ/z2GC9tbgySq+0qDItAYCsF+8pYsUpBxln6nM6HO6A3HfvjSKN+HzF7Dukt9QcDfXNsu3XEZ85sIkBoTeXwRTvxEUhd+mvKw4TbMKjwSXxpPBk5vLkYoWZ5iELz9ksb6jwk+fTBJK1Jmhyoi3g5+OMmO4tmY9jk5ggNG3Wi4RGCK2l7ESF8I9ZoV8a/Izt2jNTpaaiP9GqTtXtwPETxhZ1zHMGRBm1dVPPqTmQAAA==",
-          "/celebrities/d394d3d5b767fd9f-s2.webp",
-          "/celebrities/d394d3d5b767fd9f-s3.webp",
-          "/celebrities/d394d3d5b767fd9f-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_President,_Smt._Pratibha_Devisingh_Patil_presenting_the_Best_Actress_Award_to_Ms._Priya_Mani,_at_the_54th_National_Film_Awards_function,_in_New_Delhi_on_September_02,_2008_(cropped).jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "GODL-India",
-        "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
-        "attribution": "President's Secretariat",
-        "width": 1349,
-        "height": 1350,
-        "year": 2008
-      },
-      {
         "localPath": "/celebrities/cd504946874f7933.webp",
         "previews": [
           "data:image/webp;base64,UklGRtQBAABXRUJQVlA4IMgBAADQEQCdASpAAFAAPnkukkYkoqGhMZXeMJAPCWIAotm01z5V0cDgI9W1QD5vHrOoBKuHoc3ZDczVKwTDmlCQ17LHj8eKEnp0yqPImeNIb1fm9aMEsOZE7xNNhwZIK/TCvagyaAyFfSDueXfUM0fWRJ+/UNIiGhtGzQAsd52TLtXPU/Hw7h4X0DQ4qnSwK7B5gp21VKCDEEFYAP7sWxmAtBZQSrKipptBrC2UGX03qSjVi0pbUrb0qfmlAVzncq9GPwU34CEwQOQe8T27R8GHTGLwgc7J8GG3e0vqCN32qSoRjAbovqOlXR0kSHOI3C86+yaYesfj6g5L05kIuSrxDsmGicuZXZ8rHDbL0BoKGFWVIVt/H+JmZdAYmMIWfJ/w8n/FK1U0a7K0m8ZMrQf8Z3vSDSoDVuQ4duBjAbq8OWD9S7PrFhwfr//apxs9OtNP/dSov3cyqGgjigDCZDi7kOq379J2z17KdqouWkT+LuEdPvSqdCRuDtKJqeDI1UIQ8RGOQDT46pHCV4d7omzv15clfhoi3chN+7XNOhRLIBOBVMfOrlYfoQPpNKBkav+idb5JZ+n7HIIct28iaQaHtmImMI+nExYAAAA=",
@@ -6977,23 +6696,6 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/3d8df16671cb278f.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRn4BAABXRUJQVlA4IHIBAAAwEACdASpAAFAAPmUmjUYkIiEhOZ79+IAMiUAXZn7iAx5Hpb6AR+frK/WtaF9+4pN3XKszLtCKj9vkUD79R2svFD57OGZXfdsz0QCnPCByx732CMuJ3yy7nMa9Dxn5Ag0Aq01czSg+2MolT9bAUKvqYewJT+dSrAwz0UYzXpgu9bMldQ9IBRxcggAA/vqO+mxzfFE/GJy4XJZd+IReeiqrke0f3QfktSEVWVQPer5i+wzfbdiGgd0yNJK4FeW3dWERH6Wr81vC0u/I4TGQMkLAXjM4KRUXbuUeBrmPYNTkb6E2Z+9a0qdffNcO4TBgzAYTAUAQlNRJAlGvJpV0uhte+GgJbYWPlctbP46dmWjAwKPLskfFW5WTDbDkIIjuZLNrw9bupIYsSYN+lUeZFmQ5+FqQ09BP+Moi8WFhg7W5lWFVIsWZux5f9rt9X99UvE/sNkJ2tQYm/dUDbZlIz7e+k9HfvhwbrZqrjFG4jXeEAAAA",
-          "/celebrities/3d8df16671cb278f-s2.webp",
-          "/celebrities/3d8df16671cb278f-s3.webp",
-          "/celebrities/3d8df16671cb278f-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:RADHIKA_SARATHKUMAR-_OIL_PORTRAIT_BY_RAJASEKHARAN.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "attribution": "Rajasekharan Parameswaran",
-        "width": 3806,
-        "height": 2654,
-        "year": 2023
-      },
-      {
         "localPath": "/celebrities/d90bb4f92737c312.webp",
         "previews": [
           "data:image/webp;base64,UklGRv4BAABXRUJQVlA4IPIBAACQEQCdASpAAFAAPnEwk0YkoyGhMBZuYJAOCUAUu97Qng539TIAdQDU/x/iKdz2SAPSfMz7jFHNtHzQQc7wLuWm4XLmqPNutqXuz47khPfEsZ6m72Oio+1sn54+ESDNGyIjxRWRvKcZXPWVg9vcOm2bzcsGkF+osNWEtzd4Cgr14rrJebY720PrPtIHDCus8X11lVRsMADiIOxBJxaO3wf6/g1GEjaM6MIDIqYS3LbK7DdkSwnSVPj29Xpaxe9dQOSpWej5H95p7GNTZ42iGfZ3MdLIwTespI67bhnzRfnMZQB3fANVyZEmE91/nVS31JCgaBt4EIDAeQ1rVsH9Om57Kx214aE261NTTSBm3lrto6mYwgTUyFUtmVqEnodFhShJpr0bEIOlS6rVaAlICKWVpibAxP1sOKeVtncg4GbBPJStMucxaMpwIgaRYM4ZN0W0BUZAgHLeaovbVusvZJMfrbURl//vyNIvP+xFbyQAihMRRno0nCf+qO8gHhh8DuG9Po6/+M6W6+jIuL666S3kTvuOTuP8A6FYj8iAQirS1YIEqQq26FP3QZe1PyPjH9fJgQq+/0ZY81RG++T9PkAHn1UUlds/qlbhrqahcrOiOPsjArGSsQw0uUtqIyyYZRMZUewf2Ume7mFe4iByayEAAAA=",
@@ -7054,21 +6756,38 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/81866a03fc52b4f5.webp",
+        "localPath": "/celebrities/da67355f25e56620.webp",
         "previews": [
-          "data:image/webp;base64,UklGRrYBAABXRUJQVlA4IKoBAABQEACdASpAAFAAPmUojkYkIqEhPNjoAIAMiWUAtdANjJ8OuNsHhQ434G6wL5t/GTGarxLnBry3SFBKrZj/9IKsqIenxJar/5r6vyMoYEKvx5I3MRV/s7cEOPhJaxnvfdcD/sVrOjWdCzNNH3vti/I3rbVQIZoFTOZLQrPgeI2j9uazOxpFA2Ia0NPYAP7wTGQLmOG2kdn42/g/nma00zx0+kjTFiR96vP0aSnWRcmHdWwyXDRqCMf1kLZHW6FDk27x11KFlegtAlOOVPY40Kth0vTJcH+c631Px04PTzIybNasim4Lluio0CDsZmrsui8wD1y5T0KykDJVuvOxbcyC5u3TIAbsXrFelg/wzWIyWcGGnTXykA6el5mWJ8QMO7DDRZHms7+rM0g2yd0gJndNL5p3S4f+FiINwSniUY29d/1s5TjMlZ4kTjuBFZ6nYV+6NlqGB7F8rLwphsm07dOw4gMI/rxub9lWAw1TmU6NDMQ7M3XJxLgUijEMfKqqHgzDvVfXZFctvZP+eacdvxFcS1VYHIVj9idt8OjL7Vc2ueqo/GljsB4AAAA=",
-          "/celebrities/81866a03fc52b4f5-s2.webp",
-          "/celebrities/81866a03fc52b4f5-s3.webp",
-          "/celebrities/81866a03fc52b4f5-s4.webp"
+          "data:image/webp;base64,UklGRpoBAABXRUJQVlA4II4BAAAQDwCdASpAAFAAPnUukUYkoqGhOzLYAJAOiWMAuzMmEvDvW2gQl3FfyK4uuz4PgxBAeF+Sy+gEYOg30v69sKPQZIgVpvK0omPD/JIyo+rqSl8vSLK3CH2PwpOYpPzKvjHkJmExfLICbEMOGwTZ7oZruuw+R2SpdpJPZ6f0h3IihsgA/vgu+zY8JlurX1wUq+gW0rUn/24Lho1oeSrktWk/wjIsNFIK4CwA7IrOX26RYH5T9khyi1qPebmTL+mXc1Fyo+MkHRC1p0Pywp+gmOs22XhRgSt4TMSp2NbWZmM1VhS2kVTSlSmeSPecW794xm8InDLOhmPN4BW3UrVz3yrimMBkssDypkGL7Nq3faNFJM0e1MszRpAN5NuKCrA7nyvEe0GzqLIX3zNY/bzbl+jAAzmBFJexY0+4sQWku0kcCV50cdL3Vp9LMOnp39dUUp2GnBRvZBXbFeaIJhEBb+BFPO9IOraMrhNGpVzKMKxzoqhq7wVVUnxmeoAedtGRa8iYqmdApG7jl+Q7xIEAAA==",
+          "/celebrities/da67355f25e56620-s2.webp",
+          "/celebrities/da67355f25e56620-s3.webp",
+          "/celebrities/da67355f25e56620-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Raashi_Khanna_at_Touch_chesi_choodu_Pre_Release_event_image_1.png",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Raashi_khanna_speaking_at_Srinivasa_kalyanam_movie_launch.png",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "attribution": "Mango Music",
-        "width": 934,
-        "height": 898,
+        "attribution": "Madhuram Videos",
+        "width": 1141,
+        "height": 908,
         "year": 2018
+      },
+      {
+        "localPath": "/celebrities/b83c0e15f97ec7f0.webp",
+        "previews": [
+          "data:image/webp;base64,UklGRpYBAABXRUJQVlA4IIoBAAAQDwCdASpAAFAAPmkqj0YkIqEhPNY4AIANCWUAw+CljWsPuLD67cfjR71xCbA1JTlRsCEL5faEKwA7mqBNvqkc/k36U9S531KG4Q+P1Y0Fa5ETaWITFzEY538ygLBsqEfYS5N3yT9cDH47b3FXBt6RUj8Q9j4YIkxZA1uJ0ARarAAA/vjQz2/CRIX999exF8BYBBi2LakqAHxF4T4So17eBowDVT41pFL/dBNQdDUbWCHlZDzlfZil00za+auC1mp2oyeLmNeJK3pvE7PhR4opXeVrbSKFlwqqGi2xtOmrYpv87KDjHy937hzXqOcIWUlE1HcMd7K8k4/To6mHQyklNb/dUzm/nImMUQIvmVj8dmU4mbO2upHhGSKMsdNcXudes5F9D5g8pFr0dr9QtO8igh5mxxmeovrqdHkptgCI5Rc/5nWmOyT3b8H8pRVvymWddtc9V6IkI1rwOl8MeM2W5+lHbXKD//aCb/5RTh9VPY0yb8TGRH6kygDC2HsswMheI7Lkox0ualAA",
+          "/celebrities/b83c0e15f97ec7f0-s2.webp",
+          "/celebrities/b83c0e15f97ec7f0-s3.webp",
+          "/celebrities/b83c0e15f97ec7f0-s4.webp"
+        ],
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Raashi_Khanna_at_Tholi_Prema_movie_opening.png",
+        "sourceName": "Wikimedia Commons",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Madhuram Videos",
+        "width": 866,
+        "height": 920,
+        "year": 2017
       }
     ],
     "source": {
@@ -7579,21 +7298,20 @@
         "year": 2010
       },
       {
-        "localPath": "/celebrities/3d0256703f19d42e.webp",
+        "localPath": "/celebrities/2495708e60b9fe6b.webp",
         "previews": [
-          "data:image/webp;base64,UklGRuQBAABXRUJQVlA4INgBAADQEQCdASpAAFAAPnk2lkikoqIhKBZruJAPCUAU6bG6P8zM3PKUAJ314XJ4DU/x/gPnZI6sxCfZumOIVJphQTh/5JEy9VPpOVA1m01NtvJTkpIjBH7DZHCpmKJv2hCCU2u+7R7wZFk6g67Izj19P2JcjcoePBqRkB9n15jIXMmb843YADCH6lzbelCDRAPjXDPM/9DVw7MAAP7JTb/coYmaAd0P+fucAmmhHYq3O13eWTvVXNyiD4V3YXcpjM+KFbMgm3/nzCM+15Yvv5O82TFmW8aCzz1s0ynwrsgK0NwuSL7ruwDiwunKsCbRpz0e8Y++Z5ttR8ZVP5suhsnwlRRXbCbKtI/Llf9skKBgr+P07RzrTic+5dvr2XGACosN9fFnHvzDt0jLWGKj7E9dlOOHyMVZSEDTQXAWs7DyLLTJ2OOCphQCgwepNqMJaiLJX8neH01MV1b3Nla7RFC2n4XzWmYXvNwK5Oo8K9K4uY7CFbu4KCATkWpwtWgCQN4v8lW9w2aMIPHFs4R5IdrTNdF8lu00xgod7sH7Q8ttMLaEBhhZMTSd2CsIyhhhtW/5I2yoPDHNunOhaj7Yu4Z/vnzq4l5Edt++s5anW3+c69Bfv5WKNuzyAAAA",
-          "/celebrities/3d0256703f19d42e-s2.webp",
-          "/celebrities/3d0256703f19d42e-s3.webp",
-          "/celebrities/3d0256703f19d42e-s4.webp"
+          "data:image/webp;base64,UklGRrQBAABXRUJQVlA4IKgBAABwDwCdASpAAFAAPmkqj0YkIqEhPNY4AIANCWMAtRuNSOiwGpsiw3tAp8Scj7D5JULSlcXCD1/fC4JMh3oHKDe1hi27T5JM62Efi4LSUcLRUNGGE0z+K+TMFgz2pCCUyRC0Uit7WAtpO5ky7/t4Yu5+sA0D+TQNBF+J3xjVAPwTma800cAA/v3lGsMtx9hVqGK7gAYHVl/uQLsxuiNCeIlbYEwn6urWZwFpPkSnHxZn8uenY+6NUwTEhpuC3ZDai9jQmgaMZTZgWdsBWLRRs3xWThm5nD+9alPjEYAs9Cpj2pnaRY9wl5/Fb6nFzCXX4rK/4iDxOxnUPx4LsjYBBoskCgUgZu3wk9nCtKmbS2kqqbsGAnfHiUA7yHLSRjnEwwoyYlCNrcTKU8s9zBQ5wbLRcKOZY6o7Gr00WcxzqG/HUN5dK7ysSfMRljZkazRRoAfPGE6+idyOcvQFh5sul43nM4zpG6wONFUtneuFF34MaWcsREjIZl1B8jFAmnMvtBPZyz3bb+q8kaUNZgSJQKNfydWbU/NjT0L2vQSfdluoE/IFhVRsAAAA",
+          "/celebrities/2495708e60b9fe6b-s2.webp",
+          "/celebrities/2495708e60b9fe6b-s3.webp",
+          "/celebrities/2495708e60b9fe6b-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ram_Gopal_Verma_on_set_of_Rakta_Charitra-_rgvzoomin.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ram_Gopal_Varma-BJP.jpg",
         "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "attribution": "Ram Gopal Varma from Mumbai, MH, INDIA, INDIA",
-        "width": 680,
-        "height": 1024,
-        "year": 2010
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Bollywood Hungama",
+        "width": 417,
+        "height": 610
       }
     ],
     "source": {
@@ -7863,23 +7581,6 @@
         "width": 1000,
         "height": 624,
         "year": 2014
-      },
-      {
-        "localPath": "/celebrities/45bcc838c12d0eb3.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRpgBAABXRUJQVlA4IIwBAACwDwCdASpAAFAAPnk0lEckoyIhKztrsJAPCUAY8/fCSQXbb5T6Ce+FkarrCOzXMDU32rCcWZpswRdc74MnX6kc4Wu/s9WFpEuLUnsK5jyLnODPMM6+fJmYyr7CfsotSVvYiOp2IRl1jcAMb0fivl2FMzq04CbJXKvtu/V/v7QHo4wzZblAAAD+/cCJJZnOtrAdL7u9+c4avEy7mgyG1QO9koiH6wDCxO0jpzfIBr/rccx+IS8xv+H87wL+6KAFRb7K5xqYjI19T1KRMOJ9si02mevkEVDyztgP6NSAJzhNUY9DyMWA8nCPBRYBxWZ8phW/fXLRlw+UAV4CqKUTKoMSrelnZ9DnuKHCDWcQTqOU1RemXUaXmNzAGSXMWozI/5gAw510oepNK0V2xzeomsZ1l6GBaDVihbQj0AYoRWP43e34+z7Y3rP0A1zsrPMFUu6//3K+61g/LSLDsgnVFTM/np6tnhGADqdwhk5g31rn25FoFMDCI+kftK8lsc+Ydmin3mVW/ealV+XQAAA=",
-          "/celebrities/45bcc838c12d0eb3-s2.webp",
-          "/celebrities/45bcc838c12d0eb3-s3.webp",
-          "/celebrities/45bcc838c12d0eb3-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rao_Ramesh.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "attribution": "Pranayraj1985",
-        "width": 526,
-        "height": 852,
-        "year": 2015
       }
     ],
     "source": {
@@ -8633,23 +8334,6 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/914d5f1f5bd67448.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRqIBAABXRUJQVlA4IJYBAADQDwCdASpAAFAAPnUwk0YkoyGhNNTraJAOiUAWo4HY7CBxjpr5fjshKoZ/V8kdqVv3fSmPmjhuGo5dtRXQCX8d6rPISEy0xBfaTUt3TEuoCt9Im2wury4e/Rt8gfLmilj0RzJ4UFZhOnwQkAzLbk6AViA7uFNQN7XSREhZwznRobra/EDtaeAA+KKYhSu25IRZSyV6ilQQwxAhLlI4Hh9qX/Ll/So2k/zp2P4ZCESE4GuJ3T8mtp8sy4WXcdegdrO9r6DMjoqXIKheYNBPj3sqzVz7wpud8EmIx2uZ3pQOP21XNTN2w77O1UbB+7xK4ydd1Gxg/azIYYpKH84qickk5c+U1ekyLBt+/3dUlWAPg+b10jLjkIft3KNCiaXuGXwDXMxT5ic5ZTpWlMfxBuaf3u1s7J/cZIdSGyvXKKK02Qr79FwZDcYgiPf3kTT9V6YtjYbG5QsKx2zgXEeI0er8Y9wBsN3ML4AxNkICI3Xad3oXP3puwVvm9BwFKcNCKHrkvipFf5pNR2wcTn2zjQ2wRietQwAA",
-          "/celebrities/914d5f1f5bd67448-s2.webp",
-          "/celebrities/914d5f1f5bd67448-s3.webp",
-          "/celebrities/914d5f1f5bd67448-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sachin_Khedekar_at_Runathon_of_Hope_2011.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "attribution": "Bhushanmaskay",
-        "width": 4288,
-        "height": 2848,
-        "year": 2011
-      },
-      {
         "localPath": "/celebrities/572cd1a3aca31db0.webp",
         "previews": [
           "data:image/webp;base64,UklGRoABAABXRUJQVlA4IHQBAADwDQCdASpAAFAAPmUqj0YkIqGhOZv9+IAMiWMAwu+rEBj523xC8pFERmPUZFeZZGoMBcI8DZ3xkRWVgN518p+A7D1fhTi3MBNzlsGjUX/EcknPTRn0RQ0/yv0JfB9tJ+VN0PxLFhCuPo8XasbEhz7eph+IrSsdOYAA/vptF+Jqp0fi5iIwKTlKn1qWn2pcKZ9tT5yRRzdEydVhvT7urnJlzs9CYuxiNMLiISi3Qu4v7vWpL0vwQ5CoYWYn9dhVWXXwZlA4kyXAu7FjyNtkYzx4Fpq9JM/MGc9iiKn0153IsswEgVGooyBM9OIP4BBw4CeIxceTumojN+gmgwijA87hAxfmB6qtAxJCyk8NFUT/W7/DzgjiD3XypvwlYsdxHSjPRCIQrM48SOKHEhqYaQfbrNe01SFkob5vtUcyeh7ohi2eENQTQyIeA73/2b/fdfa15M38QmEhmjF4p3R9e9RjKCohJj491sP1xLRZ4ZWWZkQoAAA=",
@@ -8995,23 +8679,6 @@
         "attribution": "https://silverscreen.in",
         "width": 800,
         "height": 1200,
-        "year": 2014
-      },
-      {
-        "localPath": "/celebrities/071612e123449179.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRsYBAABXRUJQVlA4ILoBAACQDwCdASpAAFAAPnEskkYkoqGhN/d7MJAOCUAZL/LyO9hhRL9h0/4/ymSv82uEDNuiGdCwdg+7zNHof3mUy9E+z8h+aYcW2cn1ESX9AOw5kRkpj2KgXwJIQQj0FWvQaetdYEgfA0jY+7/x0D59ohnX9fb+G0C7Hcwi5z7iXak80k43ljhwAP78mVRTnbljQ+XHRfsOaMVCcYlmz2wIH4CmTj6qY5ksPSo1A+ZoYyTnz1yvgGT86Mp3DJ388vZI159jI3xgj47RkNxxVuUNgIg70LWTP8JGzX7UxvgE5ZxA4dB/nygqwjVIabhi4ReDofwly7EhSJ/7xTtE7+FFgSoOYjYlAyWsq0DrGBnb781yMwc7QHvqQhXBzAwkepMJnRxgdiO+dwyCRm9CajG0RD2J8s889sVKmhlZ3Nl7+muZoCwLtrm9z1kzqYc0njmffguqufF7LIkUKC8qW4Obfo6gal8pdu/LoERkY4qdJcL0XBqzVMsYCsZukGWICYZ4DOVzdTyYB8km3UEHnIeuH2mOnMMSWkvUWcAIKw6NzIsOu4F8Ka8cNai0KDyiucW6goaSZpjbjAKCCgAA",
-          "/celebrities/071612e123449179-s2.webp",
-          "/celebrities/071612e123449179-s3.webp",
-          "/celebrities/071612e123449179-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Samuthirakani_(cropped).jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "GODL-India",
-        "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
-        "attribution": "President's Secretariat",
-        "width": 888,
-        "height": 1344,
         "year": 2014
       }
     ],
@@ -9581,14 +9248,14 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/3a9a4ccffc6e15d3.webp",
+        "localPath": "/celebrities/73c8b6c674f8cca3.webp",
         "previews": [
-          "data:image/webp;base64,UklGRoYBAABXRUJQVlA4IHoBAADwDQCdASpAAFAAPmkskEYkIqGhOZcMAIANCUAXz3OaQyl3N/j/DA4JI6Y58JtH9cYazXCqk27ySVnO//qmkO5p7FiGyWsvOq6aiGcK1HDDpleFCzP2sT6wDulW92QJ9/i6v/KRcGfcMaVZGnr2NpwbRAdLuY/dd0AA/vGuS6Su/ivKrJdj//LP/SCv5IrME5LLht0VMEKYHh/p+YKA6aSLRf1Her+xWA0cExFj3Ff4VaHdzLs4NQQFOIgaOm68yNOZlfn0VIToYvf+icBEf2aousBo5URN5DNxGMJEoKOnu4W2wMFXSxudnZIduGbBmrbvPSwyTZ9WoLJ7e30rsiWwfM81cJwEyopMf/5etVOWICaxR94BWNnPh6NdynwMnykNrR8cpmA+k61NCEKQ9Puat6IpeYLuZkXjFYm8AoQjBcEGcPSiqo+Bz3CVqjjW3fsFUL4pvVWNmDY4jQ80Pc8e9RnQXFFr0PxMWpz45YVpehLMK/VkHYmrRgA=",
-          "/celebrities/3a9a4ccffc6e15d3-s2.webp",
-          "/celebrities/3a9a4ccffc6e15d3-s3.webp",
-          "/celebrities/3a9a4ccffc6e15d3-s4.webp"
+          "data:image/webp;base64,UklGRsQBAABXRUJQVlA4ILgBAADwEACdASpAAFAAPm0ulEYkIqIhNnW9UIANiUAWX/MB0/nuZgKd32zfcy0BuKFY1fsdwiFmdgzf2eT5tmGH0tk9WfA+I2uKrxpNnGLVFyfqWtxR6XdI5TrTdpEwK5Xq85fb9QBGnk9Z79U7anyxBdVcHaf9AAE90HhTkUObHQeZpprE7+01X3ew9FQHDfb0VYAA/uGtGiLaQ5zZ/3QW/sJ//yz/ZblUafS6Dvwe7qAPHWtTQoWJejpmBtVtaNatp4oWUSyDyesnu3ldaUbUiNNjZ/Ev9SRvP8SmGeeBHmXSik43+4u0L0RV8LoV9Mwuo/PlFjiAi6V4jkR6nSpwsoKDucoiu7dKePdauZpF9KKq2NWYXTnZPweDc4Qm+YihjljuZrmU16pJfqiWQAuld5ASaMT7yDG1rXWGjzBkRIt1UQG2zibAMST6J/osNPv5ecdY7DetJjA/YK1Aa5nVhwEJ4bX82k2h1eZB4C0LjA5Ia4wUHqmgPm/Db5wAv6VtsP9dRricUEjTuVAG7Cl7QjkuT/NUhxcIwc30LDDlnFCQQSDXwdbMwlS5t7XxD4poJOnu043oAzjAAA==",
+          "/celebrities/73c8b6c674f8cca3-s2.webp",
+          "/celebrities/73c8b6c674f8cca3-s3.webp",
+          "/celebrities/73c8b6c674f8cca3-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Siddharth_-_TeachAIDS_Recording_Session_(13566845335).jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Siddharth_-_TeachAIDS_Recording_Session_(13566913583).jpg",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
@@ -9596,6 +9263,23 @@
         "width": 5184,
         "height": 2912,
         "year": 2013
+      },
+      {
+        "localPath": "/celebrities/1f9edaf3c123f929.webp",
+        "previews": [
+          "data:image/webp;base64,UklGRiYCAABXRUJQVlA4IBoCAACwEgCdASpAAFAAPnkwlEakoqIhLNQOqJAPCUAWI/U5e4tZsBfigvyaTIpZQX/cQ07nctBrFotlpxM5JsjnwtvbYJhXdP7sN/8WL9Mal69nctkoMJ4blO95eNIUHWn7Y5j+68/gdxEVieVXaQff31eL5p7LqzRBiEH4rBD+ZCgHnkfRElhyzL+46bqiNBSdlzauwGdOlZA6YbrqZmlzwgD+/WgxwDyY5Ln4FDMxPFb/LZ3bxYwFYEppxWT3y+pqv+trG9fAa4yRMrDOFXHuZGQeMghpoqoyIMUoxW7PNtEdve2tqpaj67OIb0Xu9cOIBMJrd0p3RMVPoKvKJSRPL1hMTdEwhXiCEFLVBuiYfdiu9fxeRIARmyo+dHKE8XjPYDr7N5/J+Ooy98yx846W/YUnAPuWFr6HaAJvlB32ja3KbcVJaznDaPa1OPWh8qFAF0lX/6aAXI0Z8kAcenQD8ozphC8rDaiur7+nuOfcyadxVhE/LankqsUDHszFjob55aZ73w+BYubVhUPvjqW3iBH401ikoLXJIpatlK745VSanK/PZUeFRlvQo+Mq40j3JCLRFxQjZ1iS/n+3Cjaz5YHlO68OD3DK0tA0I4AM0nzjPzlaYYPY2d/sUZPDwkwDv0MJ/xGQuyCAZaEb7udOSsn6lTJ6y46C1Ps0L6NwVMS5I+qrvr9KIRCheUY+1yTdTxFhltGGRfXeAeIA",
+          "/celebrities/1f9edaf3c123f929-s2.webp",
+          "/celebrities/1f9edaf3c123f929-s3.webp",
+          "/celebrities/1f9edaf3c123f929-s4.webp"
+        ],
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Siddharth_at_the_success_party_for_Striker.jpg",
+        "sourceName": "Wikimedia Commons",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Bollywood Hungama",
+        "width": 585,
+        "height": 439,
+        "year": 2010
       }
     ],
     "source": {
@@ -10957,20 +10641,20 @@
     },
     "images": [
       {
-        "localPath": "/celebrities/1576342ff4a544e7.webp",
+        "localPath": "/celebrities/63c4dd3ab48fbcab.webp",
         "previews": [
-          "data:image/webp;base64,UklGRugBAABXRUJQVlA4INwBAAAwEQCdASpAAFAAPnkulEYkoqIhMBTdmJAPCWMAuGPVyYib5uRgC/ri/kRIjGZ1ec3tDRVj/DlulYzZRtYvbIoTcRtVALZVeafPyjVGdsZ3WsZd6hQjonm3B8FLfHdCPERDLz4ZVv5Xotv47iCtbTAQ4Z5XWI3Jju8x8/Li7TJj9iq9spAaEjvAH2Nkm4HuHqnYAAD+YB5m5DvHdFh31fS93/r6tubKePlCdMJrGdlRKnM+RIEAsCLAt6b4cVdHaoCrvCtbL/KeaPtZ6XxWTbNY/BtGMjDUClKxvCOV2eLjJRajRBl5L+5SF992q4J1n2Z69vMYG75c+UAwwtMdCPLGSqfUbyjvSfddnNgyaHbxvPDNal6+ylOUtOpk6LnJmzPbzeLjAs1TNjqRGMoxJ3nkUiP/j5oIYWF8KwwT6mgQDoYNxPv2tdyKZsyCoO6BWPtomG0Dyg7jDPZ6gYmD29J3V3/qvkmIdqGCW6m0HRxGVoGdD9siSrjFnUZ8iocl8zx2YxN77epjX4PoKMT8zAbCs1dXAaIwK+xhd3UpcYbZFyFio7BfADQ6Cx6LcnBA7Y052+cy9oh/t1PvGgjdtGBYkK1l/Pizypi3AcWJVg1B8MfkcDh9R5AHzzm4AA==",
-          "/celebrities/1576342ff4a544e7-s2.webp",
-          "/celebrities/1576342ff4a544e7-s3.webp",
-          "/celebrities/1576342ff4a544e7-s4.webp"
+          "data:image/webp;base64,UklGRsQBAABXRUJQVlA4ILgBAABwEACdASpAAFAAPmkqkEYkIqGhN/quYIANCWMAt+u0kXGSjTTURD9Wqlln45iZaXoSMB+7J9HhKi6AYznO8ZWve5EvlgYHAycj0jBT9fQs19gH7vJJ6892Tkz4mbMNrdtkm0DYtJNRVOG7O1mag5A9JS+soSxFt8HtPSgNciY3CY7Q6/cSkl1QPSSyaAD+8WVTVbvPW3prOenySLl8RQzQcLZHjxPcSWq43Hr1TE5k3jyzkSsO8shKf+QaGCb8TTpFSSbglejs/Uf3Iy/IPbMVm84walNmhaZf8d8oPzEJ1TAai31C5d7oRHTT1sfEFmJmQx4sCosnF9i4xnExAaNmWWmnmrRLnth/MxALHNtJkCH1Dqdb5Fn6v+hcC88Qhm8YbKoUi/8BoTC8PXacXEjh4DP97VLvteQQxHqi1GMatszpCvauMVC780x3qSXbsw1EGibmNPus+UuDojiJlsxJ1DHMT7dsQi7e+zb6RNP6RVmpiO3hdi53VuyyexokLPef2LhxR3guquEpacfCeNMQ29dv0aJisOpUb27Rote48LXGfpQX7kVjGY+yK2GuMSUg0Wm92WxgAA==",
+          "/celebrities/63c4dd3ab48fbcab-s2.webp",
+          "/celebrities/63c4dd3ab48fbcab-s3.webp",
+          "/celebrities/63c4dd3ab48fbcab-s4.webp"
         ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chandran_Rutnam_with_Varalaxmy_Sarathkumar.jpg",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Varalaxmy_Sarathkumar_(cropped).jpg",
         "sourceName": "Wikimedia Commons",
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "attribution": "DayanKamal",
-        "width": 4032,
-        "height": 3024,
+        "width": 484,
+        "height": 640,
         "year": 2025
       }
     ],
@@ -11108,23 +10792,6 @@
         "width": 5184,
         "height": 3456,
         "year": 2017
-      },
-      {
-        "localPath": "/celebrities/c2610e4909ea86e5.webp",
-        "previews": [
-          "data:image/webp;base64,UklGRtABAABXRUJQVlA4IMQBAAAwEACdASpAAFAAPnkyk0akoyGhLnjsWJAPCUAXZm5BMvqMBe4ofJSPyReuKlLWCjhcz5NAMb3gEUKJ/9wAM7mIdfkScJ1EK6ORjr0TRYAd4u5nKeX+wIrl1lvzDUMG/lxLgVrYyJhRrruvZc4742zrMGQ8zWzpBgDPTe1SQSDg9cCZ6sKVuciViWAA/jyUV3M61VdNmNKdP/hs8np6r/9UD04OKjAHjaIGXwwOqifcP7DTu+atHOoMPYyk4QyQqcv83Cm3ttaGbfhp6mMwDOJdFpEL0Pg1SrxbFPyndqs5bTL0dAm4DPevpB8dEnOAkuyUkgs6cTR3zyniAJ2cSYB5onLiIJVr8qq/0Zqtqv1pihNy7wtvnPMmP3dTYGOvYmNA/bev6+T7iuZXXJxS/OLSm5PkRnfOzjEujVQyUIw1qRVlxWtmDkZ5oaYI34pj6z8vE67ysvbvUGQP7dN1staCQz+NCn/bAdPNVI1JnuoypgskYerfpvmxtnOdhDhA6mH+e+H5v3Rp0xeFv6+Qx1j9TDKMFNPRCmhI/+R6EJFY9q16U7kY3xeJ/UOqwFEbAhlMU+8W9dSdEMbvfdIWxhKABAAAAA==",
-          "/celebrities/c2610e4909ea86e5-s2.webp",
-          "/celebrities/c2610e4909ea86e5-s3.webp",
-          "/celebrities/c2610e4909ea86e5-s4.webp"
-        ],
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Daggubati_Venkatesh.jpg",
-        "sourceName": "Wikimedia Commons",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "attribution": "Bollywood Hungama",
-        "width": 585,
-        "height": 1080,
-        "year": 2013
       }
     ],
     "source": {

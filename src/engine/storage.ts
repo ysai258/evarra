@@ -46,9 +46,15 @@ export function removeStore(key: string): void {
 }
 
 export const STORAGE_KEYS = {
-  /** Legacy single-day record, migrated into `games` on first load. */
-  legacyGameState: 'evaru-ra:game',
-  /** Every day the player has touched, keyed by puzzle date. */
-  games: 'evaru-ra:games',
+  /**
+   * Every day the player has touched, keyed by puzzle date. Versioned: a stored day
+   * records which star it was, so when the roster or schedule changes the old record
+   * would pin a player to a puzzle that no longer exists. Bumping the key starts
+   * everyone fresh instead.
+   */
+  games: 'evarra:v3:games',
   seenHowToPlay: 'evaru-ra:seen-how-to-play',
 } as const;
+
+/** Progress written under earlier schedules; removed on load, never read. */
+export const RETIRED_STORAGE_KEYS = ['evaru-ra:game', 'evaru-ra:games', 'evarra:v2:games'] as const;

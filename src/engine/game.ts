@@ -2,7 +2,7 @@ import { availableHints } from './hints.ts';
 import { namesMatch } from './normalize.ts';
 import { MAX_ATTEMPTS } from './reveal.ts';
 import { calculateScore } from './scoring.ts';
-import { STORAGE_KEYS, readStore, removeStore, writeStore } from './storage.ts';
+import { RETIRED_STORAGE_KEYS, STORAGE_KEYS, readStore, removeStore, writeStore } from './storage.ts';
 import type { Celebrity, GameState } from './types.ts';
 
 /**
@@ -112,23 +112,17 @@ function isGameState(value: unknown): value is GameState {
 }
 
 /**
- * Reads every stored day, folding in the single-day record earlier versions wrote so
- * a returning player keeps the game they were part way through.
+ * Reads every stored day. Progress from an earlier schedule is discarded rather than
+ * migrated: its days point at stars the current schedule no longer shows.
  */
 export function loadArchive(): GameArchive {
+  for (const key of RETIRED_STORAGE_KEYS) removeStore(key);
+
   const stored = readStore<Record<string, unknown>>(STORAGE_KEYS.games, {});
   const archive: GameArchive = {};
   for (const [date, state] of Object.entries(stored)) {
     if (isGameState(state) && state.date === date) archive[date] = state;
   }
-
-  const legacy = readStore<unknown>(STORAGE_KEYS.legacyGameState, null);
-  if (isGameState(legacy) && !archive[legacy.date]) {
-    archive[legacy.date] = legacy;
-    writeStore(STORAGE_KEYS.games, archive);
-    removeStore(STORAGE_KEYS.legacyGameState);
-  }
-
   return archive;
 }
 
@@ -142,5 +136,5 @@ export function saveGame(state: GameState): void {
 
 export function clearGame(): void {
   removeStore(STORAGE_KEYS.games);
-  removeStore(STORAGE_KEYS.legacyGameState);
+  for (const key of RETIRED_STORAGE_KEYS) removeStore(key);
 }

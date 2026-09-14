@@ -151,7 +151,16 @@ describe('persistence', () => {
   });
 
   it('ignores a corrupted record', () => {
-    window.localStorage.setItem('evaru-ra:game', '{"date":"2026-09-12"}');
+    window.localStorage.setItem('evarra:v3:games', '{"2026-09-12":{"date":"2026-09-12"}}');
     expect(loadGame('2026-09-12')).toBeUndefined();
+  });
+
+  it('drops progress saved under an earlier schedule', () => {
+    const old = play(['a', 'b', 'c', 'd', 'e']);
+    window.localStorage.setItem('evaru-ra:games', JSON.stringify({ [old.date]: old }));
+    window.localStorage.setItem('evaru-ra:game', JSON.stringify(old));
+    expect(loadGame(old.date)).toBeUndefined();
+    expect(window.localStorage.getItem('evaru-ra:games')).toBeNull();
+    expect(window.localStorage.getItem('evaru-ra:game')).toBeNull();
   });
 });

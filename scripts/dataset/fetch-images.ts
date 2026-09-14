@@ -20,6 +20,7 @@ import {
   IMAGES_DIR, RAW, chunk, ensureDirs, getJson, httpGet, progress, readJson, requireStage,
   runStage, writeJson,
 } from './lib.ts';
+import { loadPhotoReview } from './photo-review.ts';
 import { rankedCandidates } from './ranking.ts';
 
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
@@ -210,14 +211,20 @@ async function main(): Promise<void> {
     }
   }
 
-  const titlesByPerson = new Map<string, { primary: Set<string>; all: Set<string> }>();
+  const review = loadPhotoReview();
+  const titlesByPerson = new Map<
+    string,
+    { primary: Set<string>; extra: Set<string>; all: Set<string> }
+  >();
   let listed = 0;
   let fetchedCategories = 0;
   for (const person of candidates) {
     const primary = new Set(
       person.imageFiles.map((file) => `File:${file.replace(/_/g, ' ')}`),
     );
-    const all = new Set(primary);
+    // Files a reviewer added by hand are always candidates, whatever the listing says.
+    const extra = new Set(review.extraCandidates[person.qid] ?? []);
+    const all = new Set([...primary, ...extra]);
     const previous = previousByQid.get(person.qid);
     if (previous) {
       for (const title of previous) all.add(title);
@@ -229,7 +236,7 @@ async function main(): Promise<void> {
       }
       for (const title of cache[person.commonsCategory]!) all.add(title);
     }
-    titlesByPerson.set(person.qid, { primary, all });
+    titlesByPerson.set(person.qid, { primary, extra, all });
     listed += 1;
     progress('commons categories', listed, candidates.length);
   }
@@ -257,10 +264,15 @@ async function main(): Promise<void> {
     // Wikidata's P18 is always kept, however it scores. It is the one image a human
     // chose to represent this person, and a 4000px group shot from their Commons
     // category should not be able to push it out of the running.
-    const primaries = ranked.filter((item) => item.primary);
+    // Reviewer-added files get the same guarantee, and reviewer-rejected ones never
+    // take a slot a usable photo could have had.
+    const usable = ranked.filter((item) => !review.rejected[item.title]);
+    const pinned = usable.filter((item) => item.primary || entry.extra.has(item.title));
     const scored = [
-      ...primaries,
-      ...ranked.filter((item) => !item.primary).slice(0, Math.max(0, KEEP_PER_PERSON - primaries.length)),
+      ...pinned,
+      ...usable
+        .filter((item) => !pinned.includes(item))
+        .slice(0, Math.max(0, KEEP_PER_PERSON - pinned.length)),
     ];
 
     scored.forEach((item, index) => {

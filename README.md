@@ -127,6 +127,10 @@ to today on load. Replaying is also what upholds the no-repeat guarantee: the ga
 depends on everything picked before a given day, so a date cannot be evaluated in
 isolation. Difficulty is mixed 60% easy / 30% medium / 10% hard.
 
+`SCHEDULE_SEED` is mixed into every pick. Changing it reshuffles the whole rotation, past
+days included, which is what a roster fix calls for; bump the `localStorage` key with it
+so nobody is shown a stored result for a star that day no longer has.
+
 Nothing about the answers is written to disk. `npm run puzzles:generate` only pins the
 launch date and prints a preview of the rotation — see [Security](#security) for why.
 
@@ -153,7 +157,7 @@ in London each get a new star at their own 00:00. The tab picks up the rollover
 without a reload.
 
 **Progress survives a refresh.** Every day you have opened is stored in `localStorage`
-under its own date (with an in-memory fallback for private-mode browsers that throw on
+under its own date, behind a versioned key (with an in-memory fallback for private-mode browsers that throw on
 access). A finished puzzle cannot be replayed.
 
 **Nothing scrolls — not the board, not the landing, and no inner panel either.** Both
@@ -287,6 +291,15 @@ the wrong face under X's name. Any candidate whose title names a different perso
 the dataset is rejected outright. Matching is on contiguous name tokens, so "Suhasini
 Maniratnam" does not collide with "Mani Ratnam", and a name inside the subject's own
 name never counts as someone else.
+
+**Every shipped crop is also checked by eye.** Automated checks cannot tell a ceremony
+photo where the star is side-on from a portrait of the dignitary standing next to them:
+the detector sees one clear face, the crop centres on it, and the game shows the wrong
+person. `scripts/dataset/photo-review.json` records the verdicts — files `rejected` are
+never used, files `approved` were seen to show only that person (so a missed face does
+not disqualify them), and `extraCandidates` adds Commons files the category listing did
+not surface. The fetch and validation stages both read it, so a rebuild keeps every
+verdict. Anyone left with no approved or clean photo drops out of the game.
 
 Face detection is used for cropping and for judging category scrapes, but a missed
 face is not by itself disqualifying. The detector only handles upright frontal faces —
