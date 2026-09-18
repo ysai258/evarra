@@ -52,6 +52,10 @@ Other commands:
 | `npm test` | Run the test suite once |
 | `npm run test:watch` | Watch mode |
 | `npm run qa` | Drive a real browser through a full game and write screenshots to `qa/` |
+| `npm run dev:server` | The multiplayer room server, with reload, on `:8787` |
+| `npm run dev:all` | Both dev servers at once |
+| `npm run server` | The room server, without reload |
+| `npm run qa:mp` | Drive two real browsers through a whole multiplayer room |
 | `npm run dataset:report` | Print a summary of the built dataset |
 
 ---
@@ -173,6 +177,114 @@ excepting the suggestion dropdown and modals, where one is expected.
 
 ---
 
+## Multiplayer
+
+**🎮 Play with friends.** One person makes a room, shares a six-character code or the
+link that goes with it, and everyone guesses the same star at the same moment. No
+account, no sign-up — a name is the whole registration.
+
+```
+create a room  →  share AB7K9Q  →  friends join  →  host picks 5–20 questions
+               →  3, 2, 1  →  everyone guesses the same face
+               →  answer + leaderboard for ten seconds  →  next  →  final board
+```
+
+**Everything that decides the game is decided on the server.** Room state, which star
+each question is, when a question starts and ends, what a guess was worth — all of it
+lives in `server/room-manager.ts`. The browser renders and sends; it is never asked
+what it thinks the score or the time is.
+
+**The timer is two timestamps, not a countdown.** The server declares `startedAt` and
+`endsAt` and each client renders `endsAt − now` against a clock it has synchronised
+against the server's. A phone that sleeps for ten seconds wakes up to the right number
+instead of a stale one, and a device whose clock is an hour out still sees the same
+countdown as everyone else. `startedAt` is set three seconds in the future, which *is*
+the 3-2-1 — one timestamp rather than two things that have to be kept in step.
+
+**The picture clears on the clock, not on your mistakes.** In the daily game a wrong
+guess buys you clarity. In a room that would be a free clue for everyone else, so the
+blur ladder is driven by elapsed time instead: same face, same sharpness, same second,
+for everyone. The clear photograph lands exactly on the buzzer, so while anyone can
+still answer, nobody has seen it.
+
+**You can guess as often as you like — and pay for it.** Each wrong guess costs 80, the
+same as it costs in the daily game, which is what keeps an early stab a gamble rather
+than a free roll. Five misses puts you on the floor.
+
+```
+base  = 500 − stage×80 − misses×80        (floor 100)
+final = base × (1 + 0.5 × time remaining / question length)
+```
+
+The +50% cap is load-bearing. A stage is never free — reaching stage 1 has already cost
+a quarter of the clock — so once the reachable time window for each stage is accounted
+for, the score bands do not overlap at all: the worst answer at one stage still beats
+the best answer at the next. Blur decides the ranking; the clock only orders players
+within a stage. Raising that cap much past 0.5 would quietly delete the mechanic, which
+is why a test holds it there.
+
+**The answer never reaches the browser before the reveal.** This is harder than it
+sounds, because the dataset *is* in the bundle — the guess box could not autocomplete
+otherwise — so an image URL like `/celebrities/a0b0…-s2.webp` appears in
+`celebrities.json` right next to the name it belongs to. Sending one would be sending
+the answer.
+
+So the server hands out no filenames. Each question is minted with an opaque random
+token and the bytes come back through `/mp/asset/:token/:stage`, which **refuses any
+stage the room's clock has not reached**. That refusal is the actual protection: the
+token is a veil, not a key.
+
+**Dropping out is not leaving.** A refresh or a tunnel keeps your seat, your score and
+your answer for thirty seconds; the room says "reconnecting…" and carries on. Losing
+the host does not end anything — the server owns the game, and in the lobby the role
+passes to whoever has been there longest.
+
+### Running it
+
+```bash
+npm run dev:all       # the site on :5173 and the room server on :8787
+```
+
+Two browsers, or one browser and a private window, is enough to play a room.
+`npm run qa:mp` drives two real browsers through a whole game and writes screenshots to
+`qa/`.
+
+### Deploying it
+
+The daily game is files, and files are all GitHub Pages and Vercel can serve. A room is
+a process: it has to hold a clock, own the answers and stay alive between requests.
+**Neither host can run it**, so the room server deploys separately — any host that runs
+a long-lived Node process (Fly.io, Render, Railway, a VPS) will do.
+
+```bash
+MULTIPLAYER_ORIGINS=https://ysai258.github.io npm run server
+```
+
+Then point the site at it by setting a `MULTIPLAYER_URL` repository *variable* in
+GitHub → Settings → Secrets and variables → Actions → Variables. The deploy workflow
+passes it through as `VITE_MULTIPLAYER_URL`.
+
+Two things to know before it carries real traffic:
+
+- **Rooms live in memory, so this is a single instance.** Two of these behind a load
+  balancer would each hold half the rooms and neither would know it. Scaling out means a
+  Redis adapter and a shared room store — a game for a group of friends does not need
+  it, and pretending otherwise would be architecture for its own sake.
+- **The server serves the photographs**, so it needs the repository's `public/` next to
+  it. That is what lets it answer with bytes instead of a filename.
+
+**With no server configured, nothing breaks.** The multiplayer screens say the mode is
+unavailable and the daily game behaves exactly as it always has — it does not know the
+room server exists.
+
+### Deep links
+
+`/room/AB7K9Q` is a real URL people paste into group chats, but no file sits at that
+path. GitHub Pages serves `404.html` for anything missing, so the build writes a copy
+of `index.html` there; Vercel does the same job with a rewrite in `vercel.json`.
+
+---
+
 ## Architecture
 
 ```
@@ -198,6 +310,16 @@ scripts/dataset/
   generate-assets.ts        face-centred 4:5 WebP crops
   build-dataset.ts          assemble, rank, deduplicate, write
   generate-puzzles.ts       the repeat-safe daily schedule
+src/multiplayer/
+  config.ts / scoring.ts / stage.ts / code.ts / name.ts
+                            room rules — pure, shared by browser and server
+  protocol.ts               every socket event and its payload, typed once
+  client/                   the socket, the session, and the five room screens
+server/
+  index.ts                  HTTP + Socket.IO, and the token image route
+  room-manager.ts           the authoritative state machine
+  questions.ts              which stars a game is played with
+  assets.ts                 blurred bytes, without a filename attached
 ```
 
 **Look:** retro screen-print — flat poster inks, hard un-blurred offset shadows, a
@@ -209,8 +331,9 @@ green and lemon as the four colours — which also means nothing on the page com
 with the photograph for brightness.
 
 **Stack:** React 19 + TypeScript on Vite, Vitest and Testing Library for tests, sharp
-for image processing, picojs for face detection during ingestion. No backend, no
-accounts, no analytics, no dependencies at runtime beyond React.
+for image processing, picojs for face detection during ingestion. The daily game has no
+backend, no accounts and no analytics; multiplayer adds one small Node process and
+Socket.IO, and nothing else (see [Multiplayer](#multiplayer)).
 
 ---
 
@@ -371,6 +494,9 @@ None are required. The game builds and runs with no configuration.
 | `DATASET_CONTACT` | No | Contact address added to the ingestion scripts' `User-Agent`. Wikimedia's policy asks automated clients to identify themselves; set it if you are going to run the pipeline repeatedly. |
 | `LAUNCH_DATE` | No | `YYYY-MM-DD` first puzzle day, and the floor of the archive. Defaults to the date already pinned in `src/data/launch.json`, or today on a first-ever run. |
 | `QA_URL` | No | Where `npm run qa` points its browser. Defaults to `http://localhost:5173`. |
+| `VITE_MULTIPLAYER_URL` | No | Where the browser looks for the room server. Defaults to `http://localhost:8787` in `npm run dev`. Unset in a production build, multiplayer reports itself unavailable and the daily game is untouched. |
+| `MULTIPLAYER_PORT` | No | Port the room server listens on. Defaults to `8787`. |
+| `MULTIPLAYER_ORIGINS` | No | Comma-separated origins allowed to connect. Unset means any — right for a dev machine, wrong for a public one. |
 
 `.env.example` documents this. There are no API keys anywhere in the project.
 
@@ -402,6 +528,29 @@ three things screenshots alone would hide:
   against the page's real resource log rather than just the DOM,
 - the page scrolling by even a pixel with all five clues open.
 
+**Multiplayer** adds its own layers. The room rules — scoring, the blur ladder, room
+codes, name handling — are pure functions and tested as such; the state machine is
+driven through a whole game against a clock the test owns, covering host transfer, the
+join and guess validations, early completion, reconnection and cleanup. One suite stands
+up a real Socket.IO server and plays three genuine clients through a full game, which is
+the only thing that proves the protocol, the handlers and the state machine agree with
+each other.
+
+Two properties get tests of their own because breaking them would be silent:
+
+- **The score bands per stage do not overlap**, so blur outranks the clock. The first
+  attempt at this test asserted something unreachable — "stage 1 with the full timer
+  left" cannot happen — and finding that out is what produced the invariant the code now
+  states.
+- **The clear photograph is unreachable while anyone can still answer.** The image gate
+  is asserted directly against the room's clock, not inferred from the UI.
+
+`npm run qa:mp` is the multiplayer manual-QA harness: two real browsers, a room created
+and joined through the invite link, the 3-2-1 arriving in both at once, a guess charged
+for, and the reveal and final leaderboard on screen. It cannot know the answer — that is
+the point of the token route — so it handles being right or wrong, and fails if one
+player's guess shows up on another player's screen.
+
 ---
 
 ## Accessibility
@@ -412,6 +561,13 @@ answers are announced through a live region and never signalled by colour alone.
 blurred photo's alt text describes the blur level without naming the star.
 `prefers-reduced-motion` collapses the shake, the reveal transition and the score
 count-up.
+
+In a room the countdown is the hard part. The number changes four times a second, and
+announcing every one of those would make the mode unusable with a screen reader — so the
+visible timer is hidden from assistive technology and a live region carries the same
+information at a pace a person can follow, at thirty, twenty, ten and five seconds. The
+guess box is the daily game's combobox, unchanged. `prefers-reduced-motion` also puts
+the final leaderboard up in one piece instead of staggering it.
 
 ---
 
@@ -431,10 +587,26 @@ ever matters.
 
 Today's answer is never in the page metadata, and the share text never names the star.
 
+**Multiplayer is stricter, because it can afford to be.** A room has a server, so the
+answer does not have to travel with the question: images come back through an opaque
+per-question token, and the server refuses any blur stage the room's clock has not
+reached. Guesses are validated, timestamped and scored server-side; room creation,
+joining and guessing are rate-limited per connection; names are length-checked and
+stripped of control characters; and room codes come from `crypto.getRandomValues`
+rather than a counter. None of it needs an account, and none of it is a substitute for
+the fact that this is a game between friends rather than a system holding anything
+valuable.
+
 ---
 
 ## Known limitations
 
+- **Multiplayer needs a process, and the daily game does not.** That asymmetry is the
+  feature's real cost: the site still deploys to a CDN for free, but rooms only work
+  where a Node process is running, on a single instance, with the image assets beside
+  it.
+- **A room is locked once it starts.** Late arrivals and spectators are turned away
+  rather than dropped into a game with fewer questions behind them.
 - **Cropping is good, not perfect.** picojs finds upright frontal faces; profile and
   heavily stylised archive photographs fall back to a saliency crop, which
   occasionally frames loosely.
