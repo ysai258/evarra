@@ -13,5 +13,15 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/multiplayer",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/room/:code",
+      "destination": "/index.html"
+    }
   ]
 }

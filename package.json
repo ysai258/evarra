@@ -6,8 +6,11 @@
   "description": "EVARRA? \u2014 a daily progressive-blur Telugu cinema face guessing game.",
   "scripts": {
     "dev": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "dev:all": "npm run dev:server & npm run dev",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
     "preview": "vite preview",
+    "server": "tsx server/index.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -20,11 +23,14 @@
     "dataset:report": "tsx scripts/dataset/report.ts",
     "dataset:all": "npm run dataset:discover && npm run dataset:fetch && npm run dataset:images && npm run dataset:validate && npm run dataset:assets && npm run dataset:build && npm run puzzles:generate",
     "puzzles:generate": "tsx scripts/dataset/generate-puzzles.ts",
-    "qa": "tsx scripts/qa/play.ts"
+    "qa": "tsx scripts/qa/play.ts",
+    "qa:mp": "tsx scripts/qa/multiplayer.ts"
   },
   "dependencies": {
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.1",

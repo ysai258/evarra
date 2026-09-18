@@ -44,6 +44,12 @@ jobs:
         run: npm run build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
+          # Where the multiplayer room server lives. Pages can only serve files, so
+          # the room server is deployed separately (see README "Multiplayer"); this
+          # tells the built site where to find it. Leave the variable unset and the
+          # site still deploys — multiplayer simply reports itself unavailable, and
+          # the daily game is untouched either way.
+          VITE_MULTIPLAYER_URL: ${{ vars.MULTIPLAYER_URL }}
 
       - uses: actions/configure-pages@v5
 

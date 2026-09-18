@@ -20,5 +20,5 @@
     "exactOptionalPropertyTypes": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "scripts", "vite.config.ts", "vitest.config.ts"]
+  "include": ["src", "server", "scripts", "vite.config.ts", "vitest.config.ts"]
 }

@@ -6,7 +6,15 @@ type GuessInputProps = {
   celebrities: readonly Celebrity[];
   disabled: boolean;
   attemptsLeft: number;
-  onGuess: (name: string) => void;
+  /**
+   * The chosen star comes through alongside its name. The daily game only needs the
+   * name, but multiplayer sends an id over the wire, and re-deriving one from the
+   * other would break the moment two stars share a display name.
+   */
+  onGuess: (name: string, celebrity: Celebrity) => void;
+  /** Overrides the attempts-based label for modes that do not count attempts. */
+  ariaLabel?: string;
+  placeholder?: string;
 };
 
 const MAX_SUGGESTIONS = 7;
@@ -24,7 +32,9 @@ const ROLE: Record<Celebrity['category'], string> = {
  * an attempt to a spelling mistake. Implements the ARIA combobox pattern so it works
  * with a keyboard and a screen reader as well as a thumb.
  */
-export function GuessInput({ celebrities, disabled, attemptsLeft, onGuess }: GuessInputProps) {
+export function GuessInput({
+  celebrities, disabled, attemptsLeft, onGuess, ariaLabel, placeholder,
+}: GuessInputProps) {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
@@ -40,7 +50,7 @@ export function GuessInput({ celebrities, disabled, attemptsLeft, onGuess }: Gue
 
   function choose(celebrity: Celebrity | undefined) {
     if (!celebrity || disabled) return;
-    onGuess(celebrity.name);
+    onGuess(celebrity.name, celebrity);
     setQuery('');
     setOpen(false);
     setActive(0);
@@ -106,8 +116,9 @@ export function GuessInput({ celebrities, disabled, attemptsLeft, onGuess }: Gue
           aria-controls={listId}
           aria-autocomplete="list"
           aria-activedescendant={showList && suggestions.length > 0 ? `${listId}-${active}` : undefined}
-          aria-label={`Guess the celebrity. ${attemptsLeft} ${attemptsLeft === 1 ? 'guess' : 'guesses'} left.`}
-          placeholder="Search a Telugu star…"
+          aria-label={ariaLabel
+            ?? `Guess the celebrity. ${attemptsLeft} ${attemptsLeft === 1 ? 'guess' : 'guesses'} left.`}
+          placeholder={placeholder ?? 'Search a Telugu star…'}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="words"

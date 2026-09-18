@@ -1,10 +1,25 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore,
+} from 'react';
 import { ArchivePanel } from './components/ArchivePanel.tsx';
 import { GameBoard } from './components/GameBoard.tsx';
 import { HowToPlay } from './components/HowToPlay.tsx';
 import { InfoPanel, type InfoPage } from './components/InfoPanel.tsx';
 import { Landing } from './components/Landing.tsx';
 import { StatsPanel } from './components/StatsPanel.tsx';
+import { DAILY_ROUTE, currentRoute, navigate, subscribeToRoute } from './router.ts';
+
+/**
+ * Multiplayer is loaded only when someone asks for it.
+ *
+ * It drags in a socket client and five screens the daily player will never see, and
+ * the daily puzzle is the thing most people open. Splitting it keeps their first paint
+ * as cheap as it was before rooms existed; the cost is a brief spinner for the far
+ * smaller number of people heading for a room.
+ */
+const MultiplayerApp = lazy(async () => ({
+  default: (await import('./multiplayer/client/MultiplayerApp.tsx')).MultiplayerApp,
+}));
 import {
   celebrities, datasetError, launchDate, playableCelebrities, scheduleThrough,
 } from './data/index.ts';
@@ -27,7 +42,17 @@ function dateFromUrl(): string | undefined {
   return value ?? undefined;
 }
 
+/**
+ * The current route, as a subscription rather than state: `useSyncExternalStore` keeps
+ * it correct through back, forward and the programmatic pushes in `navigate`, without
+ * an effect that has to remember to re-read after every one of them.
+ */
+function useRoute() {
+  return useSyncExternalStore(subscribeToRoute, currentRoute, () => DAILY_ROUTE);
+}
+
 export function App() {
+  const route = useRoute();
   const problem = datasetError();
   // Until the server's clock has been read, nothing is shown: rendering against the
   // device clock first would give a wound-forward device a glimpse of a future star.
@@ -134,6 +159,45 @@ export function App() {
     setOverlay('none');
   }
 
+  // Multiplayer runs on the server's clock, not the daily puzzle's, so it does not
+  // wait behind the date check that guards today's star.
+  if (route.name === 'multiplayer' || route.name === 'room') {
+    return (
+      <div className="app">
+        <header className="topbar">
+          <button
+            type="button"
+            className="wordmark"
+            onClick={() => navigate({ name: 'daily' })}
+            aria-label="EVARRA? — back to the home screen"
+          >
+            <span className="wordmark__en">EVARRA?</span>
+            <span className="wordmark__te telugu">ఎవర్రా?</span>
+          </button>
+        </header>
+        <Suspense
+          fallback={(
+            <main className="error-screen">
+              <p className="loading telugu">ఒరేయ్…</p>
+            </main>
+          )}
+        >
+          <MultiplayerApp route={route} roster={playableCelebrities} onToast={showToast} />
+        </Suspense>
+        <footer className="footer footer--compact">
+          <span className="footer__links">
+            <button type="button" onClick={() => setOverlay('about')}>About</button>
+            <button type="button" onClick={() => setOverlay('privacy')}>Privacy</button>
+          </span>
+        </footer>
+        {(overlay === 'about' || overlay === 'privacy' || overlay === 'contact') && (
+          <InfoPanel page={overlay} onClose={() => setOverlay('none')} />
+        )}
+        {toast && <output className="toast">{toast}</output>}
+      </div>
+    );
+  }
+
   if (!clockReady && !problem) {
     return (
       <div className="app">
@@ -174,6 +238,14 @@ export function App() {
           <button
             type="button"
             className="icon-button"
+            onClick={() => navigate({ name: 'multiplayer' })}
+            aria-label="Play with friends"
+          >
+            🎮
+          </button>
+          <button
+            type="button"
+            className="icon-button"
             onClick={() => setOverlay('archive')}
             aria-label="Past stars"
           >
@@ -206,6 +278,7 @@ export function App() {
           stats={stats}
           catchUpCount={unplayedCount(days.filter((day) => !day.isToday))}
           onBrowseArchive={() => setOverlay('archive')}
+          onPlayWithFriends={() => navigate({ name: 'multiplayer' })}
         />
       ) : celebrity && game ? (
         <GameBoard

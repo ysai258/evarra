@@ -383,6 +383,10 @@ button { cursor: pointer; }
 
 .button--primary:hover:not(:disabled) { background: #7590ff; }
 
+/* A disabled button gives up its fill, so a primary one has to give up its dark ink
+   with it — paper on paper is a button with no label at all. */
+.button--primary:disabled { color: var(--ink); }
+
 .button--ghost {
   background: transparent;
   box-shadow: var(--shadow-press);
@@ -1302,4 +1306,526 @@ button { cursor: pointer; }
   border-radius: var(--radius);
   background: var(--paper);
   font-size: 13px;
+}
+
+/* ------------------------------------------------------------- multiplayer
+
+   Same press, same inks. A room is still a poster: flat colour, hard offset shadow,
+   monospace for anything you have to read aloud or type in.
+
+   The one new idea is the room code, which is set large and monospaced because it gets
+   shouted across a sofa as often as it gets tapped.
+   --------------------------------------------------------------------------- */
+
+.mp {
+  width: var(--shell);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mp-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.mp-banner,
+.mp-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-press);
+}
+
+.mp-banner { background: var(--sun); color: var(--paper); }
+.mp-error { background: var(--alert); color: var(--paper); }
+
+.mp-error button {
+  flex: none;
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------- multiplayer entry */
+
+.mp-landing {
+  width: var(--shell);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  padding: 8px 0 20px;
+}
+
+.mp-landing__head { text-align: center; }
+
+.mp-landing__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(27px, 7vw, 38px);
+  letter-spacing: -1.4px;
+  color: var(--ink);
+}
+
+.mp-landing__sub {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+
+.mp-landing__invite {
+  margin: 0;
+  padding: 10px 12px;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.mp-landing__invite b { font-family: var(--font-mono); font-size: 19px; color: var(--sun); }
+
+.mp-landing__choice,
+.mp-form { display: flex; flex-direction: column; gap: 12px; }
+
+.mp-landing__back { margin-top: auto; }
+
+.mp-field { display: flex; flex-direction: column; gap: 5px; }
+
+.mp-field__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.mp-field__help { font-size: 12px; color: var(--ink-faint); }
+
+.mp-input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 16px; /* 16px or iOS zooms the page on focus. */
+  font-weight: 600;
+  box-shadow: var(--shadow-press);
+}
+
+.mp-input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+.mp-input.mp-mono { font-size: 21px; letter-spacing: 4px; text-align: center; }
+
+/* ----------------------------------------------------------------- the code */
+
+.mp-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 12px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-lg);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow);
+}
+
+.mp-code__label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--ink-faint);
+}
+
+.mp-code__value {
+  padding: 2px 10px;
+  border: none;
+  background: transparent;
+  color: var(--sun);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(34px, 11vw, 46px);
+  letter-spacing: 7px;
+  /* The letter-spacing pads the right edge; pull it back so the code looks centred. */
+  text-indent: 7px;
+}
+
+.mp-code__actions { display: flex; gap: 8px; width: 100%; }
+
+.mp-code__hint { margin: 0; font-size: 12px; color: var(--ink-faint); text-align: center; }
+
+/* ---------------------------------------------------------------- the lobby */
+
+.mp-lobby {
+  width: var(--shell);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+.mp-panel {
+  padding: 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-press);
+}
+
+.mp-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.mp-count {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-soft);
+}
+
+.mp-players { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.mp-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mp-player--away { color: var(--ink-faint); }
+
+.mp-player__dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.mp-player__dot--away { background: var(--sun); animation: pulse 1.4s ease-in-out infinite; }
+
+.mp-player__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mp-player__you { color: var(--ink-faint); font-weight: 400; }
+
+.mp-player__solved { color: var(--green); font-weight: 700; }
+
+.mp-player__status { font-family: var(--font-mono); font-size: 10px; color: var(--sun); }
+
+.mp-settings { display: grid; gap: 10px; }
+
+.mp-settings__readonly { margin: 0; font-size: 15px; color: var(--ink-soft); }
+
+.mp-stepper { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+.mp-stepper__label { font-size: 14px; font-weight: 600; }
+
+.mp-stepper__control { display: flex; align-items: center; gap: 6px; }
+
+.mp-stepper__button {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mp-stepper__button:disabled { opacity: .35; border-style: dashed; }
+
+.mp-stepper__value {
+  min-width: 46px;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--sun);
+}
+
+.mp-lobby__actions { display: flex; flex-direction: column; gap: 8px; }
+
+.mp-hint, .mp-waiting { margin: 0; font-size: 13px; color: var(--ink-faint); text-align: center; }
+
+.mp-waiting { padding: 12px 0; font-size: 15px; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------- the question */
+
+.mp-game__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.mp-timer { font-size: 21px; font-weight: 700; color: var(--ink); }
+
+.mp-timer--urgent { color: var(--alert); animation: pulse .9s ease-in-out infinite; }
+
+.mp-game__answered { color: var(--green); }
+
+/* The 3-2-1, painted over the photo so the first frame everyone sees is identical. */
+.mp-countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(5 4 12 / .72);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+
+.game__stage { position: relative; }
+
+.mp-countdown__number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(70px, 22vw, 120px);
+  color: var(--sun);
+  text-shadow: var(--shadow-lg);
+  animation: countdown-pop .95s ease-out both;
+}
+
+@keyframes countdown-pop {
+  from { transform: scale(.55); opacity: 0; }
+  40% { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.06); opacity: .85; }
+}
+
+.mp-worth { margin: 0; font-size: 13px; color: var(--ink-soft); text-align: center; }
+
+.mp-worth b { color: var(--sun); font-size: 17px; }
+
+.mp-worth__misses { color: var(--alert); }
+
+.mp-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 12px;
+  border: 2px solid var(--green);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-press);
+}
+
+.mp-locked__title { margin: 0; font-family: var(--font-display); font-size: 21px; font-weight: 700; color: var(--green); }
+
+.mp-locked__score { margin: 0; font-size: 30px; font-weight: 700; color: var(--sun); }
+
+.mp-locked__wait { margin: 0; font-size: 13px; color: var(--ink-faint); }
+
+.mp-game__players { max-height: 22vh; overflow-y: auto; }
+
+/* --------------------------------------------------------------- the reveal */
+
+.mp-reveal__next { font-size: 12px; color: var(--sun); }
+
+.mp-answer { text-align: center; }
+
+.mp-answer__label {
+  margin: 0 0 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--ink-faint);
+}
+
+.mp-board { margin-top: 10px; }
+
+.mp-board__title {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.mp-board__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+
+.mp-board__row {
+  display: grid;
+  grid-template-columns: 26px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  font-size: 14px;
+  animation: row-in .3s ease-out both;
+}
+
+.mp-board--totals .mp-board__row { grid-template-columns: 26px 1fr auto; }
+
+.mp-board__row--you { outline: 2px solid var(--blue); }
+
+.mp-board__rank { text-align: center; }
+
+.mp-board__name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mp-board__detail { font-size: 11px; color: var(--ink-faint); }
+
+.mp-board__score { font-weight: 700; color: var(--sun); }
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------- final results */
+
+.mp-final {
+  width: var(--shell);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-bottom: 14px;
+}
+
+.mp-final__head { text-align: center; }
+
+.mp-final__label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 7vw, 34px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--sun);
+}
+
+.mp-final__place { margin: 4px 0 0; font-size: 15px; color: var(--ink-soft); }
+
+.mp-final__board { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.mp-final__row {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow-press);
+  /* Rows land one at a time; `--in` is added as each is revealed. */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s, transform .3s;
+}
+
+.mp-final__row--in { opacity: 1; transform: none; }
+
+.mp-final__row--winner { background: var(--sun); color: var(--paper); box-shadow: var(--shadow); }
+
+.mp-final__row--winner .mp-final__score { color: var(--paper); }
+
+.mp-final__row--you { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+.mp-final__rank { font-size: 20px; text-align: center; }
+
+.mp-final__name { font-weight: 700; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mp-final__score { font-weight: 700; font-size: 18px; color: var(--sun); }
+
+.mp-final__meta { margin: 0; text-align: center; font-size: 12px; color: var(--ink-faint); }
+
+.mp-card {
+  padding: 12px;
+  border: 2px dashed var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper-bright);
+}
+
+.mp-card__title {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--alert);
+}
+
+.mp-card__list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 3px; }
+
+.mp-card__row {
+  display: grid;
+  grid-template-columns: 34px 20px 1fr;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.mp-card__row span:last-child { text-align: right; color: var(--sun); font-weight: 600; }
+
+.mp-final__actions { display: flex; flex-direction: column; gap: 8px; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+/* On a wide screen the room sits beside the photograph, exactly as the clues do in
+   the daily game — the picture stays the biggest thing on the page. */
+@media (min-width: 720px) {
+  .mp,
+  .mp-lobby,
+  .mp-final { width: min(760px, 100%); }
+
+  .mp-game__players { max-height: none; }
+
+  .mp-landing { width: var(--shell); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mp-countdown__number,
+  .mp-board__row,
+  .mp-final__row { animation: none; transition: none; }
+
+  .mp-final__row { opacity: 1; transform: none; }
+
+  .mp-player__dot--away,
+  .mp-timer--urgent { animation: none; }
 }

@@ -12,10 +12,11 @@ type LandingProps = {
   /** Past days still waiting to be played. */
   catchUpCount: number;
   onBrowseArchive: () => void;
+  onPlayWithFriends: () => void;
 };
 
 export function Landing({
-  onPlay, hasProgress, preview, stats, catchUpCount, onBrowseArchive,
+  onPlay, hasProgress, preview, stats, catchUpCount, onBrowseArchive, onPlayWithFriends,
 }: LandingProps) {
   const stage = stageAt(0);
   const poster = preview?.images[0];
@@ -57,6 +58,11 @@ export function Landing({
         <div className="landing__actions">
           <button type="button" className="button button--primary" onClick={onPlay}>
             {hasProgress ? 'Continue today’s star' : 'Play today'}
+          </button>
+          {/* The daily star is still the headline act; this is the second button, not
+              a competing one (spec §96). */}
+          <button type="button" className="button button--ghost" onClick={onPlayWithFriends}>
+            🎮 Play with friends
           </button>
           {catchUpCount > 0 && (
             <button type="button" className="button button--ghost" onClick={onBrowseArchive}>
