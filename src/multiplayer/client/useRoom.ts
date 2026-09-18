@@ -2,7 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ERROR_MESSAGES, type Ack, type ErrorCode, type GuessResultPayload, type JoinedPayload } from '../protocol.ts';
 import type { RoomView } from '../types.ts';
 import { clearSession, loadSession, rememberName, saveSession } from './session.ts';
-import { connect, request, syncClock, type MultiplayerSocket } from './socket.ts';
+import {
+  connect, isMultiplayerConfigured, request, syncClock, type MultiplayerSocket,
+} from './socket.ts';
 
 /**
  * The client's whole relationship with a room.
@@ -51,6 +53,17 @@ export function useRoom(): RoomHandle {
   const identity = useRef<{ code: string; playerId: string; token: string }>(null);
 
   useEffect(() => {
+    /**
+     * A build with no room server configured still renders this hook — the screen that
+     * explains the situation is below it, and a hook cannot be skipped. So the check
+     * belongs here: connecting would throw inside the effect and take the whole tree
+     * down with it, leaving a blank page instead of the explanation.
+     */
+    if (!isMultiplayerConfigured()) {
+      setConnection('offline');
+      return;
+    }
+
     const socket = connect();
     socketRef.current = socket;
     setConnection('connecting');
