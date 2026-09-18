@@ -31,12 +31,26 @@ async function shot(page: Page, name: string): Promise<void> {
  */
 async function expectPhoto(page: Page, where: string): Promise<void> {
   const image = page.locator('img.stage__image').last();
-  await image.waitFor({ state: 'visible', timeout: 10_000 });
-  const ok = await image.evaluate((node) => {
-    const img = node as HTMLImageElement;
-    return img.complete && img.naturalWidth > 0;
-  });
-  if (!ok) throw new Error(`${where}: the photo did not load from the room server`);
+  await image.waitFor({ state: 'visible', timeout: 15_000 });
+  // Wait for the decode rather than asserting on it. Against a real deployment the
+  // reveal is the full-resolution photograph coming from another continent, and an
+  // assertion taken the instant the element appears is testing the network, not the
+  // game — which is what it did on the first run against production.
+  try {
+    await image.evaluate(
+      (node) => {
+        const img = node as HTMLImageElement;
+        if (img.complete && img.naturalWidth > 0) return true;
+        return new Promise((resolve, reject) => {
+          img.addEventListener('load', () => resolve(true), { once: true });
+          img.addEventListener('error', () => reject(new Error('image failed')), { once: true });
+        });
+      },
+      { timeout: 20_000 },
+    );
+  } catch {
+    throw new Error(`${where}: the photo never arrived from the room server`);
+  }
 }
 
 async function join(browser: Browser, url: string, name: string): Promise<Page> {
@@ -44,6 +58,13 @@ async function join(browser: Browser, url: string, name: string): Promise<Page> 
   const page = await context.newPage();
   page.on('console', (message) => {
     if (message.type() === 'error') console.log(`  ! ${name}: ${message.text()}`);
+  });
+  // The image route is the one thing a screenshot cannot vouch for: a refused stage
+  // and a slow one look identical on screen, so every non-200 is named here.
+  page.on('response', (response) => {
+    if (response.url().includes('/mp/asset/') && !response.ok()) {
+      console.log(`  ! ${name}: asset ${response.status()} ${new URL(response.url()).pathname}`);
+    }
   });
   await page.goto(url);
   return page;
