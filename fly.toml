@@ -1,0 +1,61 @@
+# The EVARRA? room server on Fly.io.
+#
+# Deploy:
+#   fly auth login
+#   fly launch --copy-config --no-deploy   # once, to claim the app name
+#   fly deploy
+#
+# Then set MULTIPLAYER_URL as a repository *variable* in GitHub (Settings → Secrets
+# and variables → Actions → Variables) to this app's URL, and push. The deploy
+# workflow passes it to the build as VITE_MULTIPLAYER_URL.
+
+app = 'evarra-rooms'
+primary_region = 'bom'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[env]
+  MULTIPLAYER_PORT = '8787'
+  # Only the deployed game may open rooms here. Unset would mean any origin, which is
+  # right on a dev machine and wrong on a public one.
+  MULTIPLAYER_ORIGINS = 'https://ysai258.github.io'
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+
+  # ---------------------------------------------------------------------------
+  # Every setting below exists for one reason: rooms live in this process's memory.
+  #
+  # A second machine would hold its own rooms and know nothing of the first, so half
+  # the players would be told their friend's room does not exist. And a machine that
+  # stops to save money takes every live game with it — including the timers that
+  # advance a question. So: exactly one machine, always awake.
+  #
+  # This is the trade-off the README calls out. Scaling past one means a Redis
+  # adapter and a shared room store, which a game between friends does not need.
+  # ---------------------------------------------------------------------------
+  auto_stop_machines = 'off'
+  auto_start_machines = false
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = 'connections'
+    # Sockets are long-lived, so these count players in rooms rather than requests in
+    # flight. Twenty players a room, and rooms are swept after 30 minutes idle.
+    soft_limit = 200
+    hard_limit = 400
+
+[[http_service.checks]]
+  grace_period = '10s'
+  interval = '30s'
+  method = 'GET'
+  timeout = '5s'
+  path = '/health'
+
+[[vm]]
+  # The smallest machine Fly offers, which is more than this needs: the work is
+  # relaying small JSON messages and serving image files that are under 20 KB.
+  size = 'shared-cpu-1x'
+  memory = '512mb'

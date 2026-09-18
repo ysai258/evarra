@@ -264,6 +264,15 @@ docker run -p 8787:8787 -e MULTIPLAYER_ORIGINS=https://ysai258.github.io evarra-
 The `Dockerfile` is the whole deployment — hand it to Fly.io, Render, Railway or a
 VPS and it runs unchanged. `npm run server` does the same thing without a container.
 
+`fly.toml` is set up for Fly.io in particular, pinned to a single always-on machine for
+the reason below:
+
+```bash
+fly auth login
+fly launch --copy-config --no-deploy   # once, to claim the app name
+fly deploy
+```
+
 Then point the site at it by setting a `MULTIPLAYER_URL` repository *variable* in
 GitHub → Settings → Secrets and variables → Actions → Variables. The deploy workflow
 passes it through as `VITE_MULTIPLAYER_URL`.
