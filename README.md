@@ -257,8 +257,12 @@ a process: it has to hold a clock, own the answers and stay alive between reques
 a long-lived Node process (Fly.io, Render, Railway, a VPS) will do.
 
 ```bash
-MULTIPLAYER_ORIGINS=https://ysai258.github.io npm run server
+docker build -t evarra-rooms .
+docker run -p 8787:8787 -e MULTIPLAYER_ORIGINS=https://ysai258.github.io evarra-rooms
 ```
+
+The `Dockerfile` is the whole deployment — hand it to Fly.io, Render, Railway or a
+VPS and it runs unchanged. `npm run server` does the same thing without a container.
 
 Then point the site at it by setting a `MULTIPLAYER_URL` repository *variable* in
 GitHub → Settings → Secrets and variables → Actions → Variables. The deploy workflow
