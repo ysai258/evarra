@@ -1,0 +1,18 @@
+# The EVARRA? room server on Render.
+#
+# Render reads this when you connect the repository as a Blueprint; there is nothing
+# to install and no CLI to log into. See README "Multiplayer → Deploying it".
+services:
+  - type: web
+    name: evarra-rooms
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    # Singapore is the closest free region to where the players are.
+    region: singapore
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      # Only the deployed game may open rooms here. Unset would mean any origin, which
+      # is right on a dev machine and wrong on a public one.
+      - key: MULTIPLAYER_ORIGINS
+        value: https://ysai258.github.io

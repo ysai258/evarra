@@ -2,8 +2,11 @@
 #
 # Deploy:
 #   fly auth login
-#   fly launch --copy-config --no-deploy   # once, to claim the app name
-#   fly deploy
+#   fly apps create evarra-rooms
+#   fly deploy --ha=false
+#
+# --ha=false is not optional: without it Fly starts two machines, and the comment in
+# [http_service] explains why a second one breaks the game.
 #
 # Then set MULTIPLAYER_URL as a repository *variable* in GitHub (Settings → Secrets
 # and variables → Actions → Variables) to this app's URL, and push. The deploy

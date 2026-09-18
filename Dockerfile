@@ -27,7 +27,10 @@ COPY public ./public
 COPY tsconfig.json ./
 
 ENV NODE_ENV=production
-ENV MULTIPLAYER_PORT=8787
+# PORT, not MULTIPLAYER_PORT: hosts inject their own PORT and expect to be obeyed, and
+# an image that hardcoded the explicit override would ignore them and never be found.
+# 8787 is only the default for running this container by hand.
+ENV PORT=8787
 EXPOSE 8787
 
 # Never root: this process talks to the open internet.

@@ -253,36 +253,42 @@ Two browsers, or one browser and a private window, is enough to play a room.
 
 The daily game is files, and files are all GitHub Pages and Vercel can serve. A room is
 a process: it has to hold a clock, own the answers and stay alive between requests.
-**Neither host can run it**, so the room server deploys separately — any host that runs
-a long-lived Node process (Fly.io, Render, Railway, a VPS) will do.
+**Neither host can run it**, so the room server deploys separately.
 
-```bash
-docker build -t evarra-rooms .
-docker run -p 8787:8787 -e MULTIPLAYER_ORIGINS=https://ysai258.github.io evarra-rooms
-```
+`Dockerfile` is the whole deployment and any host that runs a container will take it.
+Two are configured here.
 
-The `Dockerfile` is the whole deployment — hand it to Fly.io, Render, Railway or a
-VPS and it runs unchanged. `npm run server` does the same thing without a container.
+**Render** (`render.yaml`) is the one to reach for first, because its free tier fits the
+shape of this. Connect the repository as a Blueprint in the browser — no CLI, no card —
+and it builds the Dockerfile itself. A free service sleeps after 15 minutes without
+inbound traffic, but WebSocket messages count as traffic and the server pings every 20
+seconds, so it cannot fall asleep mid-game. It sleeps when nobody is playing, which is
+exactly when there is nothing to lose, and the next person to open a room waits about a
+minute for it to wake.
 
-`fly.toml` is set up for Fly.io in particular, pinned to a single always-on machine for
-the reason below:
+**Fly.io** (`fly.toml`) costs about $3.32 a month and has no cold start:
 
 ```bash
 fly auth login
-fly launch --copy-config --no-deploy   # once, to claim the app name
-fly deploy
+fly apps create evarra-rooms
+fly deploy --ha=false
 ```
 
-Then point the site at it by setting a `MULTIPLAYER_URL` repository *variable* in
-GitHub → Settings → Secrets and variables → Actions → Variables. The deploy workflow
-passes it through as `VITE_MULTIPLAYER_URL`.
+`--ha=false` matters — without it Fly starts two machines, and see below for why that
+breaks everything. Fly's free trial does *not* fit: it allows two hours of machine
+runtime and stops machines after five minutes idle, which takes every live game with it.
+
+Either way, finish by setting a `MULTIPLAYER_URL` repository *variable* in GitHub →
+Settings → Secrets and variables → Actions → Variables, pointing at the deployed server,
+then push. The deploy workflow passes it to the build as `VITE_MULTIPLAYER_URL`.
 
 Two things to know before it carries real traffic:
 
-- **Rooms live in memory, so this is a single instance.** Two of these behind a load
-  balancer would each hold half the rooms and neither would know it. Scaling out means a
-  Redis adapter and a shared room store — a game for a group of friends does not need
-  it, and pretending otherwise would be architecture for its own sake.
+- **Rooms live in memory, so this is a single instance.** Two servers behind a load
+  balancer would each hold half the rooms and neither would know it — half the players
+  would be told their friend's room does not exist. Scaling out means a Redis adapter
+  and a shared room store; a game for a group of friends does not need it, and
+  pretending otherwise would be architecture for its own sake.
 - **The server serves the photographs**, so it needs the repository's `public/` next to
   it. That is what lets it answer with bytes instead of a filename.
 
