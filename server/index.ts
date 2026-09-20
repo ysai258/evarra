@@ -44,6 +44,15 @@ function corsOrigin(origin: string | undefined): string | undefined {
   return origin && allowedOrigins.includes(origin) ? origin : undefined;
 }
 
+/** Whatever the host calls the deployed commit; unknown when running from a checkout. */
+function commitRef(): string {
+  const ref = process.env.RENDER_GIT_COMMIT
+    ?? process.env.SOURCE_COMMIT
+    ?? process.env.GIT_COMMIT
+    ?? process.env.FLY_MACHINE_VERSION;
+  return ref ? ref.slice(0, 12) : 'unknown';
+}
+
 const httpServer = createServer((request, response) => {
   void handleRequest(request, response);
 });
@@ -86,8 +95,22 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
   const url = new URL(request.url ?? '/', 'http://localhost');
 
   if (url.pathname === '/health') {
-    response.writeHead(200, { 'Content-Type': 'application/json' });
-    response.end(JSON.stringify({ ok: true, rooms: manager.size }));
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+    response.end(JSON.stringify({
+      ok: true,
+      rooms: manager.size,
+      /**
+       * Which commit is actually serving.
+       *
+       * The site and the room server deploy separately and on different clocks, so
+       * "is the thing I just pushed live?" is otherwise unanswerable from outside —
+       * a rules change like the scoring formula is invisible until someone plays a
+       * game and notices the wrong number. Hosts hand the commit to the process;
+       * this passes it on.
+       */
+      commit: commitRef(),
+      uptimeSeconds: Math.round(process.uptime()),
+    }));
     return;
   }
 
