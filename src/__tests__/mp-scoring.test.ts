@@ -1,37 +1,26 @@
 import { describe, expect, it } from 'vitest';
 import {
-  TIME_BONUS_MAX, WRONG_GUESS_PENALTY, multiplayerBaseScore, multiplayerScore,
-  timeMultiplier, timeRatio,
+  TIME_BONUS_MAX, multiplayerScore, timeMultiplier, timeRatio,
 } from '../multiplayer/scoring.ts';
 import { MAX_ATTEMPTS } from '../engine/reveal.ts';
-import { MAX_SCORE, MIN_WINNING_SCORE, baseScoreForStage } from '../engine/scoring.ts';
+import { MAX_SCORE, baseScoreForStage } from '../engine/scoring.ts';
 
 const MINUTE = 60_000;
 
 /** A 60-second question, the longest the host can set. */
-function score(stageIndex: number, secondsLeft: number, wrongGuesses = 0): number {
+function score(stageIndex: number, secondsLeft: number): number {
   return multiplayerScore({
     stageIndex,
-    wrongGuesses,
     timeRemainingMs: secondsLeft * 1000,
     durationMs: MINUTE,
   });
 }
 
 describe('multiplayer scoring', () => {
-  it('leaves the daily ladder alone when nothing has gone wrong', () => {
+  it('is the daily ladder on the buzzer, with no bonus left to pay', () => {
     for (let stage = 0; stage < MAX_ATTEMPTS; stage += 1) {
-      expect(multiplayerBaseScore(stage, 0)).toBe(baseScoreForStage(stage));
+      expect(score(stage, 0)).toBe(baseScoreForStage(stage));
     }
-  });
-
-  it('charges a wrong guess exactly one stage', () => {
-    expect(multiplayerBaseScore(0, 1)).toBe(MAX_SCORE - WRONG_GUESS_PENALTY);
-    expect(multiplayerBaseScore(0, 3)).toBe(MAX_SCORE - 3 * WRONG_GUESS_PENALTY);
-  });
-
-  it('never drops a correct answer below the floor, however many misses', () => {
-    expect(multiplayerBaseScore(4, 99)).toBe(MIN_WINNING_SCORE);
   });
 
   /** Spec §84: same stage, earlier answer wins. */
@@ -89,14 +78,15 @@ describe('multiplayer scoring', () => {
     expect(timeRatio(1000, 0)).toBe(0);
   });
 
+  it('clamps a stage outside the ladder rather than throwing', () => {
+    expect(score(-3, 0)).toBe(baseScoreForStage(0));
+    expect(score(99, 0)).toBe(baseScoreForStage(MAX_ATTEMPTS - 1));
+  });
+
   it('matches the worked example in the brief', () => {
     // Spec §28: stage 1, 50 of 60 seconds left ≈ 708; 10 seconds left ≈ 542.
     expect(score(0, 50)).toBe(708);
     expect(score(0, 10)).toBe(542);
   });
 
-  it('keeps a miss cheaper than nothing at all', () => {
-    // Being wrong hurts, but a correct answer after three misses still beats zero.
-    expect(score(0, 40, 3)).toBeGreaterThan(0);
-  });
 });

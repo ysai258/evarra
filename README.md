@@ -207,16 +207,22 @@ blur ladder is driven by elapsed time instead: same face, same sharpness, same s
 for everyone. The clear photograph lands exactly on the buzzer, so while anyone can
 still answer, nobody has seen it.
 
-**You can guess as often as you like — and pay for it.** Each wrong guess costs 80, the
-same as it costs in the daily game, which is what keeps an early stab a gamble rather
-than a free roll. Five misses puts you on the floor.
+**You can guess as often as you like, and a miss costs nothing.** Name as many stars as
+you can type before the buzzer; only the right one is scored.
 
 ```
-base  = 500 − stage×80 − misses×80        (floor 100)
-final = base × (1 + 0.5 × time remaining / question length)
+final = (500 − stage×80) × (1 + 0.5 × time remaining / question length)
 ```
 
-The +50% cap is load-bearing. A stage is never free — reaching stage 1 has already cost
+That is a choice for a game between friends rather than a competition, and the trade is
+worth stating: with misses free, the strongest play is to start firing names the moment
+the countdown ends, because there is no reason not to. The roster is large enough that
+this is a poor use of thirty seconds, and the per-connection rate limit stops a script
+turning it into a certainty — but nothing here pretends it is impossible. An earlier
+version charged a miss the same 80 points it costs in the daily game, which made an
+early stab a real gamble and the mode noticeably more punishing.
+
+The +50% cap is load-bearing. A blur stage is never free — reaching stage 1 has already cost
 a quarter of the clock — so once the reachable time window for each stage is accounted
 for, the score bands do not overlap at all: the worst answer at one stage still beats
 the best answer at the next. Blur decides the ranking; the clock only orders players

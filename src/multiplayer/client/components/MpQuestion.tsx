@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { GuessInput } from '../../../components/GuessInput.tsx';
 import type { Celebrity } from '../../../engine/types.ts';
-import { multiplayerScore, WRONG_GUESS_PENALTY } from '../../scoring.ts';
+import { multiplayerScore } from '../../scoring.ts';
 import { stageForElapsed } from '../../stage.ts';
 import type { GuessResultPayload } from '../../protocol.ts';
 import type { RoomView } from '../../types.ts';
@@ -45,13 +45,11 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
   const answered = room.players.filter((player) => player.solved).length;
   const active = room.players.filter((player) => player.connected).length;
 
-  const wrongGuesses = lastGuess?.wrongGuesses ?? 0;
   // What a correct guess would pay *this instant*, time bonus included. Showing the
   // base alone would understate it by up to half, which is the opposite of the point:
   // the number is there to make the clock feel expensive.
   const onTheTable = multiplayerScore({
     stageIndex,
-    wrongGuesses,
     timeRemainingMs: question.endsAt - Math.max(now, question.startedAt),
     durationMs: question.durationMs,
   });
@@ -126,11 +124,6 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
             <>
               <p className="mp-worth" role="status" aria-live="off">
                 worth <b>{onTheTable}</b> now
-                {wrongGuesses > 0 && (
-                  <span className="mp-worth__misses">
-                    {' '}· {wrongGuesses} miss{wrongGuesses === 1 ? '' : 'es'} (−{wrongGuesses * WRONG_GUESS_PENALTY})
-                  </span>
-                )}
               </p>
 
               <p
@@ -142,7 +135,7 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
                 {counting
                   ? 'Get ready…'
                   : lastGuess && !lastGuess.correct
-                    ? `❌ Not that one. Try again — the photo keeps clearing.`
+                    ? '❌ Not that one. Keep going — a miss costs you nothing.'
                     : 'Guess early for more points. A wrong guess costs you.'}
               </p>
 

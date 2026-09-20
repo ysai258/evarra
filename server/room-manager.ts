@@ -279,10 +279,12 @@ export class RoomManager {
   /**
    * A guess.
    *
-   * Multiplayer lets a player keep guessing until the buzzer, so this is also where the
-   * cost of being wrong is charged — see `multiplayer/scoring.ts` for why there has to
-   * be one. Everything that decides the score is read here, from the server's clock:
-   * which stage is on screen, how much time was left, how many misses came before.
+   * A player may keep naming stars until the buzzer, and only the right one scores —
+   * misses cost nothing. Everything that decides the score is read here, from the
+   * server's clock: which stage was on screen, and how much time was left.
+   *
+   * Misses are still counted, because the reveal reports them and because a repeat of
+   * the same wrong name is worth ignoring rather than processing again.
    */
   submitGuess(
     playerId: string,
@@ -327,7 +329,6 @@ export class RoomManager {
     const stageIndex = stageForElapsed(now - room.startedAt, durationMs);
     const score = multiplayerScore({
       stageIndex,
-      wrongGuesses: player.current.wrongGuesses,
       timeRemainingMs: room.endsAt - now,
       durationMs,
     });

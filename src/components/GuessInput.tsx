@@ -48,13 +48,24 @@ export function GuessInput({
 
   const showList = open && query.trim().length > 0;
 
+  /**
+   * Commits a guess and stays ready for the next one.
+   *
+   * Deliberately does not blur. A wrong guess is not the end of anything — in the daily
+   * game there are four more, and in a room you can keep naming stars until the buzzer
+   * — so dropping focus meant tapping the box again every single time, and on a phone
+   * watching the keyboard slide away and back for each attempt.
+   *
+   * Nothing needs to blur on a *correct* guess either: both modes swap this component
+   * out the moment the answer lands, which takes the focus and the keyboard with it.
+   */
   function choose(celebrity: Celebrity | undefined) {
     if (!celebrity || disabled) return;
     onGuess(celebrity.name, celebrity);
     setQuery('');
     setOpen(false);
     setActive(0);
-    inputRef.current?.blur();
+    inputRef.current?.focus();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {

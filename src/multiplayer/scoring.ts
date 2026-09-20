@@ -1,49 +1,42 @@
 import { MAX_ATTEMPTS } from '../engine/reveal.ts';
-import { MIN_WINNING_SCORE, STAGE_PENALTY, baseScoreForStage } from '../engine/scoring.ts';
+import { baseScoreForStage } from '../engine/scoring.ts';
 
 /**
- * Multiplayer scoring — the daily game's numbers with a clock on top.
+ * Multiplayer scoring — the daily game's ladder with a clock on top.
  *
  * The base is the existing ladder, unchanged: 500 at full blur down to 180 once the
- * photo is nearly clear. Two things then act on it.
+ * photo is nearly clear. A time bonus of up to +50% then rewards recognising the face
+ * quickly, and nothing else moves the number.
  *
- * A **wrong guess costs a stage**. Multiplayer lets you keep guessing until the buzzer,
- * and without a price for being wrong the best strategy is to start naming the roster
- * at second zero — you would beat everyone who actually recognised the face. Charging
- * a wrong guess exactly what it costs in the daily game (one stage, 80 points) keeps
- * the bargain the same in both modes: five bad guesses and you are on the floor.
+ * The cap is load-bearing, and it is worth saying why +50% rather than a round number.
+ * A stage is never free: reaching stage 1 has already cost a quarter of the clock, so
+ * the time still available at a given stage is bounded by that stage. Work the bands
+ * out under that bound and they do not overlap — the worst possible answer at one stage
+ * still outscores the best possible answer at the next.
  *
- * A **time bonus** of up to +50% then rewards recognising the face quickly. The cap
- * is what keeps the mode honest, and it is worth stating why +50% is the right number
- * rather than a round one: a stage is never free. Reaching stage 1 has already cost a
- * quarter of the clock, so the time still available at a given stage is bounded by
- * that stage. Work the bands out under that bound and they do not overlap — the worst
- * possible answer at one stage still outscores the best possible answer at the next.
- *
- * So the blur stage decides the ranking and the clock only orders players *within* a
+ * So the blur stage decides the ranking and the clock only orders players within a
  * stage. That is the bargain the mode is sold on (spec §63), and `mp-scoring.test.ts`
  * holds it to it; raising the cap much past 0.5 would quietly break it.
+ *
+ * **Wrong guesses cost nothing.** You may name as many stars as you can type until the
+ * buzzer, and only the right one is scored. That is a deliberate choice for a game
+ * between friends — the alternative charged a miss the same 80 points it costs in the
+ * daily game, which made an early stab a real gamble but also made the mode feel
+ * punishing. The trade is honest and worth knowing: with misses free, the strongest
+ * play is to start firing names the moment the countdown ends, because there is no
+ * reason not to. The roster is large enough that this is a poor use of thirty seconds,
+ * and the per-connection rate limit keeps a script from turning it into a certainty,
+ * but nothing here pretends it is impossible.
  */
 export const TIME_BONUS_MAX = 0.5;
-export const WRONG_GUESS_PENALTY = STAGE_PENALTY;
 
 export type MultiplayerScoreInput = {
   /** Blur stage on screen when the correct guess landed. */
   stageIndex: number;
-  /** Wrong guesses this player made on this question before getting it. */
-  wrongGuesses: number;
   /** Server clock: how much of the question was still left. Clamped into range. */
   timeRemainingMs: number;
   durationMs: number;
 };
-
-/** The base before the clock touches it — the daily ladder minus the misses. */
-export function multiplayerBaseScore(stageIndex: number, wrongGuesses: number): number {
-  const clampedStage = Math.min(Math.max(Math.trunc(stageIndex), 0), MAX_ATTEMPTS - 1);
-  const misses = Math.max(0, Math.trunc(wrongGuesses));
-  const penalised = baseScoreForStage(clampedStage) - misses * WRONG_GUESS_PENALTY;
-  return Math.max(MIN_WINNING_SCORE, penalised);
-}
 
 /** How much of the clock was left, as 0..1. Never trusts the numbers it is handed. */
 export function timeRatio(timeRemainingMs: number, durationMs: number): number {
@@ -58,11 +51,7 @@ export function timeMultiplier(timeRemainingMs: number, durationMs: number): num
 
 /** A wrong answer, or no answer at all, is worth nothing. This is only for winners. */
 export function multiplayerScore(input: MultiplayerScoreInput): number {
-  const base = multiplayerBaseScore(input.stageIndex, input.wrongGuesses);
+  const stage = Math.min(Math.max(Math.trunc(input.stageIndex), 0), MAX_ATTEMPTS - 1);
+  const base = baseScoreForStage(stage);
   return Math.round(base * timeMultiplier(input.timeRemainingMs, input.durationMs));
-}
-
-/** The most this question could still pay out — drives the live "worth 612 now" readout. */
-export function potentialMultiplayerScore(input: MultiplayerScoreInput): number {
-  return multiplayerScore(input);
 }

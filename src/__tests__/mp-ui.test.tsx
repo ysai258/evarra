@@ -211,7 +211,7 @@ describe('a live question', () => {
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
 
-  it('says a guess was wrong, and what the misses have cost', () => {
+  it('says a guess was wrong without putting a price on it', () => {
     clock.value = startedAt + 5_000;
     render(
       <MpQuestion
@@ -223,7 +223,51 @@ describe('a live question', () => {
       />,
     );
     expect(screen.getByText(/not that one/i)).toBeInTheDocument();
-    expect(screen.getByText(/2 misses/i)).toBeInTheDocument();
+    // Misses are free, so no tally of them and no price beside one. (The reassurance
+    // itself says "a miss costs you nothing", so this looks for the shapes the old
+    // penalty readout used, not for the word.)
+    expect(document.body.textContent).not.toMatch(/\d+\s*miss/i);
+    expect(document.body.textContent).not.toMatch(/[−-]\d+/);
+  });
+
+  /**
+   * A wrong guess is not the end of anything — you can keep naming stars until the
+   * buzzer — so the box has to stay ready to type into. It used to blur itself,
+   * which meant tapping it again for every attempt.
+   */
+  it('keeps the guess box focused so the next name can be typed straight away', async () => {
+    clock.value = startedAt + 5_000;
+    render(<MpQuestion room={room} roster={roster} playerId="p1" onGuess={vi.fn()} />);
+    const input = screen.getByRole('combobox');
+    await userEvent.type(input, 'mah');
+    await userEvent.keyboard('{Enter}');
+    expect(input).toHaveFocus();
+    expect(input).toHaveValue('');
+
+    // And it is genuinely usable: typing again works without touching it first.
+    await userEvent.keyboard('prab');
+    expect(input).toHaveValue('prab');
+  });
+
+  it('scores the same whatever the miss count says', () => {
+    clock.value = startedAt;
+    const { unmount } = render(
+      <MpQuestion room={room} roster={roster} playerId="p1" onGuess={vi.fn()} />,
+    );
+    const clean = screen.getByText('750');
+    expect(clean).toBeInTheDocument();
+    unmount();
+
+    render(
+      <MpQuestion
+        room={room}
+        roster={roster}
+        playerId="p1"
+        lastGuess={{ correct: false, celebrityId: 'mahesh-babu', wrongGuesses: 5 }}
+        onGuess={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('750')).toBeInTheDocument();
   });
 });
 

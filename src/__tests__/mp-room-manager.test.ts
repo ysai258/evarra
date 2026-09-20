@@ -239,7 +239,7 @@ describe('guessing', () => {
     expect(first.ok && second.ok && first.value.score! > second.value.score!).toBe(true);
   });
 
-  it('lets a player keep guessing, and charges for each miss', () => {
+  it('lets a player keep guessing, and charges nothing for a miss', () => {
     const { room, players, token, answer } = playing();
     const wrong = roster.find((celebrity) => celebrity.id !== answer)!.id;
     const first = manager.submitGuess(players[0]!.id, token, wrong);
@@ -248,9 +248,29 @@ describe('guessing', () => {
 
     const second = manager.submitGuess(players[0]!.id, token, answer);
     expect(second.ok && second.value.correct).toBe(true);
-    // 500 − 80 for the miss, then the full time bonus.
-    expect(second.ok && second.value.score).toBe(630);
-    expect(room.players.get(players[0]!.id)!.totalScore).toBe(630);
+    // The miss cost nothing: this is the full stage-0 score with the whole clock left.
+    expect(second.ok && second.value.score).toBe(750);
+    expect(room.players.get(players[0]!.id)!.totalScore).toBe(750);
+  });
+
+  /**
+   * The property the scoring module cannot test on its own, because it no longer takes
+   * a miss count at all: two players answering the same picture at the same moment
+   * score the same, however many names one of them got through first.
+   */
+  it('pays two players the same when only their misses differ', () => {
+    const { room, players, token, answer } = playing();
+    const wrong = roster.filter((celebrity) => celebrity.id !== answer).slice(0, 4);
+    for (const miss of wrong) manager.submitGuess(players[0]!.id, token, miss.id);
+
+    const missed = manager.submitGuess(players[0]!.id, token, answer);
+    const clean = manager.submitGuess(players[1]!.id, token, answer);
+
+    expect(missed.ok && missed.value.wrongGuesses).toBe(4);
+    expect(clean.ok && clean.value.wrongGuesses).toBe(0);
+    expect(missed.ok && clean.ok && missed.value.score).toBe(clean.ok ? clean.value.score : -1);
+    expect(room.players.get(players[0]!.id)!.totalScore)
+      .toBe(room.players.get(players[1]!.id)!.totalScore);
   });
 
   it('does not charge twice for repeating the same wrong name', () => {

@@ -167,3 +167,35 @@ describe('GameBoard', () => {
     );
   });
 });
+
+describe('staying ready for the next guess', () => {
+  /**
+   * The box used to blur itself after every selection, so a player with four guesses
+   * left had to tap it again for each one — and on a phone watch the keyboard slide
+   * away and back each time. Nothing needs to blur on a winning guess either: the
+   * board swaps this component for the result, which takes the focus with it.
+   */
+  it('keeps focus after a wrong guess', async () => {
+    render(<GuessInput celebrities={roster} disabled={false} attemptsLeft={5} onGuess={vi.fn()} />);
+    const input = screen.getByRole('combobox');
+    await userEvent.type(input, 'mah');
+    await userEvent.keyboard('{Enter}');
+
+    expect(input).toHaveFocus();
+    expect(input).toHaveValue('');
+  });
+
+  it('accepts the next name without the box being touched again', async () => {
+    const onGuess = vi.fn();
+    render(<GuessInput celebrities={roster} disabled={false} attemptsLeft={5} onGuess={onGuess} />);
+    await userEvent.type(screen.getByRole('combobox'), 'mah');
+    await userEvent.keyboard('{Enter}');
+
+    // No click, no focus() — straight on to the next attempt.
+    await userEvent.keyboard('samanth');
+    await userEvent.keyboard('{Enter}');
+
+    expect(onGuess).toHaveBeenCalledTimes(2);
+    expect(onGuess.mock.calls[1]![0]).toBe('Samantha');
+  });
+});

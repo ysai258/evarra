@@ -53,6 +53,12 @@ async function expectPhoto(page: Page, where: string): Promise<void> {
   }
 }
 
+/** The live "worth N now" figure, as a number. */
+async function readWorth(page: Page): Promise<number> {
+  const text = await page.locator('.mp-worth').textContent();
+  return Number(/(\d+)/.exec(text ?? '')?.[1] ?? 0);
+}
+
 async function join(browser: Browser, url: string, name: string): Promise<Page> {
   const context = await browser.newContext({ viewport: PHONE });
   const page = await context.newPage();
@@ -119,25 +125,45 @@ async function main(): Promise<void> {
     // --- one player guesses, the other does not ------------------------------
     // The harness cannot know the answer — that is the point of the token route — so
     // this picks a name and handles either outcome. Overwhelmingly it will be wrong,
-    // which is the more interesting path anyway: it is the one unlimited guessing
-    // added, and the one where a miss has to be charged for.
+    // which is the more interesting path: it is the one unlimited guessing added.
+    const worthBefore = await readWorth(host);
     await host.getByRole('combobox').fill('a');
     await host.locator('.guess__option').first().click();
 
     const locked = host.locator('.mp-locked');
-    const missed = host.locator('.mp-worth__misses');
+    const wrong = host.locator('.feedback--wrong');
     await Promise.race([
       locked.waitFor({ timeout: 8000 }),
-      missed.waitFor({ timeout: 8000 }),
+      wrong.waitFor({ timeout: 8000 }),
     ]);
 
     if (await locked.count() > 0) {
       console.log('  (guessed right first time)');
       await shot(host, 'mp-05-locked-in');
     } else {
-      const cost = (await missed.textContent())?.trim();
-      console.log(`  (guessed wrong — ${cost})`);
-      if (!cost?.includes('1 miss')) throw new Error('a wrong guess was not charged for');
+      console.log('  (guessed wrong — kept going)');
+
+      // A miss costs nothing, so the only thing that may have moved the score is the
+      // clock. A stage is worth 80, so anything near that is the penalty coming back.
+      const worthAfter = await readWorth(host);
+      if (worthBefore - worthAfter >= 40) {
+        throw new Error(`a miss cost ${worthBefore - worthAfter} points; it should cost nothing`);
+      }
+      const body = await host.locator('body').innerText();
+      if (/\d+\s*miss/i.test(body)) throw new Error('a miss tally is on screen');
+
+      // The box must still be ready to type into: a wrong guess ends nothing, and
+      // having to tap it again for every attempt is the bug this guards.
+      const stillFocused = await host.evaluate(
+        () => document.activeElement?.classList.contains('guess__input') ?? false,
+      );
+      if (!stillFocused) throw new Error('the guess box lost focus after a wrong guess');
+      await host.keyboard.type('ma');
+      if (await host.getByRole('combobox').inputValue() !== 'ma') {
+        throw new Error('could not type the next guess without touching the box');
+      }
+      await host.getByRole('combobox').fill('');
+
       await shot(host, 'mp-05-wrong-guess');
     }
 
@@ -146,7 +172,7 @@ async function main(): Promise<void> {
     if (await guest.locator('.mp-locked').count() > 0) {
       throw new Error('a guess leaked into the other player’s screen');
     }
-    if (await guest.locator('.mp-worth__misses').count() > 0) {
+    if (await guest.locator('.feedback--wrong').count() > 0) {
       throw new Error('one player’s miss showed on another player’s screen');
     }
     await shot(guest, 'mp-06-still-guessing');
