@@ -3,7 +3,7 @@ import { MULTIPLAYER_CONFIG, ROOM_IDLE_TIMEOUT_MS, clampQuestionCount, clampQues
 import { generateRoomCode, normalizeRoomCode } from '../src/multiplayer/code.ts';
 import { isValidPlayerName, normalizePlayerName } from '../src/multiplayer/name.ts';
 import { multiplayerScore } from '../src/multiplayer/scoring.ts';
-import { stageForElapsed } from '../src/multiplayer/stage.ts';
+import { blurPercentAt, maxFetchableStage, revealPosition } from '../src/multiplayer/stage.ts';
 import type { ErrorCode, ServerEvents } from '../src/multiplayer/protocol.ts';
 import type {
   FinalResults, PublicPlayer, PublicQuestion, QuestionResult, RevealState, RoomStatus,
@@ -56,7 +56,8 @@ type CurrentAnswer = {
   wrongGuesses: number;
   solved: boolean;
   solvedAt?: number;
-  stageIndex?: number;
+  /** How blurred the photo still was when they got it — for the reveal's detail line. */
+  blurPercent?: number;
   score: number;
   /** Stops a player re-submitting the same wrong name to burn the clock for free. */
   guessed: Set<string>;
@@ -326,16 +327,12 @@ export class RoomManager {
     }
 
     const durationMs = room.settings.questionDurationSeconds * 1000;
-    const stageIndex = stageForElapsed(now - room.startedAt, durationMs);
-    const score = multiplayerScore({
-      stageIndex,
-      timeRemainingMs: room.endsAt - now,
-      durationMs,
-    });
+    const elapsedMs = now - room.startedAt;
+    const score = multiplayerScore({ elapsedMs, durationMs });
 
     player.current.solved = true;
     player.current.solvedAt = now;
-    player.current.stageIndex = stageIndex;
+    player.current.blurPercent = blurPercentAt(revealPosition(elapsedMs, durationMs));
     player.current.score = score;
     player.totalScore += score;
     player.correctAnswers += 1;
@@ -528,7 +525,10 @@ export class RoomManager {
       if (room.startedAt === undefined) return 0;
       const durationMs = room.settings.questionDurationSeconds * 1000;
       const elapsed = this.clock.now() - room.startedAt + STAGE_GRACE_MS;
-      return stageForElapsed(elapsed, durationMs);
+      // The top of the dissolve, not the settled rung: a client legitimately needs the
+      // layer it is fading in. It never reaches the clear photograph, so a question
+      // cannot end with the answer already sitting in anyone's cache.
+      return maxFetchableStage(revealPosition(elapsed, durationMs));
     }
     return clear;
   }
@@ -618,7 +618,8 @@ export class RoomManager {
         score: player.current.score,
         wrongGuesses: player.current.wrongGuesses,
         ...(player.current.solvedAt !== undefined ? { solvedAt: player.current.solvedAt } : {}),
-        ...(player.current.stageIndex !== undefined ? { stageIndex: player.current.stageIndex } : {}),
+        ...(player.current.blurPercent !== undefined
+          ? { blurPercent: player.current.blurPercent } : {}),
       }))
       // Score first, then whoever got there sooner, then player id so the order is
       // stable for everyone looking at it (spec §37).

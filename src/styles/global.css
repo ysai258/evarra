@@ -1655,6 +1655,18 @@ button { cursor: pointer; }
 
 .mp-game__players { max-height: 22vh; overflow-y: auto; }
 
+/* The multiplayer photo's opacity belongs to the clock, not to a mount animation.
+   The transition covers the gap between ticks, so a quarter-second sample rate still
+   reads as a continuous dissolve. */
+.stage__image--dissolve {
+  animation: none;
+  transition: opacity .28s linear, filter .28s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage__image--dissolve { transition: none; }
+}
+
 /* --------------------------------------------------------------- the reveal */
 
 .mp-reveal__next { font-size: 12px; color: var(--sun); }

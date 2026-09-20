@@ -40,7 +40,13 @@ async function expectPhoto(page: Page, where: string): Promise<void> {
     await image.evaluate(
       (node) => {
         const img = node as HTMLImageElement;
-        if (img.complete && img.naturalWidth > 0) return true;
+        if (img.complete) {
+          // Already settled. A finished load with no pixels is a request the server
+          // refused — waiting on `load` here would wait for an event that has already
+          // been and gone, which is a hang rather than a failure.
+          if (img.naturalWidth > 0) return true;
+          throw new Error('request finished with no image');
+        }
         return new Promise((resolve, reject) => {
           img.addEventListener('load', () => resolve(true), { once: true });
           img.addEventListener('error', () => reject(new Error('image failed')), { once: true });

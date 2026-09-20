@@ -57,8 +57,8 @@ export type QuestionResult = {
   wrongGuesses: number;
   /** Server epoch ms of the correct guess; absent when they never got it. */
   solvedAt?: number;
-  /** 0-based blur stage they solved at, for the "recognised at 75% blur" line. */
-  stageIndex?: number;
+  /** How blurred the photo was when they got it, for the "recognised at 68% blur" line. */
+  blurPercent?: number;
 };
 
 export type RevealState = {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { GuessInput } from '../../../components/GuessInput.tsx';
 import type { Celebrity } from '../../../engine/types.ts';
 import { multiplayerScore } from '../../scoring.ts';
-import { stageForElapsed } from '../../stage.ts';
+import { revealPosition } from '../../stage.ts';
 import type { GuessResultPayload } from '../../protocol.ts';
 import type { RoomView } from '../../types.ts';
 import { secondsUntil, useServerClock } from '../useServerClock.ts';
@@ -36,7 +36,7 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
 
   const counting = now < question.startedAt;
   const elapsed = now - question.startedAt;
-  const stageIndex = stageForElapsed(elapsed, question.durationMs);
+  const position = revealPosition(elapsed, question.durationMs);
   const secondsLeft = secondsUntil(question.endsAt, now);
   const countdown = Math.max(1, Math.ceil((question.startedAt - now) / 1000));
 
@@ -49,8 +49,7 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
   // base alone would understate it by up to half, which is the opposite of the point:
   // the number is there to make the clock feel expensive.
   const onTheTable = multiplayerScore({
-    stageIndex,
-    timeRemainingMs: question.endsAt - Math.max(now, question.startedAt),
+    elapsedMs: Math.max(0, elapsed),
     durationMs: question.durationMs,
   });
 
@@ -98,7 +97,7 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
         <div className="game__stage">
           <MpPhoto
             assetToken={question.assetToken}
-            stageIndex={stageIndex}
+            position={position}
             revealed={false}
             shake={shake}
           />
@@ -136,7 +135,7 @@ export function MpQuestion({ room, roster, playerId, lastGuess, onGuess }: MpQue
                   ? 'Get ready…'
                   : lastGuess && !lastGuess.correct
                     ? '❌ Not that one. Keep going — a miss costs you nothing.'
-                    : 'Guess early for more points. A wrong guess costs you.'}
+                    : 'Guess early — every second it clears, it’s worth less.'}
               </p>
 
               <GuessInput

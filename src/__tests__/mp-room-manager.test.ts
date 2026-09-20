@@ -226,7 +226,7 @@ describe('guessing', () => {
     const { players, token, answer } = playing();
     const result = manager.submitGuess(players[0]!.id, token, answer);
     expect(result.ok && result.value.correct).toBe(true);
-    // Stage 0 with the whole 30 seconds left: the maximum a question can pay.
+    // The opening frame, before the clock has moved: the most a question can pay.
     expect(result.ok && result.value.score).toBe(750);
   });
 
@@ -248,7 +248,7 @@ describe('guessing', () => {
 
     const second = manager.submitGuess(players[0]!.id, token, answer);
     expect(second.ok && second.value.correct).toBe(true);
-    // The miss cost nothing: this is the full stage-0 score with the whole clock left.
+    // The miss cost nothing: this is still the opening-frame score.
     expect(second.ok && second.value.score).toBe(750);
     expect(room.players.get(players[0]!.id)!.totalScore).toBe(750);
   });
@@ -363,23 +363,31 @@ describe('the reveal', () => {
     expect(room.status).toBe('QUESTION');
   });
 
-  it('records the blur stage each player solved at', () => {
+  it('records how blurred the photo still was when each player got it', () => {
     const { players } = played();
-    const mine = lastReveal().results.find((r) => r.playerId === players[1]!.id)!;
-    // Ten seconds into a thirty-second question is a third of the way: stage 1.
-    expect(mine.stageIndex).toBe(1);
+    const [first, second] = [players[0]!.id, players[1]!.id]
+      .map((id) => lastReveal().results.find((r) => r.playerId === id)!);
+
+    // One answered on the opening frame, the other ten seconds later. The second
+    // player was looking at a clearer picture, and the reveal says so.
+    expect(first!.blurPercent).toBe(92);
+    expect(second!.blurPercent).toBeLessThan(first!.blurPercent!);
+    expect(second!.blurPercent).toBeGreaterThan(0);
   });
 });
 
 describe('the image gate', () => {
-  it('will not serve a stage the room has not reached', async () => {
+  it('opens up one rung at a time as the dissolve advances', () => {
     const { players } = openRoom(['Host', 'Rahul']);
     manager.startGame(players[0]!.id);
     intoQuestion();
     const token = currentQuestion().assetToken;
-    expect(manager.resolveAsset(token)!.maxStage).toBe(0);
+    // The opening frame already needs the rung it is fading in.
+    expect(manager.resolveAsset(token)!.maxStage).toBe(1);
     clock.advance(15 * SECOND);
     expect(manager.resolveAsset(token)!.maxStage).toBe(2);
+    clock.advance(10 * SECOND);
+    expect(manager.resolveAsset(token)!.maxStage).toBe(3);
   });
 
   /** The whole point: the clear photograph is unreachable while anyone can still answer. */

@@ -1,57 +1,61 @@
 import { MAX_ATTEMPTS } from '../engine/reveal.ts';
-import { baseScoreForStage } from '../engine/scoring.ts';
+import { MAX_SCORE, baseScoreForStage } from '../engine/scoring.ts';
 
 /**
- * Multiplayer scoring — the daily game's ladder with a clock on top.
+ * Multiplayer scoring — one curve, on the clock.
  *
- * The base is the existing ladder, unchanged: 500 at full blur down to 180 once the
- * photo is nearly clear. A time bonus of up to +50% then rewards recognising the face
- * quickly, and nothing else moves the number.
+ * The daily game scores you on which of five stages you were looking at, because there
+ * the picture only clears when you guess wrong. In a room the picture clears on time
+ * alone, so time is the only thing there is to score. A stage index would just be the
+ * clock, rounded — and rounding it is what made the number jump while the photograph
+ * was sharpening smoothly.
  *
- * The cap is load-bearing, and it is worth saying why +50% rather than a round number.
- * A stage is never free: reaching stage 1 has already cost a quarter of the clock, so
- * the time still available at a given stage is bounded by that stage. Work the bands
- * out under that bound and they do not overlap — the worst possible answer at one stage
- * still outscores the best possible answer at the next.
+ * So the ladder is read continuously. The score starts where the daily game's does and
+ * decays to where it ends:
  *
- * So the blur stage decides the ranking and the clock only orders players within a
- * stage. That is the bargain the mode is sold on (spec §63), and `mp-scoring.test.ts`
- * holds it to it; raising the cap much past 0.5 would quietly break it.
+ *     base  = 500 down to 180, linearly across the question
+ *     final = base x (1 + 0.5 x fraction of the clock still left)
  *
- * **Wrong guesses cost nothing.** You may name as many stars as you can type until the
- * buzzer, and only the right one is scored. That is a deliberate choice for a game
- * between friends — the alternative charged a miss the same 80 points it costs in the
- * daily game, which made an early stab a real gamble but also made the mode feel
- * punishing. The trade is honest and worth knowing: with misses free, the strongest
- * play is to start firing names the moment the countdown ends, because there is no
- * reason not to. The roster is large enough that this is a poor use of thirty seconds,
- * and the per-connection rate limit keeps a script from turning it into a certainty,
- * but nothing here pretends it is impossible.
+ * which is 750 on the opening frame and 180 on the buzzer, the same two numbers the
+ * stepped version had at its extremes. Multiplying two quantities that both fall with
+ * time makes the curve steepest at the start, which is the intent: recognising a face
+ * through heavy blur in the first seconds should feel disproportionately rewarded.
+ *
+ * It is also strictly decreasing, which is worth more than it sounds. The stepped
+ * version needed a careful argument that its five score bands could not overlap; here
+ * the guarantee is simply that answering sooner always pays more than answering later,
+ * and `mp-scoring.test.ts` checks it across the whole question rather than at five
+ * points.
  */
 export const TIME_BONUS_MAX = 0.5;
 
+/** Where the curve lands on the buzzer — the daily ladder's last rung. */
+export const MIN_QUESTION_SCORE = baseScoreForStage(MAX_ATTEMPTS - 1);
+
 export type MultiplayerScoreInput = {
-  /** Blur stage on screen when the correct guess landed. */
-  stageIndex: number;
-  /** Server clock: how much of the question was still left. Clamped into range. */
-  timeRemainingMs: number;
+  /** Server clock: how far into the question the correct guess landed. */
+  elapsedMs: number;
   durationMs: number;
 };
 
-/** How much of the clock was left, as 0..1. Never trusts the numbers it is handed. */
-export function timeRatio(timeRemainingMs: number, durationMs: number): number {
-  if (durationMs <= 0) return 0;
-  const remaining = Math.min(Math.max(timeRemainingMs, 0), durationMs);
-  return remaining / durationMs;
+/** How far through the question, as 0..1. Never trusts the numbers it is handed. */
+export function questionProgress(elapsedMs: number, durationMs: number): number {
+  if (durationMs <= 0) return 1;
+  const progress = elapsedMs / durationMs;
+  if (!Number.isFinite(progress)) return 1;
+  return Math.min(1, Math.max(0, progress));
 }
 
-export function timeMultiplier(timeRemainingMs: number, durationMs: number): number {
-  return 1 + TIME_BONUS_MAX * timeRatio(timeRemainingMs, durationMs);
+export function timeMultiplier(elapsedMs: number, durationMs: number): number {
+  return 1 + TIME_BONUS_MAX * (1 - questionProgress(elapsedMs, durationMs));
 }
 
 /** A wrong answer, or no answer at all, is worth nothing. This is only for winners. */
 export function multiplayerScore(input: MultiplayerScoreInput): number {
-  const stage = Math.min(Math.max(Math.trunc(input.stageIndex), 0), MAX_ATTEMPTS - 1);
-  const base = baseScoreForStage(stage);
-  return Math.round(base * timeMultiplier(input.timeRemainingMs, input.durationMs));
+  const progress = questionProgress(input.elapsedMs, input.durationMs);
+  const base = MAX_SCORE - (MAX_SCORE - MIN_QUESTION_SCORE) * progress;
+  return Math.round(base * timeMultiplier(input.elapsedMs, input.durationMs));
 }
+
+/** The most a question can pay: the opening frame, before the clock has moved. */
+export const MAX_QUESTION_SCORE = multiplayerScore({ elapsedMs: 0, durationMs: 1 });

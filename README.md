@@ -203,16 +203,40 @@ the 3-2-1 — one timestamp rather than two things that have to be kept in step.
 
 **The picture clears on the clock, not on your mistakes.** In the daily game a wrong
 guess buys you clarity. In a room that would be a free clue for everyone else, so the
-blur ladder is driven by elapsed time instead: same face, same sharpness, same second,
-for everyone. The clear photograph lands exactly on the buzzer, so while anyone can
-still answer, nobody has seen it.
+reveal is driven by elapsed time instead: same face, same sharpness, same second, for
+everyone.
+
+And it clears *continuously* — every second the face is a little sharper, rather than
+snapping four times a question. There are still only five blurred files per star,
+because the blur has to be in the pixels; what changes is that the client paints the
+next rung over the current one at an opacity the clock decides. At position 1.5 you are
+looking at stage 1 half-faded over stage 2, which is a picture no single file contains.
+The badge follows: it reads 91%, 88%, 84%, 81% rather than 92, 92, 92, 75.
+
+That has a cost, and it is worth naming rather than burying. A dissolve means the
+browser is *holding* the rung it is fading in. Someone with developer tools could force
+that layer to full opacity and see up to one rung ahead of the room. It is bounded —
+the gate still never authorises the clear photograph, so a question cannot end with the
+answer in anyone's cache — but it is a real gap that the old snap did not have. Serving
+a server-rendered blend per second would close it, at the cost of an image pipeline on
+the room server; that is the upgrade path if it ever matters.
 
 **You can guess as often as you like, and a miss costs nothing.** Name as many stars as
 you can type before the buzzer; only the right one is scored.
 
+Since the picture clears on the clock, the clock is the only thing left to score — a
+stage index would just be the time, rounded, and rounding it is what made the number
+jump while the photograph was sharpening smoothly. So the score is one curve:
+
 ```
-final = (500 − stage×80) × (1 + 0.5 × time remaining / question length)
+base  = 500 down to 180, linearly across the question
+final = base × (1 + 0.5 × fraction of the clock still left)
 ```
+
+750 on the opening frame, 180 on the buzzer — the same two numbers the stepped version
+had at its extremes. Multiplying two quantities that both fall with time makes the
+curve steepest at the start, which is the intent: recognising a face through heavy blur
+in the first seconds should feel disproportionately rewarded.
 
 That is a choice for a game between friends rather than a competition, and the trade is
 worth stating: with misses free, the strongest play is to start firing names the moment
@@ -222,12 +246,11 @@ turning it into a certainty — but nothing here pretends it is impossible. An e
 version charged a miss the same 80 points it costs in the daily game, which made an
 early stab a real gamble and the mode noticeably more punishing.
 
-The +50% cap is load-bearing. A blur stage is never free — reaching stage 1 has already cost
-a quarter of the clock — so once the reachable time window for each stage is accounted
-for, the score bands do not overlap at all: the worst answer at one stage still beats
-the best answer at the next. Blur decides the ranking; the clock only orders players
-within a stage. Raising that cap much past 0.5 would quietly delete the mechanic, which
-is why a test holds it there.
+This is simpler than what it replaced, and the invariant is simpler with it. The stepped
+version needed a careful argument that its five score bands could not overlap once the
+time reachable at each stage was accounted for. The continuous curve only has to be
+falling, which a test checks across the whole question rather than at five points:
+answering sooner always pays more than answering later.
 
 **The answer never reaches the browser before the reveal.** This is harder than it
 sounds, because the dataset *is* in the bundle — the guess box could not autocomplete

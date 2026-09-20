@@ -160,6 +160,9 @@ describe('a live question', () => {
     render(<MpQuestion room={room} roster={roster} playerId="p1" onGuess={vi.fn()} />);
     expect(screen.getByText('3')).toBeInTheDocument();
     expect(screen.getByRole('combobox')).toBeDisabled();
+    // The alt text stays put while the picture dissolves — the percentage changes four
+    // times a second and belongs on the badge, not in an announcement.
+    expect(screen.getByAltText(/clearing as the clock runs/i)).toBeInTheDocument();
   });
 
   it('shows the time left once the question is running', () => {
@@ -282,7 +285,7 @@ describe('the reveal', () => {
       celebrityName: 'Prabhas',
       assetToken: 'b'.repeat(32),
       results: [
-        { playerId: 'p1', name: 'Yashwanth', correct: true, score: 684, wrongGuesses: 0, stageIndex: 0 },
+        { playerId: 'p1', name: 'Yashwanth', correct: true, score: 684, wrongGuesses: 0, blurPercent: 83 },
         { playerId: 'p2', name: 'Rahul', correct: false, score: 0, wrongGuesses: 1 },
       ],
       standings: [
@@ -305,9 +308,10 @@ describe('the reveal', () => {
     expect(screen.getByText(/next question in 10/i)).toBeInTheDocument();
   });
 
+  /** A value the stepped ladder could never have produced — the point of the dissolve. */
   it('says how blurred the picture was when they got it', () => {
     render(<MpReveal room={room} playerId="p1" />);
-    expect(screen.getByText('92% blur')).toBeInTheDocument();
+    expect(screen.getByText('83% blur')).toBeInTheDocument();
   });
 });
 
@@ -414,5 +418,25 @@ describe('what a question is worth', () => {
     clock.value = startedAt + 29_000;
     render(<MpQuestion room={room} roster={roster} playerId="p1" onGuess={vi.fn()} />);
     expect(screen.queryByText('750')).not.toBeInTheDocument();
+  });
+});
+
+describe('what the question screen promises', () => {
+  const startedAt = 1_700_000_000_000 + 3000;
+  const room: RoomView = {
+    ...baseRoom,
+    status: 'QUESTION',
+    question: {
+      index: 0, number: 1, total: 5, assetToken: 'd'.repeat(32),
+      startedAt, endsAt: startedAt + 30_000, durationMs: 30_000,
+    },
+  };
+
+  /** Copy outlives the mechanic it described unless something checks it. */
+  it('never tells a player a wrong guess will cost them', () => {
+    clock.value = startedAt + 2_000;
+    render(<MpQuestion room={room} roster={roster} playerId="p1" onGuess={vi.fn()} />);
+    expect(document.body.textContent).not.toMatch(/wrong guess costs you/i);
+    expect(screen.getByText(/every second it clears/i)).toBeInTheDocument();
   });
 });

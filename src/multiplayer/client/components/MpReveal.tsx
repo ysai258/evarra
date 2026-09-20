@@ -1,4 +1,3 @@
-import { stageAt } from '../../../engine/reveal.ts';
 import type { RoomView } from '../../types.ts';
 import { secondsUntil, useServerClock } from '../useServerClock.ts';
 import { MpPhoto } from './MpPhoto.tsx';
@@ -39,7 +38,7 @@ export function MpReveal({ room, playerId }: MpRevealProps) {
 
       <div className="game__body">
         <div className="game__stage">
-          <MpPhoto assetToken={reveal.assetToken} stageIndex={4} revealed />
+          <MpPhoto assetToken={reveal.assetToken} position={0} revealed />
           {reveal.attribution && (
             <p className="attribution">
               Photo:{' '}
@@ -73,8 +72,8 @@ export function MpReveal({ room, playerId }: MpRevealProps) {
                   </span>
                   <span className="mp-board__name">{result.name}</span>
                   <span className="mp-board__detail">
-                    {result.correct && result.stageIndex !== undefined
-                      ? `${stageAt(result.stageIndex).blurPercent}% blur`
+                    {result.correct && result.blurPercent !== undefined
+                      ? `${result.blurPercent}% blur`
                       : '⏰ missed it'}
                   </span>
                   <span className="mp-board__score mp-mono">
