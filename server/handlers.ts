@@ -2,7 +2,7 @@ import type { Server, Socket } from 'socket.io';
 import { ERROR_MESSAGES, type Ack, type ClientEvents, type ErrorCode, type JoinedPayload, type ServerEvents } from '../src/multiplayer/protocol.ts';
 import type { Celebrity } from '../src/engine/types.ts';
 import { RateLimiter, type LimitName } from './rate-limit.ts';
-import { RoomManager, systemClock, type Clock, type RoomEvents, type ServerPlayer, type ServerRoom } from './room-manager.ts';
+import { RoomManager, systemClock, type Clock, type RoomEvents, type RoomLifecycle, type ServerPlayer, type ServerRoom } from './room-manager.ts';
 
 /**
  * The socket layer.
@@ -21,11 +21,14 @@ export function createRoomManager(
   io: TypedServer,
   roster: readonly Celebrity[],
   clock: Clock = systemClock,
+  /** Optional observer for room lifecycle moments — the play statistics hook in here. */
+  lifecycle?: (event: RoomLifecycle) => void,
 ): RoomManager {
   /** player id -> socket id, so the manager can address one person without knowing about sockets. */
   const sockets = new Map<string, string>();
 
   const events: RoomEvents = {
+    ...(lifecycle ? { lifecycle } : {}),
     toRoom: (code, event, ...args) => {
       io.to(code).emit(event, ...args);
     },

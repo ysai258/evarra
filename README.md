@@ -325,6 +325,16 @@ Two things to know before it carries real traffic:
 unavailable and the daily game behaves exactly as it always has — it does not know the
 room server exists.
 
+### Play statistics
+
+The room server answers `GET /stats?days=14` with counts only — no names, IPs, player
+ids or room codes — so it is public like `/health`: `live` (rooms open, rooms mid-game,
+players connected right now), and per India-time day `roomsCreated`, `joins`,
+`gamesStarted`, `gamesFinished`, `playersInGames` and `peakOnline`, plus totals. The
+counters are batched in memory and written every 30 seconds; set the Upstash variables
+(see [Environment variables](#environment-variables)) for them to survive a restart or
+the free plan's sleep. The daily game is static and still sends nothing anywhere.
+
 ### Deep links
 
 `/room/AB7K9Q` is a real URL people paste into group chats, but no file sits at that
@@ -545,6 +555,7 @@ None are required. The game builds and runs with no configuration.
 | `VITE_MULTIPLAYER_URL` | No | Where the browser looks for the room server. Defaults to `http://localhost:8787` in `npm run dev`. Unset in a production build, multiplayer reports itself unavailable and the daily game is untouched. |
 | `MULTIPLAYER_PORT` | No | Port the room server listens on. Defaults to `8787`. |
 | `MULTIPLAYER_ORIGINS` | No | Comma-separated origins allowed to connect. Unset means any — right for a dev machine, wrong for a public one. |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | No | Room server only. Persists the `/stats` play counters in Upstash Redis (`KV_REST_API_URL` / `KV_REST_API_TOKEN` also work). Unset, the counters live in memory and reset when the server restarts or wakes. |
 
 `.env.example` documents this. There are no API keys anywhere in the project.
 

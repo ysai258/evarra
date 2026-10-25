@@ -6,6 +6,7 @@ import { readStageAsset } from './assets.ts';
 import { createRoomManager, registerHandlers, type TypedServer } from './handlers.ts';
 import { systemClock } from './room-manager.ts';
 import { RateLimiter } from './rate-limit.ts';
+import { recordLifecycle, statsFromEnv } from './stats.ts';
 
 /**
  * The multiplayer server.
@@ -69,13 +70,28 @@ const io: TypedServer = new Server(httpServer, {
   pingTimeout: 20_000,
 });
 
-const manager = createRoomManager(io, celebrities);
+/** Play statistics — counts only, see `stats.ts`. */
+const stats = statsFromEnv();
+
+const manager = createRoomManager(io, celebrities, systemClock, (event) => recordLifecycle(stats, event));
 registerHandlers(io, manager, new RateLimiter(), systemClock.now);
 
 setInterval(() => manager.cleanup(), MULTIPLAYER_CONFIG.CLEANUP_INTERVAL_MS).unref();
 
+// The busiest moment of the day: sample who is connected every five seconds.
+setInterval(() => stats.online(manager.liveCounts().online), 5_000).unref();
+stats.start();
+
+// Hosts stop a container with SIGTERM; write out what is still pending first.
+for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+  process.once(signal, () => {
+    stats.stop();
+    void stats.flush().finally(() => process.exit(0));
+  });
+}
+
 /**
- * Two routes: a health check, and the blurred photographs.
+ * Three routes: a health check, the public play statistics, and the blurred photographs.
  *
  * The image route is the interesting one. It exists so that no filename ever reaches
  * a browser — see `assets.ts` — and it refuses to serve a stage the room's clock has
@@ -111,6 +127,20 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
       commit: commitRef(),
       uptimeSeconds: Math.round(process.uptime()),
     }));
+    return;
+  }
+
+  // Play statistics: counts only (no names, no IPs, no ids), so public like /health.
+  if (url.pathname === '/stats' && request.method === 'GET') {
+    const live = manager.liveCounts();
+    try {
+      const report = await stats.report(Number(url.searchParams.get('days') ?? 14), live);
+      response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' });
+      response.end(JSON.stringify(report));
+    } catch (error) {
+      response.writeHead(503, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' });
+      response.end(JSON.stringify({ error: `Stats are unavailable right now (${(error as Error).message})`, live }));
+    }
     return;
   }
 

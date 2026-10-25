@@ -43,7 +43,19 @@ export const systemClock: Clock = {
   clearTimeout: (handle) => clearTimeout(handle.id as NodeJS.Timeout),
 };
 
+/**
+ * Moments worth counting, for the play statistics. Counts only: nothing here names a
+ * player or a room.
+ */
+export type RoomLifecycle =
+  | { type: 'roomCreated' }
+  | { type: 'playerJoined' }
+  | { type: 'gameStarted'; players: number }
+  | { type: 'gameFinished'; players: number };
+
 export type RoomEvents = {
+  /** Optional observer for `RoomLifecycle` moments; it never affects the game. */
+  lifecycle?(event: RoomLifecycle): void;
   toRoom<E extends keyof ServerEvents>(
     code: string, event: E, ...args: Parameters<ServerEvents[E]>
   ): void;
@@ -150,6 +162,7 @@ export class RoomManager {
 
     this.rooms.set(code, room);
     this.playerRooms.set(player.id, code);
+    this.events.lifecycle?.({ type: 'roomCreated' });
     return { ok: true, value: { room, player } };
   }
 
@@ -179,6 +192,7 @@ export class RoomManager {
 
     this.events.toRoom(code, 'room:playerJoined', this.publicPlayer(room, player));
     this.broadcastState(room);
+    this.events.lifecycle?.({ type: 'playerJoined' });
     return { ok: true, value: { room, player } };
   }
 
@@ -274,6 +288,7 @@ export class RoomManager {
     }
 
     this.startQuestion(room, 0);
+    this.events.lifecycle?.({ type: 'gameStarted', players: this.activePlayers(room).length });
     return { ok: true, value: room };
   }
 
@@ -429,6 +444,7 @@ export class RoomManager {
       this.events.toPlayer(player.id, 'game:final', this.finalResults(room, player));
     }
     this.broadcastState(room);
+    this.events.lifecycle?.({ type: 'gameFinished', players: room.players.size });
   }
 
   // ---------------------------------------------------------- connections
@@ -748,6 +764,17 @@ export class RoomManager {
   /** Test and diagnostics seam — never used to make a decision. */
   get size(): number {
     return this.rooms.size;
+  }
+
+  /** Right-now counts for `/stats`: rooms, rooms mid-game, and connected players. */
+  liveCounts(): { rooms: number; playing: number; online: number } {
+    let playing = 0;
+    let online = 0;
+    for (const room of this.rooms.values()) {
+      if (room.status === 'QUESTION' || room.status === 'REVEAL') playing += 1;
+      for (const player of room.players.values()) if (player.connected) online += 1;
+    }
+    return { rooms: this.rooms.size, playing, online };
   }
 }
 
